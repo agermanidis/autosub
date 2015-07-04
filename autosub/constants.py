@@ -1,9 +1,6 @@
 SPEECH_CUTOFF_SECONDS = 1.5
 MAX_TIMEOUT = 9999999
 
-FFMPEG_CONVERT_COMMAND = "ffmpeg -y -i {source_path} -ac {channels} -ar {rate} -loglevel error {destination_path}"
-FFMPEG_SPLIT_COMMAND = "ffmpeg -y -i {source_path} -ss {start} -t {duration} -loglevel error {destination_path}"
-
 GOOGLE_SPEECH_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"
 GOOGLE_SPEECH_API_URL = "http://www.google.com/speech-api/v2/recognize?client=chromium&lang={lang}&key={key}"
 

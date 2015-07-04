@@ -48,11 +48,10 @@ class FLACConverter(object):
             start = max(0, start-self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac')
-            command = FFMPEG_SPLIT_COMMAND.format(source_path=self.source_path,
-                                                  start=start,
-                                                  duration=end-start,
-                                                  destination_path=temp.name)
-            subprocess.check_output(command.split())
+            command = ["ffmpeg", "-y", "-i", self.source_path,
+                       "-ss", str(start), "-t", str(end-start),
+                       "-loglevel", "error", temp.name]
+            subprocess.check_output(command)
             return temp.read()
 
         except KeyboardInterrupt:
@@ -101,11 +100,8 @@ class Translator(object):
 
 def extract_audio(filename, channels=2, rate=16000):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
-    command = FFMPEG_CONVERT_COMMAND.format(source_path=filename,
-                                            destination_path=temp.name,
-                                            channels=channels,
-                                            rate=rate)
-    subprocess.check_output(command.split())
+    command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
+    subprocess.check_output(command)
     return temp.name, rate
 
 def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_region_size=6):
