@@ -17,8 +17,7 @@ import wave
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
 from autosub.constants import SOURCE_LANGUAGES, DESTINATION_LANGUAGES, \
-                              GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL, \
-                              FFMPEG_SPLIT_COMMAND, FFMPEG_CONVERT_COMMAND
+                              GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL
 from autosub.formatters import FORMATTERS
 
 translator = goslate.Goslate()

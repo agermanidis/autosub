@@ -1,6 +1,3 @@
-SPEECH_CUTOFF_SECONDS = 1.5
-MAX_TIMEOUT = 9999999
-
 GOOGLE_SPEECH_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"
 GOOGLE_SPEECH_API_URL = "http://www.google.com/speech-api/v2/recognize?client=chromium&lang={lang}&key={key}"
 
