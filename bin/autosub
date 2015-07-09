@@ -144,7 +144,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('source_path', help="Path to the video or audio file to subtitle")
+    parser.add_argument('source_path', help="Path to the video or audio file to subtitle", nargs='?')
     parser.add_argument('-C', '--concurrency', help="Number of concurrent API requests to make", type=int, default=10)
     parser.add_argument('-o', '--output', help="Output path for subtitles (by default, subtitles are saved in the same directory and name as the source path)")
     parser.add_argument('-F', '--format', help="Destination subtitle format", default="srt")
@@ -159,7 +159,7 @@ def main():
     if args.list_formats:
         print("List of formats:")
         for subtitle_format in FORMATTERS.keys():
-            print("\t{format}".format(format=subtitle_format))
+            print("{format}".format(format=subtitle_format))
         return 0
 
     if args.list_src_languages:
@@ -184,6 +184,10 @@ def main():
 
     if args.dst_language not in DESTINATION_LANGUAGES.keys():
         print("Destination language not supported. Run with --list-destination-languages to see all supported languages.")
+        return 1
+
+    if not args.source_path:
+        print("error: You need to specify a source path.")
         return 1
 
     audio_filename, audio_rate = extract_audio(args.source_path)
