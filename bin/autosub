@@ -164,13 +164,13 @@ def main():
 
     if args.list_src_languages:
         print("List of source languages:")
-        for code, language in SOURCE_LANGUAGES.items():
+        for code, language in sorted(SOURCE_LANGUAGES.items()):
             print("{code}\t{language}".format(code=code, language=language))
         return 0
 
     if args.list_dst_languages:
         print("List of output languages:")
-        for code, language in DESTINATION_LANGUAGES.items():
+        for code, language in sorted(DESTINATION_LANGUAGES.items()):
             print("{code}\t{language}".format(code=code, language=language))
         return 0
 
