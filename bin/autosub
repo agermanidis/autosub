@@ -244,7 +244,8 @@ def main():
         base, ext = os.path.splitext(args.source_path)
         dest = "{base}.{format}".format(base=base, format=args.format)
 
-    open(dest, 'wb').write(formatted_subtitles)
+    with open(dest, 'wb') as f:
+        f.write(formatted_subtitles.encode("utf-8"))
 
     print "Subtitles file created at {}".format(dest)
 
