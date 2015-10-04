@@ -51,6 +51,7 @@ class FLACConverter(object):
                        "-ss", str(start), "-t", str(end-start),
                        "-loglevel", "error", temp.name]
             subprocess.check_output(command)
+            os.system('stty sane')
             return temp.read()
 
         except KeyboardInterrupt:
@@ -101,6 +102,7 @@ def extract_audio(filename, channels=2, rate=16000):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
     command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
     subprocess.check_output(command)
+    os.system('stty sane') 
     return temp.name, rate
 
 def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_region_size=6):
