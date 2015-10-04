@@ -28,7 +28,11 @@ def json_formatter(subtitles):
     subtitle_dicts = map(lambda (r, t): {'start': r[0], 'end': r[1], 'content': t}, subtitles)
     return json.dumps(subtitle_dicts)
 
+def raw_formatter(subtitles):
+    return ' '.join(map(lambda (rng, text): text, subtitles))
+
 FORMATTERS = {
     'srt': srt_formatter,
     'json': json_formatter,
+    'raw': raw_formatter,
 }
