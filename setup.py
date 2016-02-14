@@ -9,7 +9,7 @@ long_description = 'Autosub is a utility for automatic speech recognition and su
 
 setup(
     name='autosub',
-    version='0.3.4',
+    version='0.3.5',
     description='Auto-generates subtitles for any video or audio file',
     long_description=long_description,
     author='Anastasis Germanidis',
