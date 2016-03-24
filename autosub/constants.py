@@ -79,6 +79,7 @@ SOURCE_LANGUAGES = {
     'es-VE': 'Spanish (Venezuela)',
     'sv-SE': 'Swedish',
     'tr': 'Turkish',
+    'uk': 'Ukrainian',
     'zu': 'Zulu',
 }
 

@@ -15,8 +15,9 @@ def force_unicode(s, encoding="utf-8"):
 
 def srt_formatter(subtitles, show_before=0, show_after=0):
     f = pysrt.SubRipFile()
-    for (rng, text) in subtitles:
+    for i, (rng, text) in enumerate(subtitles, 1):
         item = pysrt.SubRipItem()
+        item.index = i
         item.text = force_unicode(text)
         start, end = rng
         item.start.seconds = max(0, start - show_before)
