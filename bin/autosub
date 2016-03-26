@@ -200,40 +200,42 @@ def main():
     recognizer = SpeechRecognizer(language=args.src_language, rate=audio_rate)
     translator = Translator(args.dst_language)
 
-    try:
-        widgets=["Converting speech regions to FLAC files: ", Percentage(), ' ', Bar(), ' ', ETA()]
-        pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-        extracted_regions = []
-        for i, extracted_region in enumerate(pool.imap(converter, regions)):
-            extracted_regions.append(extracted_region)
-            pbar.update(i)
-        pbar.finish()
-
-        widgets=["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]        
-        pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-        transcripts = []
-        for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
-            transcripts.append(transcript)
-            pbar.update(i)
-        pbar.finish()
-
-        if not is_same_language(args.src_language, args.dst_language):
-            prompt = "Translating from {0} to {1}: ".format(args.src_language, args.dst_language)
-            widgets=[prompt, Percentage(), ' ', Bar(), ' ', ETA()]
+    transcripts = []
+    if regions:
+        try:
+            widgets=["Converting speech regions to FLAC files: ", Percentage(), ' ', Bar(), ' ', ETA()]
             pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-            translated_transcripts = []
-            for i, transcript in enumerate(pool.imap(translator, transcripts)):
-                translated_transcripts.append(transcript)
+            extracted_regions = []
+            for i, extracted_region in enumerate(pool.imap(converter, regions)):
+                extracted_regions.append(extracted_region)
                 pbar.update(i)
             pbar.finish()
-            transcripts = translated_transcripts
 
-    except KeyboardInterrupt:
-        pbar.finish()
-        pool.terminate()
-        pool.join()
-        print "Cancelling transcription"
-        sys.exit(1)
+            widgets=["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]
+            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+
+            for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
+                transcripts.append(transcript)
+                pbar.update(i)
+            pbar.finish()
+
+            if not is_same_language(args.src_language, args.dst_language):
+                prompt = "Translating from {0} to {1}: ".format(args.src_language, args.dst_language)
+                widgets=[prompt, Percentage(), ' ', Bar(), ' ', ETA()]
+                pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+                translated_transcripts = []
+                for i, transcript in enumerate(pool.imap(translator, transcripts)):
+                    translated_transcripts.append(transcript)
+                    pbar.update(i)
+                pbar.finish()
+                transcripts = translated_transcripts
+
+        except KeyboardInterrupt:
+            pbar.finish()
+            pool.terminate()
+            pool.join()
+            print "Cancelling transcription"
+            sys.exit(1)
 
     timed_subtitles = [(r, t) for r, t in zip(regions, transcripts) if t]
     formatter = FORMATTERS.get(args.format)
