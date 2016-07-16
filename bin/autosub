@@ -78,7 +78,8 @@ class SpeechRecognizer(object):
                 for line in resp.content.split("\n"):
                     try:
                         line = json.loads(line)
-                        return line['result'][0]['alternative'][0]['transcript'].capitalize()
+                        line = line['result'][0]['alternative'][0]['transcript']
+                        return line[:1].upper() + line[1:]
                     except:
                         # no result
                         continue
