@@ -121,7 +121,7 @@ def extract_audio(filename, channels=1, rate=16000):
     return temp.name, rate
 
 
-def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_region_size=6):
+def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_region_size=6,dthreshold=0.2):
     reader = wave.open(filename)
     sample_width = reader.getsampwidth()
     rate = reader.getframerate()
@@ -137,7 +137,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
         chunk = reader.readframes(frame_width)
         energies.append(audioop.rms(chunk, sample_width * n_channels))
 
-    threshold = percentile(energies, 0.2)
+    threshold = percentile(energies, dthreshold)
 
     elapsed_time = 0
 
@@ -175,9 +175,9 @@ def main():
                         help="The Google Translate API key to be used. (Required for subtitle translation)")
     parser.add_argument('--list-formats', help="List all available subtitle formats", action='store_true')
     parser.add_argument('--list-languages', help="List all available source/destination languages", action='store_true')
-
+    parser.add_argument('-T', '--threshold', help="Threshold,for level noise ", default=0.2,type=float)
     args = parser.parse_args()
-
+    threshold = args.threshold
     if args.list_formats:
         print("List of formats:")
         for subtitle_format in FORMATTERS.keys():
@@ -209,7 +209,7 @@ def main():
 
     audio_filename, audio_rate = extract_audio(args.source_path)
 
-    regions = find_speech_regions(audio_filename)
+    regions = find_speech_regions(audio_filename,dthreshold = threshold)
 
     pool = multiprocessing.Pool(args.concurrency)
     converter = FLACConverter(source_path=audio_filename)
