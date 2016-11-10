@@ -36,7 +36,7 @@ def vtt_formatter(subtitles, show_before=0, show_after=0):
         item.end.seconds = end + show_after
         f.append(item)
     return '\n'.join(map(unicode, f))
-        
+
 def json_formatter(subtitles):
     subtitle_dicts = map(lambda (r, t): {'start': r[0], 'end': r[1], 'content': t}, subtitles)
     return json.dumps(subtitle_dicts)
