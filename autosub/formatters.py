@@ -26,16 +26,9 @@ def srt_formatter(subtitles, show_before=0, show_after=0):
     return '\n'.join(map(unicode, f))
 
 def vtt_formatter(subtitles, show_before=0, show_after=0):
-    f = pysrt.SubRipFile()
-    for i, (rng, text) in enumerate(subtitles, 1):
-        item = pysrt.SubRipItem()
-        item.index = i
-        item.text = force_unicode(text)
-        start, end = rng
-        item.start.seconds = max(0, start - show_before)
-        item.end.seconds = end + show_after
-        f.append(item)
-    return '\n'.join(map(unicode, f))
+    text = srt_formatter(subtitles, show_before, show_after)
+    text = 'WEBVTT\n\n' + text.replace(',', '.')
+    return text
 
 def json_formatter(subtitles):
     subtitle_dicts = map(lambda (r, t): {'start': r[0], 'end': r[1], 'content': t}, subtitles)
