@@ -13,12 +13,12 @@ Autosub is a utility for automatic speech recognition and subtitle generation. I
 ```
 $ autosub -h
 usage: autosub [-h] [-C CONCURRENCY] [-o OUTPUT] [-F FORMAT] [-S SRC_LANGUAGE]
-               [-D DST_LANGUAGE] [--list-formats] [--list-src-languages]
-               [--list-dst-languages]
-               source_path
+               [-D DST_LANGUAGE] [-K API_KEY] [--list-formats]
+               [--list-languages]
+               [source_path]
 
 positional arguments:
-  source_path           Path to the video or audio file
+  source_path           Path to the video or audio file to subtitle
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -34,9 +34,11 @@ optional arguments:
                         Language spoken in source file
   -D DST_LANGUAGE, --dst-language DST_LANGUAGE
                         Desired language for the subtitles
+  -K API_KEY, --api-key API_KEY
+                        The Google Translate API key to be used. (Required for
+                        subtitle translation)
   --list-formats        List all available subtitle formats
-  --list-src-languages  List all available source languages
-  --list-dst-languages  List all available destination languages
+  --list-languages      List all available source/destination languages
 ```
 
 ### License
