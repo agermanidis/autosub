@@ -114,8 +114,31 @@ class Translator(object):
             return
 
 
+def which(program):
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+    return None
+
+
 def extract_audio(filename, channels=1, rate=16000):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
+    if not os.path.isfile(filename):
+        print "The given file does not exist: {0}".format(filename)
+        raise Exception("Invalid filepath: {0}".format(filename))
+    if not which("ffmpeg"):
+        print "ffmpeg: Executable not found on machine."
+        raise Exception("Dependency not found: ffmpeg")
     command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
     subprocess.check_output(command)
     return temp.name, rate
