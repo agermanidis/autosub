@@ -49,8 +49,8 @@ class FLACConverter(object):
             command = ["ffmpeg","-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
-            subprocess.check_output(command)
-            os.system('stty sane')
+            subprocess.check_output(command, stdin=open(os.devnull))
+            # os.system('stty sane')
             return temp.read()
 
         except KeyboardInterrupt:
@@ -140,7 +140,7 @@ def extract_audio(filename, channels=1, rate=16000):
         print "ffmpeg: Executable not found on machine."
         raise Exception("Dependency not found: ffmpeg")
     command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
-    subprocess.check_output(command)
+    subprocess.check_output(command, stdin=open(os.devnull))
     return temp.name, rate
 
 
