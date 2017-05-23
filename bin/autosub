@@ -46,8 +46,8 @@ class FLACConverter(object):
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac')
-            command = ["ffmpeg", "-y", "-i", self.source_path,
-                       "-ss", str(start), "-t", str(end - start),
+            command = ["ffmpeg","-ss", str(start), "-t", str(end - start),
+                       "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             subprocess.check_output(command)
             os.system('stty sane')
@@ -114,8 +114,31 @@ class Translator(object):
             return
 
 
+def which(program):
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+    return None
+
+
 def extract_audio(filename, channels=1, rate=16000):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
+    if not os.path.isfile(filename):
+        print "The given file does not exist: {0}".format(filename)
+        raise Exception("Invalid filepath: {0}".format(filename))
+    if not which("ffmpeg"):
+        print "ffmpeg: Executable not found on machine."
+        raise Exception("Dependency not found: ffmpeg")
     command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
     subprocess.check_output(command)
     return temp.name, rate
@@ -145,19 +168,17 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
     region_start = None
 
     for energy in energies:
-        elapsed_time += chunk_duration
-
         is_silence = energy <= threshold
         max_exceeded = region_start and elapsed_time - region_start >= max_region_size
 
         if (max_exceeded or is_silence) and region_start:
             if elapsed_time - region_start >= min_region_size:
                 regions.append((region_start, elapsed_time))
-            region_start = None
+                region_start = None
 
         elif (not region_start) and (not is_silence):
             region_start = elapsed_time
-
+        elapsed_time += chunk_duration
     return regions
 
 
