@@ -1,7 +1,7 @@
 # Autosub <a href="https://pypi.python.org/pypi/autosub"><img src="https://img.shields.io/pypi/v/autosub.svg"></img></a> <a href="https://pypi.python.org/pypi/autosub">
 ### Auto-generated subtitles for any video
 
-Autosub is a utility for automatic speech recognition and subtitle generation. It takes a video or an audio file as input, performs voice activity detection to find speech regions, makes parallel requests to Google Web Speech API to generate transcriptions for those regions, (optionally) translates them to a different language, and finally saves the resulting subtitles to disk. It supports a variety of input and output languages (to see which, run the utility with `--list-src-languages` and `--list-dst-languages` as arguments respectively) and can currently produce subtitles in either the SRT, VTT format or simple JSON.
+Autosub is a utility for automatic speech recognition and subtitle generation. It takes a video or an audio file as input, performs voice activity detection to find speech regions, makes parallel requests to Google Web Speech API to generate transcriptions for those regions, (optionally) translates them to a different language, and finally saves the resulting subtitles to disk. It supports a variety of input and output languages (to see which, run the utility with `--list-languages` as argument respectively) and can currently produce subtitles in either the SRT format or simple JSON.
 
 ### Installation
 
