@@ -50,7 +50,6 @@ class FLACConverter(object):
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             subprocess.check_output(command, stdin=open(os.devnull))
-            # os.system('stty sane')
             return temp.read()
 
         except KeyboardInterrupt:
