@@ -152,7 +152,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
     total_duration = reader.getnframes() / rate
     chunk_duration = float(frame_width) / rate
 
-    n_chunks = int(total_duration / chunk_duration)
+    n_chunks = int(math.ceil(reader.getnframes()*1.0 / frame_width))
     energies = []
 
     for i in range(n_chunks):
