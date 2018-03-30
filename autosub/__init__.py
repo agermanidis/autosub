@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import absolute_import, print_function, unicode_literals
 import argparse
 import audioop
 from googleapiclient.discovery import build
@@ -12,8 +11,6 @@ import subprocess
 import sys
 import tempfile
 import wave
-
-from progressbar import ProgressBar, Percentage, Bar, ETA
 
 from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
@@ -284,22 +281,12 @@ def generate_subtitles(
     transcripts = []
     if regions:
         try:
-            widgets = ["Converting speech regions to FLAC files: ", Percentage(), ' ', Bar(), ' ',
-                       ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
             extracted_regions = []
             for i, extracted_region in enumerate(pool.imap(converter, regions)):
                 extracted_regions.append(extracted_region)
-                pbar.update(i)
-            pbar.finish()
-
-            widgets = ["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
 
             for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
                 transcripts.append(transcript)
-                pbar.update(i)
-            pbar.finish()
 
             if not is_same_language(src_language, dst_language):
                 if api_key:
@@ -307,14 +294,9 @@ def generate_subtitles(
                     translator = Translator(dst_language, google_translate_api_key,
                                             dst=dst_language,
                                             src=src_language)
-                    prompt = "Translating from {0} to {1}: ".format(src_language, dst_language)
-                    widgets = [prompt, Percentage(), ' ', Bar(), ' ', ETA()]
-                    pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
                     translated_transcripts = []
                     for i, transcript in enumerate(pool.imap(translator, transcripts)):
                         translated_transcripts.append(transcript)
-                        pbar.update(i)
-                    pbar.finish()
                     transcripts = translated_transcripts
                 else:
                     print(
@@ -324,7 +306,6 @@ def generate_subtitles(
                     return 1
 
         except KeyboardInterrupt:
-            pbar.finish()
             pool.terminate()
             pool.join()
             print("Cancelling transcription")
