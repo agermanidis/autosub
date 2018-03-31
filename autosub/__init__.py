@@ -268,6 +268,7 @@ def generate_subtitles(
     src_language=DEFAULT_SRC_LANGUAGE,
     dst_language=DEFAULT_DST_LANGUAGE,
     subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
+    verbose=False,
     api_key=None,
 ):
     regions = find_speech_regions(audio_filename)
@@ -291,9 +292,11 @@ def generate_subtitles(
                     transcripts.append(transcript)
             else:
                 for region in regions:
-                    extracted = converter(region)
-                    for chunk in extracted:
-                        transcripts.append(recognizer(chunk))
+                    caption = recognizer(converter(region))
+                    if verbose:
+                        print(caption)
+                    transcripts.append(caption)
+
             if not is_same_language(src_language, dst_language):
                 raise NotImplementedError('currently we do not support translation')
 
