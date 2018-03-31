@@ -261,7 +261,8 @@ def main():
 
 
 def generate_subtitles(
-    source_path,
+    audio_filename,
+    audio_rate,
     output=None,
     concurrency=DEFAULT_CONCURRENCY,
     src_language=DEFAULT_SRC_LANGUAGE,
@@ -269,8 +270,6 @@ def generate_subtitles(
     subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
     api_key=None,
 ):
-    audio_filename, audio_rate = extract_audio(source_path)
-
     regions = find_speech_regions(audio_filename)
 
     pool = multiprocessing.Pool(concurrency)
