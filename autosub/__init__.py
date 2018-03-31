@@ -317,13 +317,11 @@ def generate_subtitles(
     dest = output
 
     if not dest:
-        base, ext = os.path.splitext(source_path)
+        base, ext = os.path.splitext(audio_filename)
         dest = "{base}.{format}".format(base=base, format=subtitle_file_format)
 
     with open(dest, 'wb') as f:
         f.write(formatted_subtitles.encode("utf-8"))
-
-    os.remove(audio_filename)
 
     return dest
 
