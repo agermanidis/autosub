@@ -18,7 +18,7 @@ from autosub.constants import (
 from autosub.formatters import FORMATTERS
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
-DEFAULT_CONCURRENCY = 10
+DEFAULT_CONCURRENCY = 0
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 
@@ -272,7 +272,9 @@ def generate_subtitles(
 ):
     regions = find_speech_regions(audio_filename)
 
-    pool = multiprocessing.Pool(concurrency)
+    is_parallel = concurrency > 0
+    if is_parallel:
+        pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
     recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
                                   api_key=GOOGLE_SPEECH_API_KEY)
@@ -281,28 +283,19 @@ def generate_subtitles(
     if regions:
         try:
             extracted_regions = []
-            for i, extracted_region in enumerate(pool.imap(converter, regions)):
-                extracted_regions.append(extracted_region)
+            if is_parallel:
+                for i, extracted_region in enumerate(pool.imap(converter, regions)):
+                    extracted_regions.append(extracted_region)
 
-            for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
-                transcripts.append(transcript)
-
+                for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
+                    transcripts.append(transcript)
+            else:
+                for region in regions:
+                    extracted = converter(region)
+                    for chunk in extracted:
+                        transcripts.append(recognizer(chunk))
             if not is_same_language(src_language, dst_language):
-                if api_key:
-                    google_translate_api_key = api_key
-                    translator = Translator(dst_language, google_translate_api_key,
-                                            dst=dst_language,
-                                            src=src_language)
-                    translated_transcripts = []
-                    for i, transcript in enumerate(pool.imap(translator, transcripts)):
-                        translated_transcripts.append(transcript)
-                    transcripts = translated_transcripts
-                else:
-                    print(
-                        "Error: Subtitle translation requires specified Google Translate API key. "
-                        "See --help for further information."
-                    )
-                    return 1
+                raise NotImplementedError('currently we do not support translation')
 
         except KeyboardInterrupt:
             pool.terminate()
