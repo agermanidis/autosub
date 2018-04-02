@@ -18,7 +18,7 @@ from autosub.constants import (
 from autosub.formatters import FORMATTERS
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
-DEFAULT_CONCURRENCY = 0
+DEFAULT_CONCURRENCY = int(os.environ.get('SKPATION_CORES', 0))
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 EXECUTABLE = os.environ.get('FFMPEG_PATH', 'bin/ffmpeg')
