@@ -278,7 +278,7 @@ def generate_subtitles(
     dst_language=DEFAULT_DST_LANGUAGE,
     subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
     api_key=None,
-    is_dst_language_provided=True
+    is_dst_language_provided=False
 ):
     audio_filename, audio_rate = extract_audio(source_path)
 
