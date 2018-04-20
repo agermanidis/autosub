@@ -83,8 +83,10 @@ class SpeechRecognizer(object):
                 for line in resp.content.decode().split("\n"):
                     try:
                         line = json.loads(line)
-                        line = line['result'][0]['alternative'][0]['transcript']
-                        return line[:1].upper() + line[1:]
+                        result = line['result'][0]['alternative'][0]
+                        line = result['transcript']
+                        confidence = result['confidence'] if 'confidence' in result else 'no confidence returned'
+                        return line[:1].upper() + line[1:], confidence
                     except:
                         # no result
                         continue
@@ -136,14 +138,15 @@ def which(program):
     return None
 
 
-def extract_audio(filename, channels=1, rate=16000):
+def extract_audio(filename, channels=1, rate=16000, s3=True):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
-    if not os.path.isfile(filename):
-        print("The given file does not exist: {0}".format(filename))
-        raise Exception("Invalid filepath: {0}".format(filename))
-    if not which(EXECUTABLE):
-        print("ffmpeg: Executable not found on machine.")
-        raise Exception("Dependency not found: ffmpeg")
+    if not s3:
+        if not os.path.isfile(filename):
+            print("The given file does not exist: {0}".format(filename))
+            raise Exception("Invalid filepath: {0}".format(filename))
+        if not which(EXECUTABLE):
+            print("ffmpeg: Executable not found on machine.")
+            raise Exception("Dependency not found: ffmpeg")
     command = [EXECUTABLE, "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
     use_shell = True if os.name == "nt" else False
     subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
@@ -264,11 +267,9 @@ def main():
 def generate_subtitles(
     audio_filename,
     audio_rate,
-    output=None,
     concurrency=DEFAULT_CONCURRENCY,
     src_language=DEFAULT_SRC_LANGUAGE,
     dst_language=DEFAULT_DST_LANGUAGE,
-    subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
     verbose=False,
     api_key=None,
 ):
@@ -282,6 +283,7 @@ def generate_subtitles(
                                   api_key=GOOGLE_SPEECH_API_KEY)
 
     transcripts = []
+    confidences = []
     if regions:
         try:
             extracted_regions = []
@@ -289,14 +291,19 @@ def generate_subtitles(
                 for i, extracted_region in enumerate(pool.imap(converter, regions)):
                     extracted_regions.append(extracted_region)
 
-                for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
-                    transcripts.append(transcript)
+                for i, response in enumerate(pool.imap(recognizer, extracted_regions)):
+                    if response:
+                        transcript = response[0]
+                        confidence = response[1]
+                        transcripts.append(transcript)
+                        confidences.append(confidence)
             else:
                 for region in regions:
-                    caption = recognizer(converter(region))
+                    caption, confidence = recognizer(converter(region))
                     if verbose:
                         print(caption)
                     transcripts.append(caption)
+                    confidences.append(confidence)
 
             if not is_same_language(src_language, dst_language):
                 raise NotImplementedError('currently we do not support translation')
@@ -308,19 +315,18 @@ def generate_subtitles(
             raise
 
     timed_subtitles = [(r, t) for r, t in zip(regions, transcripts) if t]
+    timed_confidences = [(r, c) for r, c in zip(regions, confidences)]
+    return timed_subtitles, timed_confidences
+
+
+def persist_subtitles(timed_subtitles, output, subtitle_file_format=DEFAULT_SUBTITLE_FORMAT):
     formatter = FORMATTERS.get(subtitle_file_format)
     formatted_subtitles = formatter(timed_subtitles)
 
-    dest = output
-
-    if not dest:
-        base, ext = os.path.splitext(audio_filename)
-        dest = "{base}.{format}".format(base=base, format=subtitle_file_format)
-
-    with open(dest, 'wb') as f:
+    with open(output, 'wb') as f:
         f.write(formatted_subtitles.encode("utf-8"))
 
-    return dest
+    return output
 
 
 if __name__ == '__main__':
