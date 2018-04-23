@@ -316,6 +316,7 @@ def generate_subtitles(
 
     timed_subtitles = [(r, t) for r, t in zip(regions, transcripts) if t]
     timed_confidences = [(r, c) for r, c in zip(regions, confidences)]
+    pool.close()
     return timed_subtitles, timed_confidences
 
 
