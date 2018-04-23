@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import absolute_import, print_function, unicode_literals
 import argparse
 import audioop
 from googleapiclient.discovery import build
@@ -13,17 +12,16 @@ import sys
 import tempfile
 import wave
 
-from progressbar import ProgressBar, Percentage, Bar, ETA
-
 from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
-DEFAULT_CONCURRENCY = 10
+DEFAULT_CONCURRENCY = int(os.environ.get('SKPATION_CORES', 0))
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
+EXECUTABLE = os.environ.get('FFMPEG_PATH', 'bin/ffmpeg')
 
 
 def percentile(arr, percent):
@@ -53,7 +51,7 @@ class FLACConverter(object):
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac')
-            command = ["ffmpeg","-ss", str(start), "-t", str(end - start),
+            command = [EXECUTABLE,"-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
@@ -85,8 +83,10 @@ class SpeechRecognizer(object):
                 for line in resp.content.decode().split("\n"):
                     try:
                         line = json.loads(line)
-                        line = line['result'][0]['alternative'][0]['transcript']
-                        return line[:1].upper() + line[1:]
+                        result = line['result'][0]['alternative'][0]
+                        line = result['transcript']
+                        confidence = result['confidence'] if 'confidence' in result else 'no confidence returned'
+                        return line[:1].upper() + line[1:], confidence
                     except:
                         # no result
                         continue
@@ -138,15 +138,16 @@ def which(program):
     return None
 
 
-def extract_audio(filename, channels=1, rate=16000):
+def extract_audio(filename, channels=1, rate=16000, s3=True):
     temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
-    if not os.path.isfile(filename):
-        print("The given file does not exist: {0}".format(filename))
-        raise Exception("Invalid filepath: {0}".format(filename))
-    if not which("ffmpeg"):
-        print("ffmpeg: Executable not found on machine.")
-        raise Exception("Dependency not found: ffmpeg")
-    command = ["ffmpeg", "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
+    if not s3:
+        if not os.path.isfile(filename):
+            print("The given file does not exist: {0}".format(filename))
+            raise Exception("Invalid filepath: {0}".format(filename))
+        if not which(EXECUTABLE):
+            print("ffmpeg: Executable not found on machine.")
+            raise Exception("Dependency not found: ffmpeg")
+    command = [EXECUTABLE, "-y", "-i", filename, "-ac", str(channels), "-ar", str(rate), "-loglevel", "error", temp.name]
     use_shell = True if os.name == "nt" else False
     subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
     return temp.name, rate
@@ -264,88 +265,69 @@ def main():
 
 
 def generate_subtitles(
-    source_path,
-    output=None,
+    audio_filename,
+    audio_rate,
     concurrency=DEFAULT_CONCURRENCY,
     src_language=DEFAULT_SRC_LANGUAGE,
     dst_language=DEFAULT_DST_LANGUAGE,
-    subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
+    verbose=False,
     api_key=None,
 ):
-    audio_filename, audio_rate = extract_audio(source_path)
-
     regions = find_speech_regions(audio_filename)
 
-    pool = multiprocessing.Pool(concurrency)
+    is_parallel = concurrency > 0
+    if is_parallel:
+        pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
     recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
                                   api_key=GOOGLE_SPEECH_API_KEY)
 
     transcripts = []
+    confidences = []
     if regions:
         try:
-            widgets = ["Converting speech regions to FLAC files: ", Percentage(), ' ', Bar(), ' ',
-                       ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
             extracted_regions = []
-            for i, extracted_region in enumerate(pool.imap(converter, regions)):
-                extracted_regions.append(extracted_region)
-                pbar.update(i)
-            pbar.finish()
+            if is_parallel:
+                for i, extracted_region in enumerate(pool.imap(converter, regions)):
+                    extracted_regions.append(extracted_region)
 
-            widgets = ["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-
-            for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
-                transcripts.append(transcript)
-                pbar.update(i)
-            pbar.finish()
+                for i, response in enumerate(pool.imap(recognizer, extracted_regions)):
+                    if response:
+                        transcript = response[0]
+                        confidence = response[1]
+                        transcripts.append(transcript)
+                        confidences.append(confidence)
+            else:
+                for region in regions:
+                    caption, confidence = recognizer(converter(region))
+                    if verbose:
+                        print(caption)
+                    transcripts.append(caption)
+                    confidences.append(confidence)
 
             if not is_same_language(src_language, dst_language):
-                if api_key:
-                    google_translate_api_key = api_key
-                    translator = Translator(dst_language, google_translate_api_key,
-                                            dst=dst_language,
-                                            src=src_language)
-                    prompt = "Translating from {0} to {1}: ".format(src_language, dst_language)
-                    widgets = [prompt, Percentage(), ' ', Bar(), ' ', ETA()]
-                    pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-                    translated_transcripts = []
-                    for i, transcript in enumerate(pool.imap(translator, transcripts)):
-                        translated_transcripts.append(transcript)
-                        pbar.update(i)
-                    pbar.finish()
-                    transcripts = translated_transcripts
-                else:
-                    print(
-                        "Error: Subtitle translation requires specified Google Translate API key. "
-                        "See --help for further information."
-                    )
-                    return 1
+                raise NotImplementedError('currently we do not support translation')
 
         except KeyboardInterrupt:
-            pbar.finish()
             pool.terminate()
             pool.join()
             print("Cancelling transcription")
             raise
 
     timed_subtitles = [(r, t) for r, t in zip(regions, transcripts) if t]
+    timed_confidences = [(r, c) for r, c in zip(regions, confidences)]
+    pool.close()
+    return timed_subtitles, timed_confidences
+
+
+def persist_subtitles(timed_subtitles, output, subtitle_file_format=DEFAULT_SUBTITLE_FORMAT):
     formatter = FORMATTERS.get(subtitle_file_format)
     formatted_subtitles = formatter(timed_subtitles)
 
-    dest = output
-
-    if not dest:
-        base, ext = os.path.splitext(source_path)
-        dest = "{base}.{format}".format(base=base, format=subtitle_file_format)
-
-    with open(dest, 'wb') as f:
+    with open(output, 'wb') as f:
         f.write(formatted_subtitles.encode("utf-8"))
 
-    os.remove(audio_filename)
-
-    return dest
+    return output
 
 
 if __name__ == '__main__':
