@@ -1,7 +1,8 @@
-# Autosub <a href="https://pypi.python.org/pypi/autosub"><img src="https://img.shields.io/pypi/v/autosub.svg"></img></a> <a href="https://pypi.python.org/pypi/autosub">
-### Auto-generated subtitles for any video
+# autosub3
 
-Autosub is a utility for automatic speech recognition and subtitle generation. It takes a video or an audio file as input, performs voice activity detection to find speech regions, makes parallel requests to Google Web Speech API to generate transcriptions for those regions, (optionally) translates them to a different language, and finally saves the resulting subtitles to disk. It supports a variety of input and output languages (to see which, run the utility with the argument `--list-languages`) and can currently produce subtitles in either the SRT format or simple JSON.
+> Auto-generated subtitles for any video
+
+autosub3 is a utility for automatic speech recognition and subtitle generation. It takes a video or an audio file as input, performs voice activity detection to find speech regions, makes parallel requests to Google Web Speech API to generate transcriptions for those regions, and finally saves the resulting subtitles to disk. It can currently produce subtitles in either the SRT, VTT format or simple JSON.
 
 ### Installation
 
@@ -11,34 +12,21 @@ Autosub is a utility for automatic speech recognition and subtitle generation. I
 ### Usage
 
 ```
-$ autosub -h
-usage: autosub [-h] [-C CONCURRENCY] [-o OUTPUT] [-F FORMAT] [-S SRC_LANGUAGE]
-               [-D DST_LANGUAGE] [-K API_KEY] [--list-formats]
-               [--list-languages]
-               [source_path]
+$ autosub3 -h
+Usage:
+  autosub3.py -h | --help
+  autosub3.py --list-formats
+  autosub3.py --list-languages
+  autosub3.py [options] <source>
 
-positional arguments:
-  source_path           Path to the video or audio file to subtitle
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -C CONCURRENCY, --concurrency CONCURRENCY
-                        Number of concurrent API requests to make
-  -o OUTPUT, --output OUTPUT
-                        Output path for subtitles (by default, subtitles are
-                        saved in the same directory and name as the source
-                        path)
-  -F FORMAT, --format FORMAT
-                        Destination subtitle format
-  -S SRC_LANGUAGE, --src-language SRC_LANGUAGE
-                        Language spoken in source file
-  -D DST_LANGUAGE, --dst-language DST_LANGUAGE
-                        Desired language for the subtitles
-  -K API_KEY, --api-key API_KEY
-                        The Google Translate API key to be used. (Required for
-                        subtitle translation)
-  --list-formats        List all available subtitle formats
-  --list-languages      List all available source/destination languages
+Options:
+  -h --help                         Show this screen
+  -C --concurrency=<concurrency>    Number of concurrent API requests to make [default: 10]
+  -o --output=<output>              Output path for subtitles (by default, subtitles are saved in the same directory and name as the source path)
+  -F --format=<format>              Destination subtitle format [default: srt]
+  -S --src-language=<language>      Language spoken in source file [default: en]
+  --list-formats                    List all available subtitle formats
+  --list-languages                  List all available source languages
 ```
 
 ### License
