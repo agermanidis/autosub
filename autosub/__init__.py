@@ -1,18 +1,17 @@
-#!/usr/bin/env python
-from __future__ import absolute_import, print_function, unicode_literals
+#!/usr/bin/env python3
 import argparse
 import audioop
-from googleapiclient.discovery import build
 import json
 import math
 import multiprocessing
 import os
-import requests
 import subprocess
 import sys
 import tempfile
 import wave
 
+import requests
+from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
 from autosub.constants import (
@@ -53,7 +52,7 @@ class FLACConverter(object):
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac')
-            command = ["ffmpeg","-ss", str(start), "-t", str(end - start),
+            command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
@@ -113,7 +112,7 @@ class Translator(object):
                 q=[sentence]
             ).execute()
             if 'translations' in result and len(result['translations']) and \
-                'translatedText' in result['translations'][0]:
+                    'translatedText' in result['translations'][0]:
                 return result['translations'][0]['translatedText']
             return ""
 
@@ -159,7 +158,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
     n_channels = reader.getnchannels()
     chunk_duration = float(frame_width) / rate
 
-    n_chunks = int(math.ceil(reader.getnframes()*1.0 / frame_width))
+    n_chunks = int(math.ceil(reader.getnframes() * 1.0 / frame_width))
     energies = []
 
     for i in range(n_chunks):
@@ -264,13 +263,13 @@ def main():
 
 
 def generate_subtitles(
-    source_path,
-    output=None,
-    concurrency=DEFAULT_CONCURRENCY,
-    src_language=DEFAULT_SRC_LANGUAGE,
-    dst_language=DEFAULT_DST_LANGUAGE,
-    subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
-    api_key=None,
+        source_path,
+        output=None,
+        concurrency=DEFAULT_CONCURRENCY,
+        src_language=DEFAULT_SRC_LANGUAGE,
+        dst_language=DEFAULT_DST_LANGUAGE,
+        subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
+        api_key=None,
 ):
     audio_filename, audio_rate = extract_audio(source_path)
 

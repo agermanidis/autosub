@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-from __future__ import unicode_literals
+#!/usr/bin/env python3
 
 try:
     from setuptools import setup
@@ -19,17 +18,17 @@ long_description = (
 )
 
 setup(
-    name='autosub',
-    version='0.3.13',
+    name='autosub3',
+    version='1.0.0',
     description='Auto-generates subtitles for any video or audio file',
     long_description=long_description,
-    author='Anastasis Germanidis',
-    author_email='agermanidis@gmail.com',
-    url='https://github.com/agermanidis/autosub',
+    author='Henry Wu',
+    author_email='henry40408@gmail.com',
+    url='https://github.com/henry40408/autosub3',
     packages=['autosub'],
     entry_points={
         'console_scripts': [
-            'autosub = autosub:main',
+            'autosub3 = autosub:main',
         ],
     },
     install_requires=[
@@ -39,5 +38,6 @@ setup(
         'progressbar2>=3.34.3',
         'six>=1.11.0',
     ],
-    license=open("LICENSE").read()
+    license=open("LICENSE").read(),
+    python_requires='>=3.6.5'
 )
