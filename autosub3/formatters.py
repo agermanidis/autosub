@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import json
 
 import pysrt
-import six
 
 
 def srt_formatter(subtitles, show_before=0, show_after=0):
@@ -12,11 +8,11 @@ def srt_formatter(subtitles, show_before=0, show_after=0):
     for i, ((start, end), text) in enumerate(subtitles, start=1):
         item = pysrt.SubRipItem()
         item.index = i
-        item.text = six.text_type(text)
+        item.text = str(text)
         item.start.seconds = max(0, start - show_before)
         item.end.seconds = end + show_after
         sub_rip_file.append(item)
-    return '\n'.join(six.text_type(item) for item in sub_rip_file)
+    return '\n'.join(str(item) for item in sub_rip_file)
 
 
 def vtt_formatter(subtitles, show_before=0, show_after=0):
@@ -26,16 +22,11 @@ def vtt_formatter(subtitles, show_before=0, show_after=0):
 
 
 def json_formatter(subtitles):
-    subtitle_dicts = [
-        {
-            'start': start,
-            'end': end,
-            'content': text,
-        }
-        for ((start, end), text)
-        in subtitles
-    ]
-    return json.dumps(subtitle_dicts)
+    return json.dumps([{
+        'start': start,
+        'end': end,
+        'content': text
+    } for ((start, end), text) in subtitles])
 
 
 def raw_formatter(subtitles):
