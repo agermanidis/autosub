@@ -21,10 +21,10 @@ setup(
     author='Henry Wu',
     author_email='henry40408@gmail.com',
     url='https://github.com/henry40408/autosub3',
-    packages=['autosub'],
+    packages=['autosub3'],
     entry_points={
         'console_scripts': [
-            'autosub3 = autosub:main',
+            'autosub3 = autosub3:main',
         ],
     },
     install_requires=[
@@ -32,7 +32,6 @@ setup(
         'requests>=2.3.0',
         'pysrt>=1.0.1',
         'progressbar2>=3.34.3',
-        'six>=1.11.0',
         'docopt>=0.6.2',
         'ffmpeg-python>=0.1.11'
     ],

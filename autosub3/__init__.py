@@ -9,8 +9,10 @@ Usage:
 
 Options:
   -h --help                         Show this screen
+  -q --quiet                        Do NOT show progress bar
   -C --concurrency=<concurrency>    Number of concurrent API requests to make [default: 10]
-  -o --output=<output>              Output path for subtitles (by default, subtitles are saved in the same directory and name as the source path)
+  -o --output=<output>              Output path for subtitles (by default, subtitles are saved in the same directory and
+                                    name as the source path)
   -F --format=<format>              Destination subtitle format [default: srt]
   -S --src-language=<language>      Language spoken in source file [default: en]
   --list-formats                    List all available subtitle formats
@@ -22,19 +24,20 @@ import json
 import math
 import multiprocessing
 import os
-import subprocess
+import sys
 import tempfile
 import wave
+from json import JSONDecodeError
+from typing import List
 
 import docopt
 import ffmpeg
 import requests
-from progressbar import ProgressBar, Percentage, Bar, ETA
+from progressbar import Percentage, Bar, ETA
 
-from autosub.constants import (
-    LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
-)
-from autosub.formatters import FORMATTERS
+from autosub3.constants import LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL
+from autosub3.formatters import FORMATTERS
+from autosub3.optional_progressbar import OptionalProgressBar
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
@@ -42,12 +45,18 @@ DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 
 
-def percentile(arr, percent):
+def percentile(arr: List, percent: float):
+    if not arr:
+        raise RuntimeError('array cannot be empty')
+
     arr = sorted(arr)
     k = (len(arr) - 1) * percent
     f = math.floor(k)
     c = math.ceil(k)
-    if f == c: return arr[int(k)]
+
+    if f == c:
+        return arr[int(k)]
+
     d0 = arr[int(f)] * (c - k)
     d1 = arr[int(c)] * (k - f)
     return d0 + d1
@@ -65,11 +74,9 @@ class FLACConverter(object):
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac')
-            command = ['ffmpeg', '-ss', str(start), '-t', str(end - start),
-                       '-y', '-i', self.source_path,
-                       '-loglevel', 'error', temp.name]
-            use_shell = True if os.name == 'nt' else False
-            subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
+            stream = ffmpeg.input(self.source_path)
+            stream = ffmpeg.output(stream, temp.name, ss=start, t=end - start, loglevel='error')
+            ffmpeg.run(stream, overwrite_output=True)
             return temp.read()
 
         except KeyboardInterrupt:
@@ -99,7 +106,7 @@ class SpeechRecognizer(object):
                         line = json.loads(line)
                         line = line['result'][0]['alternative'][0]['transcript']
                         return line[:1].upper() + line[1:]
-                    except:
+                    except (IndexError, JSONDecodeError, KeyError):
                         # no result
                         continue
 
@@ -141,15 +148,14 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
     for energy in energies:
         is_silence = energy <= threshold
         max_exceeded = region_start and elapsed_time - region_start >= max_region_size
-
         if (max_exceeded or is_silence) and region_start:
             if elapsed_time - region_start >= min_region_size:
                 regions.append((region_start, elapsed_time))
                 region_start = None
-
         elif (not region_start) and (not is_silence):
             region_start = elapsed_time
         elapsed_time += chunk_duration
+
     return regions
 
 
@@ -181,12 +187,14 @@ def main():
         )
         return 1
 
+    verbose = not args['--quiet']
     try:
         subtitle_file_path = generate_subtitles(args['<source>'],
                                                 concurrency=int(args['--concurrency']),
                                                 src_language=args['--src-language'],
                                                 subtitle_file_format=args['--format'],
-                                                output=args['--output'])
+                                                output=args['--output'],
+                                                verbose=verbose)
         print('Subtitles file created at {subtitle_file_path}'.format(subtitle_file_path=subtitle_file_path))
     except KeyboardInterrupt:
         return 1
@@ -198,37 +206,38 @@ def generate_subtitles(source_path, *,
                        concurrency=DEFAULT_CONCURRENCY,
                        src_language=DEFAULT_SRC_LANGUAGE,
                        subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
-                       output=None):
+                       output=None,
+                       verbose=False):
     audio_filename, audio_rate = extract_audio(source_path)
-
     regions = find_speech_regions(audio_filename)
-
     pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
-    recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
+    recognizer = SpeechRecognizer(language=src_language,
+                                  rate=audio_rate,
                                   api_key=GOOGLE_SPEECH_API_KEY)
 
     transcripts = []
     if regions:
+        widgets = ['Converting speech regions to FLAC files: ', Percentage(), ' ', Bar(), ' ', ETA()]
+        p_bar = OptionalProgressBar(verbose=verbose, widgets=widgets, maxval=len(regions))
+
         try:
-            widgets = ['Converting speech regions to FLAC files: ', Percentage(), ' ', Bar(), ' ',
-                       ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+            p_bar.start()
             extracted_regions = []
             for i, extracted_region in enumerate(pool.imap(converter, regions)):
                 extracted_regions.append(extracted_region)
-                pbar.update(i)
-            pbar.finish()
+                p_bar.update(i)
+            p_bar.finish()
 
             widgets = ['Performing speech recognition: ', Percentage(), ' ', Bar(), ' ', ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+            p_bar = OptionalProgressBar(verbose=verbose, widgets=widgets, maxval=len(regions)).start()
 
             for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
                 transcripts.append(transcript)
-                pbar.update(i)
-            pbar.finish()
+                p_bar.update(i)
+            p_bar.finish()
         except KeyboardInterrupt:
-            pbar.finish()
+            p_bar.finish()
             pool.terminate()
             pool.join()
             print('Cancelling transcription')
@@ -238,18 +247,17 @@ def generate_subtitles(source_path, *,
     formatter = FORMATTERS.get(subtitle_file_format)
     formatted_subtitles = formatter(timed_subtitles)
 
-    dest = output
-
-    if not dest:
+    destination = output
+    if not destination:
         base, ext = os.path.splitext(source_path)
-        dest = '{base}.{format}'.format(base=base, format=subtitle_file_format)
+        destination = '{base}.{format}'.format(base=base, format=subtitle_file_format)
 
-    with open(dest, 'wb') as f:
+    with open(destination, 'wb') as f:
         f.write(formatted_subtitles.encode('utf-8'))
 
     os.remove(audio_filename)
 
-    return dest
+    return destination
 
 
 if __name__ == '__main__':
