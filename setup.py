@@ -33,7 +33,8 @@ setup(
         'pysrt>=1.0.1',
         'progressbar2>=3.34.3',
         'six>=1.11.0',
-        'docopt>=0.6.2'
+        'docopt>=0.6.2',
+        'ffmpeg-python>=0.1.11'
     ],
     license=open("LICENSE").read(),
     python_requires='>=3.6.5'
