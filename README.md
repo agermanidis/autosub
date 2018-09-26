@@ -39,8 +39,13 @@ optional arguments:
                         subtitle translation)
   --list-formats        List all available subtitle formats
   --list-languages      List all available source/destination languages
+  -d DIR_PATH, --dir DIR_PATH  
+                        Check for files in subdirectories
+  -i MEDIA_FORMAT, --input-format MEDIA_FORMAT
+                        Input video or audio file format to subtitle"
 ```
 
+    
 ### License
 
 MIT
