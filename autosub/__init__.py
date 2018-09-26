@@ -25,6 +25,7 @@ DEFAULT_CONCURRENCY = 10
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 
+
 def percentile(arr, percent):
     arr = sorted(arr)
     k = (len(arr) - 1) * percent
@@ -81,7 +82,7 @@ class SpeechRecognizer(object):
                 except requests.exceptions.ConnectionError:
                     continue
 
-                for line in resp.content.decode().split("\n"):
+                for line in resp.content.decode('utf-8').split("\n"):
                     try:
                         line = json.loads(line)
                         line = line['result'][0]['alternative'][0]['transcript']
@@ -186,6 +187,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
         elapsed_time += chunk_duration
     return regions
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('source_path', help="Path to the video or audio file to subtitle", nargs='?')
@@ -203,12 +205,12 @@ def main():
     parser.add_argument('-K', '--api-key',
                         help="The Google Translate API key to be used. (Required for subtitle translation)")
     parser.add_argument('--list-formats', help="List all available subtitle formats", action='store_true')
+    parser.add_argument('--list-languages', help="List all available source/destination languages", action='store_true')
     parser.add_argument('-d','--dir', help="check for files in subdirectories recursively", action='store_true')
     parser.add_argument('-i', '--input-format', help="Input video or audio file format to subtitle")
-    parser.add_argument('--list-languages', help="List all available source/destination languages", action='store_true')
-
-    args = parser.parse_args()
     
+    args = parser.parse_args()
+
     if args.list_formats:
         print("List of formats:")
         for subtitle_format in FORMATTERS.keys():
@@ -245,7 +247,7 @@ def main():
     if not args.source_path:
         print("Error: You need to specify a source path.")
         return 1
-    
+
     if args.dir and not args.input_format:
         print("Error: You need to specify an input format when you specify a directory.")
         return 1
@@ -257,20 +259,8 @@ def main():
     if not args.dir and not os.path.isfile(args.source_path):
         print("Error: You must use the --dir for directories.")
         return 1        
-       
-    kwparams = {
-        'source_path' : None,
-        'concurrency' : args.concurrency,
-        'src_language' : args.src_language,
-        'dst_language' : args.dst_language,
-        'api_key' : args.api_key,
-        'subtitle_file_format' : args.format,
-        'output' : args.output,
 
-    }
-    
     try:
-
         if args.dir:
             for root, dirs, files in os.walk(args.source_path):
                 for name in files:
@@ -280,18 +270,31 @@ def main():
 
                     if not check_exists_subtitle(mediaFile,subtitle_extension) and is_right_format:
                         print("Generating subtitles for '{}'".format(mediaFile))
-                        kwparams.update({'source_path': mediaFile})
-                        subtitle_file_path = generate_subtitles(**kwparams)
+                        subtitle_file_path = generate_subtitles(              
+                            source_path=mediaFile,
+                            concurrency=args.concurrency,
+                            src_language=args.src_language,
+                            dst_language=args.dst_language,
+                            api_key=args.api_key,
+                            subtitle_file_format=args.format,
+                            output=args.output,
+                        )
                     
                     elif check_exists_subtitle(mediaFile,subtitle_extension) and is_right_format :
                         print("There is already a subtitle for '{}'".format(mediaFile))
         else:
-            kwparams.update({'source_path': args.source_path})
-            subtitle_file_path = generate_subtitles(**kwparams)       
+            subtitle_file_path = generate_subtitles(
+                source_path=args.source_path,
+                concurrency=args.concurrency,
+                src_language=args.src_language,
+                dst_language=args.dst_language,
+                api_key=args.api_key,
+                subtitle_file_format=args.format,
+                output=args.output,
+            )
             print("Subtitles file created at {}".format(subtitle_file_path))
     except KeyboardInterrupt:
         return 1
-
 
     return 0
 
