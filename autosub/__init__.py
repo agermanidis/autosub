@@ -200,8 +200,7 @@ def main():
                         default=DEFAULT_SUBTITLE_FORMAT)
     parser.add_argument('-S', '--src-language', help="Language spoken in source file",
                         default=DEFAULT_SRC_LANGUAGE)
-    parser.add_argument('-D', '--dst-language', help="Desired language for the subtitles",
-                        default=DEFAULT_DST_LANGUAGE)
+    parser.add_argument('-D', '--dst-language', help="Desired language for the subtitles")
     parser.add_argument('-K', '--api-key',
                         help="The Google Translate API key to be used. (Required for subtitle translation)")
     parser.add_argument('--list-formats', help="List all available subtitle formats", action='store_true')
@@ -235,7 +234,14 @@ def main():
         )
         return 1
 
-    if args.dst_language not in LANGUAGE_CODES.keys():
+    if args.dst_language is None:
+        is_dst_language_provided = False
+        dst_language = DEFAULT_DST_LANGUAGE
+    else:
+        is_dst_language_provided = True
+        dst_language = args.dst_language
+
+    if dst_language not in LANGUAGE_CODES.keys():
         print(
             "Destination language not supported. "
             "Run with --list-languages to see all supported languages."
@@ -251,10 +257,11 @@ def main():
             source_path=args.source_path,
             concurrency=args.concurrency,
             src_language=args.src_language,
-            dst_language=args.dst_language,
+            dst_language=dst_language,
             api_key=args.api_key,
             subtitle_file_format=args.format,
             output=args.output,
+            is_dst_language_provided=is_dst_language_provided,
         )
         print("Subtitles file created at {}".format(subtitle_file_path))
     except KeyboardInterrupt:
@@ -271,6 +278,7 @@ def generate_subtitles(
     dst_language=DEFAULT_DST_LANGUAGE,
     subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
     api_key=None,
+    is_dst_language_provided=False
 ):
     audio_filename, audio_rate = extract_audio(source_path)
 
@@ -300,8 +308,7 @@ def generate_subtitles(
                 transcripts.append(transcript)
                 pbar.update(i)
             pbar.finish()
-
-            if not is_same_language(src_language, dst_language):
+            if not is_same_language(src_language, dst_language) and is_dst_language_provided:
                 if api_key:
                     google_translate_api_key = api_key
                     translator = Translator(dst_language, google_translate_api_key,
