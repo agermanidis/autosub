@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-from __future__ import unicode_literals
+#!/usr/bin/env python3
 
 try:
     from setuptools import setup
@@ -20,7 +19,7 @@ long_description = (
 
 setup(
     name='autosub',
-    version='0.4.0',
+    version='1.0.0', # should to update version code?   zombie110year
     description='Auto-generates subtitles for any video or audio file',
     long_description=long_description,
     author='Anastasis Germanidis',
