@@ -19,10 +19,10 @@ import requests
 from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
-from autosub.constants import (
+from .constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
-from autosub.formatters import FORMATTERS
+from .formatters import FORMATTERS
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
