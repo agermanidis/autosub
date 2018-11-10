@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import wave
+import platform
 
 import requests
 from googleapiclient.discovery import build
@@ -147,6 +148,9 @@ def which(program):
         Checks whether a file is executable.
         """
         return os.path.isfile(file_path) and os.access(file_path, os.X_OK)
+    if "nt" == platform.os.name:        # windows can't execute program without .exe extension
+        if ".exe" != program[-4:]:
+            program = program + ".exe"
 
     fpath, _ = os.path.split(program)
     if fpath:
