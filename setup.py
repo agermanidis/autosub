@@ -28,7 +28,7 @@ setup(
     packages=['autosub'],
     entry_points={
         'console_scripts': [
-            'autosub = autosub:main',
+            'autosub = autosub.__main__:main',
         ],
     },
     install_requires=[
