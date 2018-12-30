@@ -93,15 +93,10 @@ class SpeechRecognizer(object):
 
                 for line in resp.content.decode('utf-8').split("\n"):
                     try:
-                        if line:
-                            line = json.loads(line)
-                            line = line['result'][0]['alternative'][0]['transcript']
-                            line = line[:1].upper() + line[1:]
-                        else:
-                            line = None
-
-                        return line
-                    except IndexError:
+                        line = json.loads(line)
+                        line = line['result'][0]['alternative'][0]['transcript']
+                        return line[:1].upper() + line[1:]
+                    except (IndexError, ValueError):
                         # no result
                         continue
         except KeyboardInterrupt:
