@@ -12,13 +12,13 @@ with open("autosub/metadata.py") as metafile:
     exec(metafile.read(), metadata)
 
 setup(
-    name=metadata['name'],
-    version=metadata['version'],
-    description=metadata['description'],
-    long_description=metadata['long_description'],
-    author=metadata['author'],
-    author_email=metadata['author_email'],
-    url=metadata['homepage'],
+    name=metadata['NAME'],
+    version=metadata['VERSION'],
+    description=metadata['DESCRIPTION'],
+    long_description=metadata['LONG_DESCRIPTION'],
+    author=metadata['AUTHOR'],
+    author_email=metadata['AUTHOR_EMAIL'],
+    url=metadata['HOMEPAGE'],
     packages=['autosub'],
     entry_points={
         'console_scripts': [

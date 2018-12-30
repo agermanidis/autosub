@@ -7,15 +7,15 @@ import json
 import math
 import multiprocessing
 import os
-import requests
 import subprocess
 import sys
 import tempfile
 import wave
+import requests
 
-from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
-from autosub.metadata import *
+from googleapiclient.discovery import build
+from autosub import metadata
 from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
     DEFAULT_CONCURRENCY, DEFAULT_SRC_LANGUAGE, DEFAULT_DST_LANGUAGE, DEFAULT_SUBTITLE_FORMAT
@@ -82,7 +82,7 @@ class SpeechRecognizer(object):
 
     def __call__(self, data):
         try:
-            for i in range(self.retries):
+            for _ in range(self.retries):
                 url     = GOOGLE_SPEECH_API_URL.format(lang=self.language, key=self.api_key)
                 headers = {"Content-Type": "audio/x-flac; rate=%d" % self.rate}
 
@@ -93,10 +93,15 @@ class SpeechRecognizer(object):
 
                 for line in resp.content.decode('utf-8').split("\n"):
                     try:
-                        line = json.loads(line)
-                        line = line['result'][0]['alternative'][0]['transcript']
-                        return line[:1].upper() + line[1:]
-                    except:
+                        if line:
+                            line = json.loads(line)
+                            line = line['result'][0]['alternative'][0]['transcript']
+                            line = line[:1].upper() + line[1:]
+                        else:
+                            line = None
+
+                        return line
+                    except IndexError:
                         # no result
                         continue
         except KeyboardInterrupt:
@@ -136,10 +141,10 @@ def which(program):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
     if os.name == "nt":
-        if ".exe" != program[-4:]:
+        if program[-4:] != ".exe":
             program = program + ".exe"
 
-    fpath, fname = os.path.split(program)
+    fpath, _ = os.path.split(program)
     if fpath:
         if is_exe(program):
             return program
@@ -183,7 +188,7 @@ def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_reg
     n_chunks       = int(math.ceil(reader.getnframes()*1.0 / frame_width))
     energies       = []
 
-    for i in range(n_chunks):
+    for _ in range(n_chunks):
         chunk = reader.readframes(frame_width)
         energies.append(audioop.rms(chunk, sample_width * n_channels))
 
@@ -269,8 +274,8 @@ def generate_subtitles(source_path, output=None, concurrency=DEFAULT_CONCURRENCY
     dest = output
 
     if not dest:
-        base, ext = os.path.splitext(source_path)
-        dest      = "{base}.{locale}.{format}".format(base=base, locale=dst_language, format=subtitle_file_format)
+        base = os.path.splitext(source_path)[0]
+        dest = "{base}.{locale}.{format}".format(base=base, locale=dst_language, format=subtitle_file_format)
 
     with open(dest, 'wb') as output_file:
         output_file.write(formatted_subtitles.encode("utf-8"))
@@ -302,9 +307,9 @@ def validate(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        prog=metadata.name,
+        prog=metadata.NAME,
         usage='\n  %(prog)s [options] <source_path>',
-        description=metadata.description,
+        description=metadata.DESCRIPTION,
         formatter_class=ConsoleHelpFormatter,
         add_help=False
     )
@@ -368,7 +373,7 @@ def main():
     ogroup.add_argument(
         '-V', '--version',
         action='version',
-        version='%(prog)s ' + metadata.version + ' by ' + metadata.author + ' <' + metadata.author_email + '>',
+        version='%(prog)s ' + metadata.VERSION + ' by ' + metadata.AUTHOR + ' <' + metadata.AUTHOR_EMAIL + '>',
         help="Show %(prog)s version and exit."
     )
 
@@ -389,7 +394,7 @@ def main():
     if args.list_formats:
         print("List of formats:")
 
-        for subtitle_format in FORMATTERS.keys():
+        for subtitle_format in FORMATTERS:
             print("{format}".format(format=subtitle_format))
 
         return 0
