@@ -7,3 +7,7 @@ dist/
 MANIFEST
 *#*
 .vscode
+/.vs/autosub/v15/.suo
+/.vs
+/autosub.sln
+/autosub.pyproj

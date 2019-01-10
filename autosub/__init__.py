@@ -163,6 +163,18 @@ def which(program):
     return None
 
 
+def ffmpeg_check():
+    """
+    Return the ffmpeg executable name. "null" returned when no executable exsits.
+    """
+    if which("ffmpeg"):
+        return "ffmpeg"
+    elif which("ffmpeg.exe"):
+        return "ffmpeg.exe"
+    else:
+        return None
+
+
 def extract_audio(filename, channels=1, rate=16000):
     """
     Extract audio from an input file to a temporary WAV file.
@@ -171,10 +183,10 @@ def extract_audio(filename, channels=1, rate=16000):
     if not os.path.isfile(filename):
         print("The given file does not exist: {}".format(filename))
         raise Exception("Invalid filepath: {}".format(filename))
-    if not which("ffmpeg"):
+    if not ffmpeg_check():
         print("ffmpeg: Executable not found on machine.")
         raise Exception("Dependency not found: ffmpeg")
-    command = ["ffmpeg", "-y", "-i", filename,
+    command = [ffmpeg_check(), "-y", "-i", filename,
                "-ac", str(channels), "-ar", str(rate),
                "-loglevel", "error", temp.name]
     use_shell = True if os.name == "nt" else False
