@@ -107,9 +107,38 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class Translator(object): # pylint: disable=too-few-public-methods
+class TranslatorWithoutApikey(object): # pylint: disable=too-few-public-methods
     """
-    Class for translating a sentence from a one language to another.
+    Class for translating a sentence from a one language to another using free api.
+    """
+    def __init__(self, src, dst):
+        self.url = "".join(
+            ["https://translate.googleapis.com/translate_a/single?client=gtx&sl=", src, "&tl=", dst, "&dt=t&q="])
+
+    def __call__(self, sentence):
+        try:
+            if not sentence:
+                return None
+
+            self.url += sentence
+            
+            result = requests.get(self.url)
+
+            result = json.loads(result.content.decode('utf-8'))
+            result = result[0][0][0]
+            
+            if result:
+                return result
+            else:
+                return None
+
+        except (requests.exceptions.ConnectionError, KeyboardInterrupt, ValueError, IndexError):            
+            return None
+
+
+class TranslatorWithApikey(object): # pylint: disable=too-few-public-methods
+    """
+    Class for translating a sentence from a one language to another using api key.
     """
     def __init__(self, language, api_key, src, dst):
         self.language = language
@@ -276,25 +305,24 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
 
             if src_language.split("-")[0] != dst_language.split("-")[0]:
                 if api_key:
-                    google_translate_api_key = api_key
-                    translator = Translator(dst_language, google_translate_api_key,
+                    translator = TranslatorWithApikey(dst_language,
+                                            api_key,
                                             dst=dst_language,
                                             src=src_language)
-                    prompt = "Translating from {0} to {1}: ".format(src_language, dst_language)
-                    widgets = [prompt, Percentage(), ' ', Bar(), ' ', ETA()]
-                    pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-                    translated_transcripts = []
-                    for i, transcript in enumerate(pool.imap(translator, transcripts)):
-                        translated_transcripts.append(transcript)
-                        pbar.update(i)
-                    pbar.finish()
-                    transcripts = translated_transcripts
+                    print("Using free translation API...")
                 else:
-                    print(
-                        "Error: Subtitle translation requires specified Google Translate API key. "
-                        "See --help for further information."
-                    )
-                    return 1
+                    translator = TranslatorWithoutApikey(src_language, dst_language)
+                    print("Using specific translation API...")
+                    
+                prompt = "Translating from {0} to {1}: ".format(src_language, dst_language)
+                widgets = [prompt, Percentage(), ' ', Bar(), ' ', ETA()]
+                pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+                translated_transcripts = []
+                for i, transcript in enumerate(pool.imap(translator, transcripts)):
+                    translated_transcripts.append(transcript)
+                    pbar.update(i)
+                pbar.finish()
+                transcripts = translated_transcripts
 
         except KeyboardInterrupt:
             pbar.finish()
@@ -372,8 +400,9 @@ def main():
     parser.add_argument('-D', '--dst-language', help="Desired language for the subtitles",
                         default=DEFAULT_DST_LANGUAGE)
     parser.add_argument('-K', '--api-key',
-                        help="The Google Translate API key to be used. \
-                        (Required for subtitle translation)")
+                        help="The Google Translate API key to be used \
+                        for subtitle translation.(or leave it alone to \
+                        use default free api)")
     parser.add_argument('--list-formats', help="List all available subtitle formats",
                         action='store_true')
     parser.add_argument('--list-languages', help="List all available source/destination languages",
