@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1045</width>
-    <height>420</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,9 +32,12 @@
      <rect>
       <x>550</x>
       <y>230</y>
-      <width>161</width>
-      <height>32</height>
+      <width>97</width>
+      <height>34</height>
      </rect>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QComboBox::AdjustToContents</enum>
     </property>
    </widget>
    <widget class="QLabel" name="labelSelectLang">
@@ -127,6 +130,12 @@
       <height>32</height>
      </rect>
     </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
@@ -160,19 +169,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="labelProgressFileIndex">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>340</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QPushButton" name="bRemoveFile">
     <property name="geometry">
      <rect>
@@ -184,6 +180,19 @@
     </property>
     <property name="text">
      <string>Remove file(s)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelProgressFileIndex">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>330</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
