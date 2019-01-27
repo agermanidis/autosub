@@ -320,6 +320,8 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         output_file.write(formatted_subtitles.encode("utf-8"))
 
     os.remove(audio_filename)
+    pool.terminate()
+    pool.join()
 
     return dest
 
