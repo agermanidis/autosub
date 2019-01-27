@@ -1,9 +1,9 @@
---- __init__.py	2019-01-27 12:01:21.639775227 +0700
-+++ __init__-pyQtAutosub.py	2019-01-27 11:59:39.901780854 +0700
+--- __init__.py	2019-01-27 12:48:26.556618972 +0700
++++ __init__-new.py	2019-01-27 12:47:31.702622006 +0700
 @@ -220,6 +220,13 @@
          elapsed_time += chunk_duration
      return regions
- 
+
 +def percentage(currentval, maxval):
 +    return 100 * currentval / float(maxval)
 +
@@ -11,7 +11,7 @@
 +def output_progress(listener_progress, str_task, progress_percent):
 +    if listener_progress != None:
 +        listener_progress(str_task,progress_percent)
- 
+
  def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
          source_path,
 @@ -229,6 +236,7 @@
@@ -40,17 +40,25 @@
 +                progress_percent= percentage(i, len_regions)
 +                output_progress(listener_progress,str_task_1,progress_percent)
              pbar.finish()
- 
+
 -            widgets = ["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]
 +            str_task_2 = "Performing speech recognition: "
 +            widgets = [str_task_2, Percentage(), ' ', Bar(), ' ', ETA()]
              pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
- 
+
              for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
                  transcripts.append(transcript)
                  pbar.update(i)
 +                progress_percent= percentage(i, len_regions)
 +                output_progress(listener_progress,str_task_2,progress_percent)
              pbar.finish()
- 
+
              if src_language.split("-")[0] != dst_language.split("-")[0]:
+@@ -305,6 +320,8 @@
+         output_file.write(formatted_subtitles.encode("utf-8"))
+
+     os.remove(audio_filename)
++    pool.terminate()
++    pool.join()
+
+     return dest
