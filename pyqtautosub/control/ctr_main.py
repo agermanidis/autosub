@@ -106,29 +106,32 @@ class Ctr_Main():
             self.objGUI.bRemoveFile.setEnabled(True)
 
     def listenerBExec(self):
-        #execute the main process in separate thread to avoid gui lock
+        if not MyUtil.is_internet_connected():
+            self.showErrorMessage("Error! You need to have internet connection to use pyQtAutosub!")
+        else:
+            #extracts the two letter lang_code from the string on language selection
+            selectedLanguage = self.objGUI.cbSelectLang.currentText()
+            indexDash = selectedLanguage.index("-")
+            langCode = selectedLanguage[:indexDash-1]
 
-        #extracts the two letter lang_code from the string on language selection
-        selectedLanguage = self.objGUI.cbSelectLang.currentText()
-        indexDash = selectedLanguage.index("-")
-        langCode = selectedLanguage[:indexDash-1]
+            listFiles = []
+            for i in range(self.objGUI.qlwListFilesSelected.count()):
+                listFiles.append(str(self.objGUI.qlwListFilesSelected.item(i).text()))
 
-        listFiles = []
-        for i in range(self.objGUI.qlwListFilesSelected.count()):
-            listFiles.append(str(self.objGUI.qlwListFilesSelected.item(i).text()))
+            outputFolder = self.objGUI.qleOutputFolder.text()
+            objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode)
 
-        outputFolder = self.objGUI.qleOutputFolder.text()
-        objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode)
-        self.wt = Worker_Thread(objParamAutosub)
+            #execute the main process in separate thread to avoid gui lock
+            self.wt = Worker_Thread(objParamAutosub)
 
-        #connect signals from work thread to gui controls
-        self.wt.signalLockGUI.connect(self.lockButtonsDuringOperation)
-        self.wt.signalResetGUI.connect(self.resetGUI)
-        self.wt.signalProgress.connect(self.listenerProgress)
-        self.wt.signalProgressFileYofN.connect(self.updateProgressFileYofN)
-        self.wt.signalErrorMsg.connect(self.showErrorMessage)
+            #connect signals from work thread to gui controls
+            self.wt.signalLockGUI.connect(self.lockButtonsDuringOperation)
+            self.wt.signalResetGUI.connect(self.resetGUI)
+            self.wt.signalProgress.connect(self.listenerProgress)
+            self.wt.signalProgressFileYofN.connect(self.updateProgressFileYofN)
+            self.wt.signalErrorMsg.connect(self.showErrorMessage)
 
-        self.wt.start()
+            self.wt.start()
 
     def listenerBRemove(self):
         indexSelected = self.objGUI.qlwListFilesSelected.currentRow()
