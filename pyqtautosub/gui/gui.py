@@ -20,8 +20,6 @@
 '''
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ctr_main import Ctr_Main
-import multiprocessing
 
 class Ui_window(object):
     def setupUi(self, window):
@@ -86,8 +84,6 @@ class Ui_window(object):
         self.statusbar.setObjectName("statusbar")
         window.setStatusBar(self.statusbar)
 
-        self.ctrMain = Ctr_Main(self)
-
         self.retranslateUi(window)
         QtCore.QMetaObject.connectSlotsByName(window)
 
@@ -101,13 +97,3 @@ class Ui_window(object):
         self.bSelectOutputFolder.setText(_translate("window", "Output Location"))
         self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
         self.groupBox.setTitle(_translate("window", "&List of files to generate subtitles/transcribe"))
-
-if __name__ == "__main__":
-    import sys
-    multiprocessing.freeze_support()
-    app = QtWidgets.QApplication(sys.argv)
-    window = QtWidgets.QMainWindow()
-    ui = Ui_window()
-    ui.setupUi(window)
-    window.show()
-    sys.exit(app.exec_())

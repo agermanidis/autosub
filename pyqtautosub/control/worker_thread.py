@@ -16,9 +16,9 @@ from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
 from pathlib import Path
 from autosub import generate_subtitles
-from srtparser import SRTParser
-from param_autosub import Param_Autosub
-from util import MyUtil
+from pyqtautosub.util.srtparser import SRTParser
+from pyqtautosub.model.param_autosub import Param_Autosub
+from pyqtautosub.util.util import MyUtil
 import os
 
 

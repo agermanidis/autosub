@@ -18,17 +18,27 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from pathlib import Path
 from autosub import generate_subtitles
-from srtparser import SRTParser
-from param_autosub import Param_Autosub
-from util import MyUtil
-from worker_thread import Worker_Thread
+from pyqtautosub.model.param_autosub import Param_Autosub
+from pyqtautosub.util.util import MyUtil
+from pyqtautosub.control.worker_thread import Worker_Thread
+from pyqtautosub.gui.gui import Ui_window
+import multiprocessing
 import os
 
 class Ctr_Main():
 
-    def __init__(self, objGUI):
-        self.objGUI = objGUI
+    def __init__(self):
+        multiprocessing.freeze_support()
+        import sys
+        app = QtWidgets.QApplication(sys.argv)
+        window = QtWidgets.QMainWindow()
+        self.objGUI = Ui_window()
+        self.objGUI.setupUi(window)
         self.initGUI()
+        window.show()
+        sys.exit(app.exec_())
+
+
 
     def initGUI(self):
 
@@ -146,3 +156,7 @@ class Ctr_Main():
         msg.setWindowTitle("Error!")
         msg.setText(errorMsg)
         msg.exec()
+
+if __name__ == '__main__':
+    multiprocessing.freeze_support()
+    sys.exit(main())
