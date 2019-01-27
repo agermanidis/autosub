@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'pyQtAutosub.ui'
+# Form implementation generated from reading ui file 'gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.dev1812231618
 #
 # WARNING! All changes made in this file will be lost!
+
 '''
    (C) 2019 Raryel C. Souza
     This program is free software: you can redistribute it and/or modify
@@ -31,9 +32,9 @@ class Ui_window(object):
         self.bSelectMedia.setGeometry(QtCore.QRect(10, 10, 141, 34))
         self.bSelectMedia.setObjectName("bSelectMedia")
         self.cbSelectLang = QtWidgets.QComboBox(self.centralwidget)
-        self.cbSelectLang.setGeometry(QtCore.QRect(550, 230, 111, 32))
-        self.cbSelectLang.setObjectName("cbSelectLang")
+        self.cbSelectLang.setGeometry(QtCore.QRect(550, 230, 97, 34))
         self.cbSelectLang.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
+        self.cbSelectLang.setObjectName("cbSelectLang")
         self.labelSelectLang = QtWidgets.QLabel(self.centralwidget)
         self.labelSelectLang.setGeometry(QtCore.QRect(400, 230, 141, 31))
         self.labelSelectLang.setObjectName("labelSelectLang")
@@ -57,8 +58,9 @@ class Ui_window(object):
         self.bSelectOutputFolder.setObjectName("bSelectOutputFolder")
         self.qleOutputFolder = QtWidgets.QLineEdit(self.centralwidget)
         self.qleOutputFolder.setGeometry(QtCore.QRect(160, 180, 861, 32))
-        self.qleOutputFolder.setObjectName("qleOutputFolder")
+        self.qleOutputFolder.setText("")
         self.qleOutputFolder.setReadOnly(True)
+        self.qleOutputFolder.setObjectName("qleOutputFolder")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(160, 10, 871, 161))
         self.groupBox.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
@@ -79,10 +81,19 @@ class Ui_window(object):
         self.menubar = QtWidgets.QMenuBar(window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1045, 32))
         self.menubar.setObjectName("menubar")
+        self.menuAbout = QtWidgets.QMenu(self.menubar)
+        self.menuAbout.setObjectName("menuAbout")
         window.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(window)
         self.statusbar.setObjectName("statusbar")
         window.setStatusBar(self.statusbar)
+        self.actionLicense = QtWidgets.QAction(window)
+        self.actionLicense.setObjectName("actionLicense")
+        self.actionAbout_pyQtAutosub = QtWidgets.QAction(window)
+        self.actionAbout_pyQtAutosub.setObjectName("actionAbout_pyQtAutosub")
+        self.menuAbout.addAction(self.actionLicense)
+        self.menuAbout.addAction(self.actionAbout_pyQtAutosub)
+        self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(window)
         QtCore.QMetaObject.connectSlotsByName(window)
@@ -95,5 +106,8 @@ class Ui_window(object):
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
         self.bOpenOutputFolder.setText(_translate("window", "Open Output Folder"))
         self.bSelectOutputFolder.setText(_translate("window", "Output Location"))
-        self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
         self.groupBox.setTitle(_translate("window", "&List of files to generate subtitles/transcribe"))
+        self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
+        self.menuAbout.setTitle(_translate("window", "Abo&ut"))
+        self.actionLicense.setText(_translate("window", "License"))
+        self.actionAbout_pyQtAutosub.setText(_translate("window", "About pyQtAutosub"))

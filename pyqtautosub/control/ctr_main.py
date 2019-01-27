@@ -62,6 +62,9 @@ class Ctr_Main():
         self.objGUI.bOpenOutputFolder.clicked.connect(self.listenerBOpenOutputFolder)
         self.objGUI.bSelectMedia.clicked.connect(self.listenerBSelectMedia)
 
+        self.objGUI.actionLicense.triggered.connect(self.listenerBLicense)
+        self.objGUI.actionAbout_pyQtAutosub.triggered.connect(self.listenerBAboutpyQtAutosub)
+
     def resetGUI(self):
         self.objGUI.qlwListFilesSelected.clear()
         self.objGUI.bConvert.setEnabled(False)
@@ -151,6 +154,39 @@ class Ctr_Main():
             MyUtil.open_file(pathOutputFolder)
         else:
             self.showErrorMessage("Error! Invalid output folder.")
+
+    def listenerBLicense(self):
+        self.showInfoMessage("<html><body><a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GPL License</a><br><br>"
+                + "Copyright (C) 2019 Raryel C. Souza <raryel.costa at gmail.com><br>"
+                + "This program is free software: you can redistribute it and/or modify<br>"
+                + "it under the terms of the GNU General Public License as published by<br>"
+                + "the Free Software Foundation, either version 3 of the License, or<br>"
+                + " any later version<br>"
+                + "<br>"
+                + "This program is distributed in the hope that it will be useful,<br>"
+                + "but WITHOUT ANY WARRANTY; without even the implied warranty of<br>"
+                + "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>"
+                + "GNU General Public License for more details.<br>"
+                + "<br>"
+                + "You should have received a copy of the GNU General Public License<br>"
+                + "along with this program.  If not, see <https://www.gnu.org/licenses/>."
+                + "</body></html>", "License")
+
+    def listenerBAboutpyQtAutosub(self):
+        self.showInfoMessage("<html><body>"
+                + "pyQtAutosub is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
+                + "<a href=\"https://github.com/agermanidis/autosub\">Autosub</a> is a command-line utility for auto-generating subtitles for any video/audio file<br>"
+                + "using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
+                + "</body></html>", "About pyQtAutosub")
+
+
+    def showInfoMessage(self, info_msg, title):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+
+        msg.setWindowTitle(title)
+        msg.setText(info_msg)
+        msg.exec()
 
     def showErrorMessage(self, errorMsg):
         msg = QMessageBox()
