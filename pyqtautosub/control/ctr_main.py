@@ -17,10 +17,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from pathlib import Path
-from autosub import generate_subtitles
 from pyqtautosub.model.param_autosub import Param_Autosub
 from pyqtautosub.util.util import MyUtil
 from pyqtautosub.control.worker_thread import Worker_Thread
+from pyqtautosub.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pyqtautosub.gui.gui import Ui_window
 import multiprocessing
 import os
@@ -55,8 +55,11 @@ class Ctr_Main():
 
         self.objGUI.bRemoveFile.setEnabled(False)
 
+        self.objGUI.bCancel.hide()
+
         #button listeners
         self.objGUI.bConvert.clicked.connect(self.listenerBExec)
+        self.objGUI.bCancel.clicked.connect(self.listenerBCancel)
         self.objGUI.bRemoveFile.clicked.connect(self.listenerBRemove)
         self.objGUI.bSelectOutputFolder.clicked.connect(self.listenerBSelectOuputFolder)
         self.objGUI.bOpenOutputFolder.clicked.connect(self.listenerBOpenOutputFolder)
@@ -66,6 +69,9 @@ class Ctr_Main():
         self.objGUI.actionAbout_pyQtAutosub.triggered.connect(self.listenerBAboutpyQtAutosub)
 
     def resetGUI(self):
+
+        self.resetProgressBar()
+
         self.objGUI.qlwListFilesSelected.clear()
         self.objGUI.bConvert.setEnabled(False)
         self.objGUI.bRemoveFile.setEnabled(False)
@@ -73,6 +79,8 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.setEnabled(True)
         self.objGUI.bSelectOutputFolder.setEnabled(True)
         self.objGUI.cbSelectLang.setEnabled(True)
+
+        self.objGUI.bCancel.hide()
 
     def lockButtonsDuringOperation(self):
         self.objGUI.bConvert.setEnabled(False)
@@ -86,6 +94,17 @@ class Ctr_Main():
         self.objGUI.labelCurrentOperation.setText(str)
         self.objGUI.progressBar.setProperty("value", percent)
         QtCore.QCoreApplication.processEvents()
+
+    def setProgressBarIndefinite(self):
+        self.objGUI.progressBar.setMinimum(0)
+        self.objGUI.progressBar.setMaximum(0)
+        self.objGUI.progressBar.setValue(0)
+
+    def resetProgressBar(self):
+        self.objGUI.progressBar.setMinimum(0)
+        self.objGUI.progressBar.setMaximum(100)
+        self.objGUI.progressBar.setValue(0)
+        self.listenerProgress("", 0)
 
     def updateProgressFileYofN(self, str):
         self.objGUI.labelProgressFileIndex.setText(str)
@@ -134,7 +153,29 @@ class Ctr_Main():
             self.wt.signalProgressFileYofN.connect(self.updateProgressFileYofN)
             self.wt.signalErrorMsg.connect(self.showErrorMessage)
 
+            #self.wt.setTerminationEnabled(True)
             self.wt.start()
+
+            #Show the cancel button
+            self.objGUI.bCancel.show()
+
+    def listenerBCancel(self):
+        self.objGUI.bCancel.setEnabled(False)
+        self.wt2 = Thread_Cancel_Autosub(self.wt)
+
+        #Only if worker thread is running
+        if self.wt and self.wt.isRunning():
+            #reset progress indicator
+            self.listenerProgress("Cancelling", 0)
+            self.setProgressBarIndefinite()
+            self.updateProgressFileYofN("")
+
+            #connect the terminate signal to resetGUI
+            self.wt2.signalTerminated.connect(self.resetGUI)
+
+            #run the cancel autosub operation in new thread
+            #to avoid progressbar freezing
+            self.wt2.start()
 
     def listenerBRemove(self):
         indexSelected = self.objGUI.qlwListFilesSelected.currentRow()

@@ -15,7 +15,7 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
 from pathlib import Path
-from autosub import generate_subtitles
+from autosub import Autosub
 from pyqtautosub.util.srtparser import SRTParser
 from pyqtautosub.model.param_autosub import Param_Autosub
 from pyqtautosub.util.util import MyUtil
@@ -60,7 +60,7 @@ class Worker_Thread(QThread):
         outputFileTXT = outputFiles[1]
 
         #run autosub
-        fOutput = generate_subtitles(source_path = sourceFile,
+        fOutput = Autosub.generate_subtitles(source_path = sourceFile,
                                     output = outputFileSRT,
                                     src_language = langCode,
                                     dst_language = langCode,
@@ -107,3 +107,7 @@ class Worker_Thread(QThread):
     def run(self):
         self.__loopSelectedFiles()
         self.running = False
+
+    def cancel(self):
+        Autosub.cancel_operation()
+        self.terminate()
