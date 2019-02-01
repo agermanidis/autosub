@@ -22,7 +22,7 @@ from pyqtautosub.util.util import MyUtil
 import os
 
 
-class Worker_Thread(QThread):
+class Thread_Exec_Autosub(QThread):
     signalLockGUI = pyqtSignal()
     signalResetGUI = pyqtSignal()
     signalProgress = pyqtSignal(str, int)

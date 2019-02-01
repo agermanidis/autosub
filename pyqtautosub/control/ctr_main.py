@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from pathlib import Path
 from pyqtautosub.model.param_autosub import Param_Autosub
 from pyqtautosub.util.util import MyUtil
-from pyqtautosub.control.worker_thread import Worker_Thread
+from pyqtautosub.control.worker_thread import Thread_Exec_Autosub
 from pyqtautosub.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pyqtautosub.gui.gui import Ui_window
 import multiprocessing
@@ -144,17 +144,17 @@ class Ctr_Main():
             objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode)
 
             #execute the main process in separate thread to avoid gui lock
-            self.wt = Worker_Thread(objParamAutosub)
+            self.wt = Thread_Exec_Autosub(objParamAutosub)
 
             #connect signals from work thread to gui controls
-            self.wt.signalLockGUI.connect(self.lockButtonsDuringOperation)
-            self.wt.signalResetGUI.connect(self.resetGUI)
-            self.wt.signalProgress.connect(self.listenerProgress)
-            self.wt.signalProgressFileYofN.connect(self.updateProgressFileYofN)
-            self.wt.signalErrorMsg.connect(self.showErrorMessage)
+            self.thread_exec.signalLockGUI.connect(self.lockButtonsDuringOperation)
+            self.thread_exec.signalResetGUI.connect(self.resetGUI)
+            self.thread_exec.signalProgress.connect(self.listenerProgress)
+            self.thread_exec.signalProgressFileYofN.connect(self.updateProgressFileYofN)
+            self.thread_exec.signalErrorMsg.connect(self.showErrorMessage)
 
-            #self.wt.setTerminationEnabled(True)
-            self.wt.start()
+            #self.thread_exec.setTerminationEnabled(True)
+            self.thread_exec.start()
 
             #Show the cancel button
             self.objGUI.bCancel.show()
@@ -164,18 +164,18 @@ class Ctr_Main():
         self.wt2 = Thread_Cancel_Autosub(self.wt)
 
         #Only if worker thread is running
-        if self.wt and self.wt.isRunning():
+        if self.thread_exec and self.thread_exec.isRunning():
             #reset progress indicator
             self.listenerProgress("Cancelling", 0)
             self.setProgressBarIndefinite()
             self.updateProgressFileYofN("")
 
             #connect the terminate signal to resetGUI
-            self.wt2.signalTerminated.connect(self.resetGUI)
+            self.thread_cancel.signalTerminated.connect(self.resetGUI)
 
             #run the cancel autosub operation in new thread
             #to avoid progressbar freezing
-            self.wt2.start()
+            self.thread_cancel.start()
 
     def listenerBRemove(self):
         indexSelected = self.objGUI.qlwListFilesSelected.currentRow()
