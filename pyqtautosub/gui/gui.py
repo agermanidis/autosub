@@ -6,26 +6,12 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-'''
-   (C) 2019 Raryel C. Souza
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-'''
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_window(object):
     def setupUi(self, window):
         window.setObjectName("window")
-        window.resize(1045, 418)
+        window.resize(1045, 463)
         self.centralwidget = QtWidgets.QWidget(window)
         self.centralwidget.setObjectName("centralwidget")
         self.bSelectMedia = QtWidgets.QPushButton(self.centralwidget)
@@ -77,6 +63,9 @@ class Ui_window(object):
         self.labelProgressFileIndex.setGeometry(QtCore.QRect(30, 330, 131, 41))
         self.labelProgressFileIndex.setText("")
         self.labelProgressFileIndex.setObjectName("labelProgressFileIndex")
+        self.bCancel = QtWidgets.QPushButton(self.centralwidget)
+        self.bCancel.setGeometry(QtCore.QRect(470, 360, 108, 36))
+        self.bCancel.setObjectName("bCancel")
         window.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1045, 32))
@@ -108,6 +97,8 @@ class Ui_window(object):
         self.bSelectOutputFolder.setText(_translate("window", "Output Location"))
         self.groupBox.setTitle(_translate("window", "&List of files to generate subtitles/transcribe"))
         self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
+        self.bCancel.setText(_translate("window", "Cancel"))
         self.menuAbout.setTitle(_translate("window", "Abo&ut"))
-        self.actionLicense.setText(_translate("window", "License"))
-        self.actionAbout_pyQtAutosub.setText(_translate("window", "About pyQtAutosub"))
+        self.actionLicense.setText(_translate("window", "&License"))
+        self.actionAbout_pyQtAutosub.setText(_translate("window", "&About pyQtAutosub"))
+

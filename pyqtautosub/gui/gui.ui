@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1045</width>
-    <height>418</height>
+    <height>463</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -195,6 +195,19 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="bCancel">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>360</y>
+      <width>108</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -205,8 +218,26 @@
      <height>32</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Abo&amp;ut</string>
+    </property>
+    <addaction name="actionLicense"/>
+    <addaction name="actionAbout_pyQtAutosub"/>
+   </widget>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionLicense">
+   <property name="text">
+    <string>&amp;License</string>
+   </property>
+  </action>
+  <action name="actionAbout_pyQtAutosub">
+   <property name="text">
+    <string>&amp;About pyQtAutosub</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
