@@ -64,7 +64,7 @@ class Ui_window(object):
         self.labelProgressFileIndex.setText("")
         self.labelProgressFileIndex.setObjectName("labelProgressFileIndex")
         self.bCancel = QtWidgets.QPushButton(self.centralwidget)
-        self.bCancel.setGeometry(QtCore.QRect(470, 360, 108, 36))
+        self.bCancel.setGeometry(QtCore.QRect(470, 370, 108, 36))
         self.bCancel.setObjectName("bCancel")
         window.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window)
