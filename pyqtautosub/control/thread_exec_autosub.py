@@ -109,4 +109,3 @@ class Thread_Exec_Autosub(QThread):
 
     def cancel(self):
         Autosub.cancel_operation()
-        self.terminate()
