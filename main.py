@@ -15,8 +15,8 @@
 from pyqtautosub.control.ctr_main import Ctr_Main
 import multiprocessing
 
-def main():
+if __name__ == '__main__':
+    import sys
     multiprocessing.freeze_support()
     ctrMain = Ctr_Main()
-
-main()
+    sys.exit(main())
