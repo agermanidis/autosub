@@ -27,7 +27,6 @@ import os
 class Ctr_Main():
 
     def __init__(self):
-        multiprocessing.freeze_support()
         import sys
         app = QtWidgets.QApplication(sys.argv)
         window = QtWidgets.QMainWindow()
@@ -215,7 +214,7 @@ class Ctr_Main():
 
     def listenerBAboutpyQtAutosub(self):
         self.showInfoMessage("<html><body>"
-                + "pyQtAutosub is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
+                + "<a href=\"https://github.com/raryelcostasouza/pyQtAutosub\">pyQtAutosub</a> is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
                 + "<a href=\"https://github.com/agermanidis/autosub\">Autosub</a> is a command-line utility for auto-generating subtitles for any video/audio file<br>"
                 + "using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
                 + "</body></html>", "About pyQtAutosub")
