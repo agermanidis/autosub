@@ -254,11 +254,14 @@ class Autosub():
         while Autosub.step == 0:
             time.sleep(0.1)
 
+        #the first step involves ffmpeg and cannot be stopped safely
         if Autosub.step == 1:
+            #close wait for threads to finish their work first
             Autosub.pool.close()
             Autosub.pool.join()
 
         else:
+            #terminates the threads immediately
             Autosub.pool.terminate()
             Autosub.pool.join()
 
@@ -291,7 +294,7 @@ class Autosub():
                 if Autosub.cancel:
                     return -1
 
-                str_task_1 = "Converting speech regions to FLAC files: "
+                str_task_1 = "Step 1 of 2: Converting speech regions to FLAC files "
                 widgets = [str_task_1, Percentage(), ' ', Bar(), ' ',
                            ETA()]
                 len_regions = len(regions)
@@ -311,8 +314,7 @@ class Autosub():
                     Autosub.pool.close()
                     Autosub.pool.join()
 
-                print("STEP 2 STARTING SOON")
-                str_task_2 = "Performing speech recognition: "
+                str_task_2 = "Step 2 of 2: Performing speech recognition "
                 widgets = [str_task_2, Percentage(), ' ', Bar(), ' ', ETA()]
                 pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
                 Autosub.pool = multiprocessing.Pool(concurrency)
@@ -342,6 +344,7 @@ class Autosub():
                         translated_transcripts = []
                         Autosub.pool = multiprocessing.Pool(concurrency)
                         for i, transcript in enumerate(Autosub.pool.imap(translator, transcripts)):
+                            Autosub.step = 3
                             translated_transcripts.append(transcript)
                             Autosub.pbar.update(i)
                         Autosub.pbar.finish()
