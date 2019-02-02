@@ -59,8 +59,7 @@ class Thread_Exec_Autosub(QThread):
         outputFileTXT = outputFiles[1]
 
         #run autosub
-        self.objAutosub = Autosub()
-        fOutput = self.objAutosub.generate_subtitles(source_path = sourceFile,
+        fOutput = Autosub.generate_subtitles(source_path = sourceFile,
                                     output = outputFileSRT,
                                     src_language = langCode,
                                     dst_language = langCode,
@@ -109,6 +108,5 @@ class Thread_Exec_Autosub(QThread):
         self.running = False
 
     def cancel(self):
-        self.objAutosub.cancel_operation()
-        self.objAutosub = None
+        Autosub.cancel_operation()
         self.terminate()
