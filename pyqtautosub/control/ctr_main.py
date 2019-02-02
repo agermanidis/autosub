@@ -12,18 +12,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-from PyQt5.QtCore import QThread
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from pathlib import Path
 from pyqtautosub.model.param_autosub import Param_Autosub
 from pyqtautosub.util.util import MyUtil
-from pyqtautosub.control.worker_thread import Thread_Exec_Autosub
+from pyqtautosub.control.thread_exec_autosub import Thread_Exec_Autosub
 from pyqtautosub.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pyqtautosub.gui.gui import Ui_window
 import multiprocessing
 import os
+
 
 class Ctr_Main():
 
@@ -144,7 +143,7 @@ class Ctr_Main():
             objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode)
 
             #execute the main process in separate thread to avoid gui lock
-            self.wt = Thread_Exec_Autosub(objParamAutosub)
+            self.thread_exec = Thread_Exec_Autosub(objParamAutosub)
 
             #connect signals from work thread to gui controls
             self.thread_exec.signalLockGUI.connect(self.lockButtonsDuringOperation)
@@ -158,10 +157,11 @@ class Ctr_Main():
 
             #Show the cancel button
             self.objGUI.bCancel.show()
+            self.objGUI.bCancel.setEnabled(True)
 
     def listenerBCancel(self):
         self.objGUI.bCancel.setEnabled(False)
-        self.wt2 = Thread_Cancel_Autosub(self.wt)
+        self.thread_cancel = Thread_Cancel_Autosub(self.thread_exec)
 
         #Only if worker thread is running
         if self.thread_exec and self.thread_exec.isRunning():
@@ -172,10 +172,10 @@ class Ctr_Main():
 
             #connect the terminate signal to resetGUI
             self.thread_cancel.signalTerminated.connect(self.resetGUI)
-
             #run the cancel autosub operation in new thread
             #to avoid progressbar freezing
             self.thread_cancel.start()
+            self.thread_exec = None
 
     def listenerBRemove(self):
         indexSelected = self.objGUI.qlwListFilesSelected.currentRow()

@@ -12,6 +12,7 @@ import json
 import math
 import multiprocessing
 import os
+from json import JSONDecodeError
 import subprocess
 import sys
 import tempfile
@@ -93,7 +94,9 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                 try:
                     resp = requests.post(url, data=data, headers=headers)
                 except requests.exceptions.ConnectionError:
+                    print('EXCEPTION')
                     continue
+
 
                 for line in resp.content.decode('utf-8').split("\n"):
                     try:
@@ -102,6 +105,8 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         return line[:1].upper() + line[1:]
                     except IndexError:
                         # no result
+                        continue
+                    except JSONDecodeError:
                         continue
 
         except KeyboardInterrupt:
@@ -226,32 +231,39 @@ def percentage(currentval, maxval):
 
 
 class Autosub():
-    @staticmethod
-    def output_progress(listener_progress, str_task, progress_percent):
+
+    def __init__(self):
+        self.cancel = False
+        self.step = 0
+
+
+
+    def output_progress(self, listener_progress, str_task, progress_percent):
         #only update progress if not requested to cancel
-        if listener_progress != None and not Autosub.cancel :
+        if listener_progress != None and not self.cancel :
             listener_progress(str_task,progress_percent)
 
 
 
-    @staticmethod
-    def cancel_operation():
-        Autosub.cancel = True
 
-        Autosub.pbar.finish()
-        #the first step is not stoppable... wait for it to finish
-        while Autosub.step is 1:
+    def cancel_operation(self):
+        self.cancel = True
+
+        self.pbar.finish()
+
+        while self.step == 0:
             time.sleep(0.1)
 
-        #the second step can be stopped safely
-        #if threads are running
-        if Autosub.pool and Autosub.step is 2:
-            Autosub.pool.terminate()
-            Autosub.pool.join()
-            Autosub.pool = None
+        if self.step == 1:
+            self.pool.close()
+            self.pool.join()
 
-    @staticmethod
-    def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
+        else:
+            self.pool.terminate()
+            self.pool.join()
+
+
+    def generate_subtitles(self, # pylint: disable=too-many-locals,too-many-arguments
             source_path,
             output=None,
             concurrency=DEFAULT_CONCURRENCY,
@@ -264,44 +276,58 @@ class Autosub():
         """
         Given an input audio/video file, generate subtitles in the specified language and format.
         """
-        Autosub.cancel = False
-        Autosub.step = 1
         audio_filename, audio_rate = extract_audio(source_path)
 
         regions = find_speech_regions(audio_filename)
 
-        Autosub.pool = multiprocessing.Pool(concurrency)
+        #self.pool = multiprocessing.Pool(concurrency)
         converter = FLACConverter(source_path=audio_filename)
         recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
                                       api_key=GOOGLE_SPEECH_API_KEY)
-
         transcripts = []
         if regions:
             try:
+                if self.cancel:
+                    return -1
+
                 str_task_1 = "Converting speech regions to FLAC files: "
                 widgets = [str_task_1, Percentage(), ' ', Bar(), ' ',
                            ETA()]
                 len_regions = len(regions)
-                Autosub.pbar = ProgressBar(widgets=widgets, maxval=len_regions).start()
+                self.pbar = ProgressBar(widgets=widgets, maxval=len_regions).start()
                 extracted_regions = []
-                for i, extracted_region in enumerate(Autosub.pool.imap(converter, regions)):
+                self.pool = multiprocessing.Pool(concurrency)
+                for i, extracted_region in enumerate(self.pool.imap(converter, regions)):
+                    self.step = 1
                     extracted_regions.append(extracted_region)
-                    Autosub.pbar.update(i)
+                    self.pbar.update(i)
                     progress_percent= percentage(i, len_regions)
-                    Autosub.output_progress(listener_progress,str_task_1,progress_percent)
-                Autosub.pbar.finish()
+                    self.output_progress(listener_progress,str_task_1,progress_percent)
+                self.pbar.finish()
+                if self.cancel:
+                    return -1
+                else:
+                    self.pool.close()
+                    self.pool.join()
 
-                Autosub.step = 2
+                print("STEP 2 STARTING SOON")
                 str_task_2 = "Performing speech recognition: "
                 widgets = [str_task_2, Percentage(), ' ', Bar(), ' ', ETA()]
-                Autosub.pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
-
-                for i, transcript in enumerate(Autosub.pool.imap(recognizer, extracted_regions)):
+                pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+                self.pool = multiprocessing.Pool(concurrency)
+                for i, transcript in enumerate(self.pool.imap(recognizer, extracted_regions)):
+                    self.step = 2
                     transcripts.append(transcript)
-                    Autosub.pbar.update(i)
+                    self.pbar.update(i)
                     progress_percent= percentage(i, len_regions)
-                    Autosub.output_progress(listener_progress,str_task_2,progress_percent)
-                Autosub.pbar.finish()
+                    self.output_progress(listener_progress,str_task_2,progress_percent)
+                self.pbar.finish()
+
+                if self.cancel:
+                    return -1
+                else:
+                    self.pool.close()
+                    self.pool.join()
 
                 if src_language.split("-")[0] != dst_language.split("-")[0]:
                     if api_key:
@@ -311,13 +337,20 @@ class Autosub():
                                                 src=src_language)
                         prompt = "Translating from {0} to {1}: ".format(src_language, dst_language)
                         widgets = [prompt, Percentage(), ' ', Bar(), ' ', ETA()]
-                        Autosub.pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+                        pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
                         translated_transcripts = []
-                        for i, transcript in enumerate(Autosub.pool.imap(translator, transcripts)):
+                        self.pool = multiprocessing.Pool(concurrency)
+                        for i, transcript in enumerate(self.pool.imap(translator, transcripts)):
                             translated_transcripts.append(transcript)
-                            Autosub.pbar.update(i)
-                        Autosub.pbar.finish()
+                            self.pbar.update(i)
+                        self.pbar.finish()
                         transcripts = translated_transcripts
+
+                        if self.cancel:
+                            return -1
+                        else:
+                            self.pool.close()
+                            self.pool.join()
                     else:
                         print(
                             "Error: Subtitle translation requires specified Google Translate API key. "
@@ -326,10 +359,9 @@ class Autosub():
                         return 1
 
             except KeyboardInterrupt:
-                Autosub.pbar.finish()
-                Autosub.pool.terminate()
-                Autosub.pool.join()
-                print("Cancelling transcription")
+                self.pbar.finish()
+                self.pool.terminate()
+                self.pool.join()
                 raise
 
         timed_subtitles = [(r, t) for r, t in zip(regions, transcripts) if t]
@@ -346,8 +378,12 @@ class Autosub():
             output_file.write(formatted_subtitles.encode("utf-8"))
 
         os.remove(audio_filename)
-        Autosub.pool.terminate()
-        Autosub.pool.join()
+
+        if self.cancel:
+            return -1
+        else:
+            self.pool.close()
+            self.pool.join()
 
         return dest
 

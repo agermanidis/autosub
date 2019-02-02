@@ -17,7 +17,6 @@ from PyQt5.QtCore import pyqtSignal
 from pathlib import Path
 from autosub import Autosub
 from pyqtautosub.util.srtparser import SRTParser
-from pyqtautosub.model.param_autosub import Param_Autosub
 from pyqtautosub.util.util import MyUtil
 import os
 
@@ -60,14 +59,18 @@ class Thread_Exec_Autosub(QThread):
         outputFileTXT = outputFiles[1]
 
         #run autosub
-        fOutput = Autosub.generate_subtitles(source_path = sourceFile,
+        self.objAutosub = Autosub()
+        fOutput = self.objAutosub.generate_subtitles(source_path = sourceFile,
                                     output = outputFileSRT,
                                     src_language = langCode,
                                     dst_language = langCode,
                                     listener_progress = self.listenerProgress)
+        #if nothing was returned
+        if not fOutput:
+            self.signalErrorMsg.emit("Error! Unable to generate subtitles for file " + sourceFile + ".")
+        elif fOutput != -1:
+            #if the operation was not canceled
 
-        #if the operation was sucessful
-        if fOutput:
             #updated the progress message
             self.listenerProgress("Finished", 100)
 
@@ -77,9 +80,6 @@ class Thread_Exec_Autosub(QThread):
             #open both SRT and TXT output files
             MyUtil.open_file(outputFileTXT)
             MyUtil.open_file(outputFileSRT)
-
-        else:
-            self.signalErrorMsg.emit("Error! Unable to generate subtitles for file " + sourceFile + ".")
 
     def __loopSelectedFiles(self):
         self.signalLockGUI.emit()
@@ -109,5 +109,6 @@ class Thread_Exec_Autosub(QThread):
         self.running = False
 
     def cancel(self):
-        Autosub.cancel_operation()
+        self.objAutosub.cancel_operation()
+        self.objAutosub = None
         self.terminate()
