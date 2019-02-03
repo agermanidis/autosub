@@ -1,0 +1,2 @@
+The autosub version used for pyTranscriber had to be customized a little bit.
+The patch in this folder was made comparing the original autosub/__init__.py file from version 0.4.0 to the customized version I made.
