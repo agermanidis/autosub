@@ -15,11 +15,11 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from pathlib import Path
-from pyqtautosub.model.param_autosub import Param_Autosub
-from pyqtautosub.util.util import MyUtil
-from pyqtautosub.control.thread_exec_autosub import Thread_Exec_Autosub
-from pyqtautosub.control.thread_cancel_autosub import Thread_Cancel_Autosub
-from pyqtautosub.gui.gui import Ui_window
+from pytranscriber.model.param_autosub import Param_Autosub
+from pytranscriber.util.util import MyUtil
+from pytranscriber.control.thread_exec_autosub import Thread_Exec_Autosub
+from pytranscriber.control.thread_cancel_autosub import Thread_Cancel_Autosub
+from pytranscriber.gui.gui import Ui_window
 import os
 
 
