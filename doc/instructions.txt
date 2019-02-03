@@ -1,6 +1,0 @@
-*Convert .ui file to .py
-pyuic5 gui.ui -o output.py
-
-
-*Generate python bundled package version
-pyinstaller --onefile main.py
