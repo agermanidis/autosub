@@ -193,9 +193,9 @@ class Ctr_Main():
             self.__showErrorMessage("Error! Invalid output folder.")
 
     def __listenerBLicense(self):
-        self.showInfoMessage("<html><body><a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GPL License</a><br><br>"
+        self.__showInfoMessage("<html><body><a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GPL License</a><br><br>"
                 + "Copyright (C) 2019 Raryel C. Souza <raryel.costa at gmail.com><br>"
-                + "This program is free software: you can redistribute it and/or modify<br>"
+                + "<br>This program is free software: you can redistribute it and/or modify<br>"
                 + "it under the terms of the GNU General Public License as published by<br>"
                 + "the Free Software Foundation, either version 3 of the License, or<br>"
                 + " any later version<br>"
@@ -206,14 +206,14 @@ class Ctr_Main():
                 + "GNU General Public License for more details.<br>"
                 + "<br>"
                 + "You should have received a copy of the GNU General Public License<br>"
-                + "along with this program.  If not, see <https://www.gnu.org/licenses/>."
+                + "along with this program.  If not, see <a href=\"https://www.gnu.org/licenses\">www.gnu.org/licenses</a>."
                 + "</body></html>", "License")
 
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
-                + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
+                + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is a graphical interface for Autosub intended to support audio transcription<br><br>"
                 + "<a href=\"https://github.com/agermanidis/autosub\">Autosub</a> is a command-line utility for auto-generating subtitles for any video/audio file<br>"
-                + "using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
+                + "developed by <a href=\"https://github.com/agermanidis\">agermanidis</a> using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
                 + "</body></html>", "About pyTranscriber")
 
 
