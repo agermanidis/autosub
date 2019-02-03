@@ -47,7 +47,7 @@ class Ctr_Main():
 
         #default output folder at user desktop
         userHome = Path.home()
-        pathOutputFolder = userHome / 'Desktop' / 'pyQtAutosub'
+        pathOutputFolder = userHome / 'Desktop' / 'pyTranscriber'
         self.objGUI.qleOutputFolder.setText(str(pathOutputFolder))
 
         self.objGUI.bRemoveFile.setEnabled(False)
@@ -63,7 +63,7 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.clicked.connect(self.__listenerBSelectMedia)
 
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
-        self.objGUI.actionAbout_pyQtAutosub.triggered.connect(self.__listenerBAboutpyQtAutosub)
+        self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
 
     def __resetGUI(self):
 
@@ -125,7 +125,7 @@ class Ctr_Main():
 
     def __listenerBExec(self):
         if not MyUtil.is_internet_connected():
-            self.__showErrorMessage("Error! You need to have internet connection to use pyQtAutosub!")
+            self.__showErrorMessage("Error! You need to have internet connection to use pyTranscriber!")
         else:
             #extracts the two letter lang_code from the string on language selection
             selectedLanguage = self.objGUI.cbSelectLang.currentText()
@@ -209,12 +209,12 @@ class Ctr_Main():
                 + "along with this program.  If not, see <https://www.gnu.org/licenses/>."
                 + "</body></html>", "License")
 
-    def __listenerBAboutpyQtAutosub(self):
+    def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
-                + "<a href=\"https://github.com/raryelcostasouza/pyQtAutosub\">pyQtAutosub</a> is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
+                + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is a pyQt GUI for Autosub intended to support audio transcription<br><br>"
                 + "<a href=\"https://github.com/agermanidis/autosub\">Autosub</a> is a command-line utility for auto-generating subtitles for any video/audio file<br>"
                 + "using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
-                + "</body></html>", "About pyQtAutosub")
+                + "</body></html>", "About pyTranscriber")
 
 
     def __showInfoMessage(self, info_msg, title):

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>pyQtAutosub</string>
+   <string>pyTranscriber</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="bSelectMedia">
@@ -223,7 +223,7 @@
      <string>Abo&amp;ut</string>
     </property>
     <addaction name="actionLicense"/>
-    <addaction name="actionAbout_pyQtAutosub"/>
+    <addaction name="actionAbout_pyTranscriber"/>
    </widget>
    <addaction name="menuAbout"/>
   </widget>
@@ -233,9 +233,9 @@
     <string>&amp;License</string>
    </property>
   </action>
-  <action name="actionAbout_pyQtAutosub">
+  <action name="actionAbout_pyTranscriber">
    <property name="text">
-    <string>&amp;About pyQtAutosub</string>
+    <string>&amp;About pyTranscriber</string>
    </property>
   </action>
  </widget>

@@ -78,10 +78,10 @@ class Ui_window(object):
         window.setStatusBar(self.statusbar)
         self.actionLicense = QtWidgets.QAction(window)
         self.actionLicense.setObjectName("actionLicense")
-        self.actionAbout_pyQtAutosub = QtWidgets.QAction(window)
-        self.actionAbout_pyQtAutosub.setObjectName("actionAbout_pyQtAutosub")
+        self.actionAbout_pyTranscriber = QtWidgets.QAction(window)
+        self.actionAbout_pyTranscriber.setObjectName("actionAbout_pyTranscriber")
         self.menuAbout.addAction(self.actionLicense)
-        self.menuAbout.addAction(self.actionAbout_pyQtAutosub)
+        self.menuAbout.addAction(self.actionAbout_pyTranscriber)
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(window)
@@ -89,7 +89,7 @@ class Ui_window(object):
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
-        window.setWindowTitle(_translate("window", "pyQtAutosub"))
+        window.setWindowTitle(_translate("window", "pyTranscriber"))
         self.bSelectMedia.setText(_translate("window", "Select file(s)"))
         self.labelSelectLang.setText(_translate("window", "Audio Language"))
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
@@ -100,5 +100,4 @@ class Ui_window(object):
         self.bCancel.setText(_translate("window", "Cancel"))
         self.menuAbout.setTitle(_translate("window", "Abo&ut"))
         self.actionLicense.setText(_translate("window", "&License"))
-        self.actionAbout_pyQtAutosub.setText(_translate("window", "&About pyQtAutosub"))
-
+        self.actionAbout_pyTranscriber.setText(_translate("window", "&About pyTranscriber"))
