@@ -24,7 +24,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <a href="https://github.com/raryelcostasouza/pyTranscriber/releases/download/v1.0-rc1/pyTranscriber-v1.0-RC1-linux-portable.zip"> pyTranscriber-v1.0-RC1-linux-portable.zip</a>
 
 <h1>For Developers - Technical Details</h1>
-Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/pytranscriber/doc/technical_details.txt">technical_details.txt<a>
+Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.txt">technical_details.txt<a>
 
 ### License
 
