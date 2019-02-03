@@ -12,7 +12,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-from pyqtautosub.control.ctr_main import Ctr_Main
+from pytranscriber.control.ctr_main import Ctr_Main
 import multiprocessing
 
 if __name__ == '__main__':
