@@ -1,6 +1,6 @@
 <h1>For Developers - Technical Details</h1>
 
-This app consists basically of a friendly pyQt5 graphical interface for a customized version of <a href=\"https://github.com/agermanidis/autosub\">Autosub 0.4.0</a> . All the hard work of processing the audio and generating the subtitles is done by Autosub.
+This app consists basically of a friendly pyQt5 graphical interface for a customized version of <a href="https://github.com/agermanidis/autosub">Autosub 0.4.0</a> . All the hard work of processing the audio and generating the subtitles is done by Autosub.
 
 <ul>
 <li> To get autosub running on Windows followed <a href="https://github.com/agermanidis/autosub/issues/31">this instructions.</a> </li>
@@ -17,13 +17,13 @@ This app consists basically of a friendly pyQt5 graphical interface for a custom
 <li>ffmpeg
 </ol>
 
-How to run?
+# How to run?
 $ python3 main.py
 
-How to edit the GUI?
+# How to edit the GUI?
 Install Qt5 Designer and open the file pytranscriber/gui/gui.ui
 
-How to convert the .ui file (qt5designer project file) to .py?
+# How to convert the .ui file (qt5designer project file) to .py?
 $ pyuic5 gui.ui -o gui.py
 
 How to generate the python bundled binary package version?
