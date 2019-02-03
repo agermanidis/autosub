@@ -147,7 +147,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>&amp;List of files to generate subtitles/transcribe</string>
+     <string>&amp;List of files to generate transcribe audio / generate subtitles</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

@@ -95,7 +95,7 @@ class Ui_window(object):
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
         self.bOpenOutputFolder.setText(_translate("window", "Open Output Folder"))
         self.bSelectOutputFolder.setText(_translate("window", "Output Location"))
-        self.groupBox.setTitle(_translate("window", "&List of files to generate subtitles/transcribe"))
+        self.groupBox.setTitle(_translate("window", "&List of files to transcribe audio / generate subtitles"))
         self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
         self.bCancel.setText(_translate("window", "Cancel"))
         self.menuAbout.setTitle(_translate("window", "Abo&ut"))
