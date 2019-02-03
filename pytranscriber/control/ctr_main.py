@@ -211,9 +211,12 @@ class Ctr_Main():
 
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
-                + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is a graphical interface for Autosub intended to support audio transcription<br><br>"
-                + "<a href=\"https://github.com/agermanidis/autosub\">Autosub</a> is a command-line utility for auto-generating subtitles for any video/audio file<br>"
-                + "developed by <a href=\"https://github.com/agermanidis\">agermanidis</a> using the <a href=\"https://cloud.google.com/speech/\">Google Cloud Speech API</a> <br>"
+                + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is an application that can be used "
+                + "to generate <b>automatic transcription / automatic subtitles </b>"
+                + "for audio/video files through a friendly graphical user interface. "
+                +"<br><br>"
+                + "The hard work of speech recognition is made by the <a href=\"https://cloud.google.com/speech/\">Google Speech Recognition API</a> "
+                + "using <a href=\"https://github.com/agermanidis/autosub\">Autosub</a>"
                 + "</body></html>", "About pyTranscriber")
 
 
