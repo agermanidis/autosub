@@ -20,8 +20,9 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 ![pyTranscriber3](doc/screenshot1.png?raw=true "pyTranscriber")
 <br>
 <br>
-<h1>For Users - Download the Linux portable app</h1>
-<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/download/v1.0-rc1/pyTranscriber-v1.0-RC1-linux-portable.zip"> pyTranscriber-v1.0-RC1-linux-portable.zip</a>
+<h1>For Users - Download the Windows/Linux portable app</h1>
+<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.0-rc1"> pyTranscriber-v1.0-RC1</a>
+**Mac OS version coming soon
 
 <h1>For Developers - Technical Details</h1>
 Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.txt">technical_details.txt<a>
