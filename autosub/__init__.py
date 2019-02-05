@@ -17,7 +17,6 @@ import sys
 import tempfile
 import wave
 
-from json import JSONDecodeError
 import requests
 from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
@@ -103,7 +102,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                     except IndexError:
                         # no result
                         continue
-                    except JSONDecodeError:
+                    except json.JSONDecodeError:
                         continue
 
         except KeyboardInterrupt:
