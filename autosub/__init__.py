@@ -245,21 +245,28 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
     transcripts = []
     if regions:
         try:
-            widgets = ["Converting speech regions to FLAC files: ", Percentage(), ' ', Bar(), ' ',
+            str_task_1 = "Converting speech regions to FLAC files: "
+            widgets = [str_task_1, Percentage(), ' ', Bar(), ' ',
                        ETA()]
-            pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
+            len_regions = len(regions)
+            pbar = ProgressBar(widgets=widgets, maxval=len_regions).start()
             extracted_regions = []
             for i, extracted_region in enumerate(pool.imap(converter, regions)):
                 extracted_regions.append(extracted_region)
                 pbar.update(i)
+                progress_percent= percentage(i, len_regions)
+                output_progress(listener_progress,str_task_1,progress_percent)
             pbar.finish()
 
-            widgets = ["Performing speech recognition: ", Percentage(), ' ', Bar(), ' ', ETA()]
+            str_task_2 = "Performing speech recognition: "
+            widgets = [str_task_2, Percentage(), ' ', Bar(), ' ', ETA()]
             pbar = ProgressBar(widgets=widgets, maxval=len(regions)).start()
 
             for i, transcript in enumerate(pool.imap(recognizer, extracted_regions)):
                 transcripts.append(transcript)
                 pbar.update(i)
+                progress_percent= percentage(i, len_regions)
+                output_progress(listener_progress,str_task_2,progress_percent)
             pbar.finish()
 
             if src_language.split("-")[0] != dst_language.split("-")[0]:
