@@ -1,3 +1,4 @@
+python-libs/
 bin/
 *.spec
 *pyc
