@@ -34,6 +34,13 @@ DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 
 
+def get_program_ffmpeg():
+    program_name = "ffmpeg"
+    if os.name == "nt":
+        return program_name +  ".exe"
+    else:
+        return "./" + program_name
+
 def percentile(arr, percent):
     """
     Calculate the given percentile of arr.
@@ -64,7 +71,8 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             start = max(0, start - self.include_before)
             end += self.include_after
             temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
-            command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
+            program_name = get_program_ffmpeg()
+            command = [program_name, "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
@@ -181,9 +189,7 @@ def extract_audio(filename, channels=1, rate=16000):
     #    print("ffmpeg: Executable not found on machine.")
     #    raise Exception("Dependency not found: ffmpeg")
     #patch for using the included ffmpeg binary on windows
-    program_name = "ffmpeg"
-    if os.name == "nt":
-        program_name += ".exe"
+    program_name = get_program_ffmpeg()
     command = [program_name, "-y", "-i", filename,
                "-ac", str(channels), "-ar", str(rate),
                "-loglevel", "error", temp.name]
