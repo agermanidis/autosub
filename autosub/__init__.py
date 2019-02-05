@@ -8,7 +8,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import argparse
 import audioop
-import json
 import math
 import multiprocessing
 import os
@@ -18,6 +17,8 @@ import tempfile
 import wave
 
 import requests
+
+import json
 try:
     from json.decoder import JSONDecodeError
 except ImportError:
