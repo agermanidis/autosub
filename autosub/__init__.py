@@ -15,10 +15,8 @@ import subprocess
 import sys
 import tempfile
 import wave
-
-import requests
-
 import json
+import requests
 try:
     from json.decoder import JSONDecodeError
 except ImportError:
