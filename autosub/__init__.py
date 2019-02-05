@@ -102,7 +102,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                     except IndexError:
                         # no result
                         continue
-                    
+
         except KeyboardInterrupt:
             return None
 
