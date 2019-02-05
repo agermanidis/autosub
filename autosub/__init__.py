@@ -25,7 +25,6 @@ from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
-from json import JSONDecodeError
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
@@ -103,9 +102,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                     except IndexError:
                         # no result
                         continue
-                    except JSONDecodeError:
-                        continue
-
+                    
         except KeyboardInterrupt:
             return None
 
