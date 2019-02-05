@@ -25,6 +25,7 @@ from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
+from json import JSONDecodeError
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
@@ -61,7 +62,7 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             start, end = region
             start = max(0, start - self.include_before)
             end += self.include_after
-            temp = tempfile.NamedTemporaryFile(suffix='.flac',delete=False)
+            temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
             command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
@@ -101,6 +102,8 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         return line[:1].upper() + line[1:]
                     except IndexError:
                         # no result
+                        continue
+                    except JSONDecodeError:
                         continue
 
         except KeyboardInterrupt:
