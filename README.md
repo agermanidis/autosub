@@ -25,7 +25,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 **Mac OS version coming soon
 
 <h1>For Developers - Technical Details</h1>
-Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.txt">technical_details.txt<a>
+Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.txt">technical_details.md<a>
 
 ### License
 
