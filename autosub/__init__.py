@@ -39,7 +39,10 @@ def get_program_ffmpeg():
     if os.name == "nt":
         return program_name +  ".exe"
     else:
-        return "./" + program_name
+        str_uname = os.uname()
+        program_name = "./" + program_name
+        if "Darwin" in str_uname    :
+            return program_name + "-mac"
 
 def percentile(arr, percent):
     """
@@ -281,6 +284,7 @@ class Autosub():
             api_key=None,
             listener_progress=None,
         ):
+        multiprocessing.set_start_method('forkserver')
         Autosub.cancel = False
         Autosub.step = 0
         """
