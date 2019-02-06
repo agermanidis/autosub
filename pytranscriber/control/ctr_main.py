@@ -113,8 +113,9 @@ class Ctr_Main():
             self.objGUI.qleOutputFolder.setText(fSelectDir)
 
     def __listenerBSelectMedia(self):
-        options = QFileDialog.Options()
-        files, _ = QFileDialog.getOpenFileNames(self.objGUI.centralwidget, "Select media", "","All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma);", options=options)
+        #options = QFileDialog.Options()
+        options = QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self.objGUI.centralwidget, "Select media", "","All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma)")
 
         if files:
             self.objGUI.qlwListFilesSelected.addItems(files)
