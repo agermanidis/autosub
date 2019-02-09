@@ -41,8 +41,10 @@ def get_program_ffmpeg():
     else:
         str_uname = os.uname()
         program_name = "./" + program_name
-        if "Darwin" in str_uname    :
+        if "Darwin" in str_uname:
             return program_name + "-mac"
+        else:
+            return program_name
 
 def percentile(arr, percent):
     """
