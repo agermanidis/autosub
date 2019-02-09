@@ -287,7 +287,7 @@ class Autosub():
             listener_progress=None,
         ):
         #windows not support forkserver... only spawn
-        if os.name() != "nt":
+        if os.name != "nt":
             #necessary for running on MacOS
             multiprocessing.set_start_method('forkserver')
         Autosub.cancel = False
