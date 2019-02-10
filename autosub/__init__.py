@@ -61,7 +61,7 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             start, end = region
             start = max(0, start - self.include_before)
             end += self.include_after
-            temp = tempfile.NamedTemporaryFile(suffix='.flac')
+            temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
             command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
@@ -99,7 +99,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         line = json.loads(line)
                         line = line['result'][0]['alternative'][0]['transcript']
                         return line[:1].upper() + line[1:]
-                    except (ValueError, IndexError):                        
+                    except (ValueError, IndexError):
                         # no result
                         continue
 
@@ -107,7 +107,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class Translator(object): # pylint: disable=too-few-public-methods
+class Translator(object):  # pylint: disable=too-few-public-methods
     """
     Class for translating a sentence from a one language to another.
     """
@@ -165,14 +165,13 @@ def which(program):
 
 def ffmpeg_check():
     """
-    Return the ffmpeg executable name. "null" returned when no executable exsits.
+    Return the ffmpeg executable name. "null" returned when no executable exists.
     """
     if which("ffmpeg"):
         return "ffmpeg"
-    elif which("ffmpeg.exe"):
+    if which("ffmpeg.exe"):
         return "ffmpeg.exe"
-    else:
-        return None
+    return None
 
 
 def extract_audio(filename, channels=1, rate=16000):
