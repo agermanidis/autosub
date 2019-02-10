@@ -1,0 +1,9 @@
+[MESSAGES CONTROL]
+disable=missing-docstring,
+        wildcard-import,
+        line-too-long,
+        bad-whitespace,
+        too-few-public-methods,
+        too-many-arguments,
+        too-many-locals,
+        no-member
