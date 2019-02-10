@@ -37,3 +37,7 @@ class MyUtil(object):
         except OSError:
             pass
         return False
+
+    @staticmethod
+    def percentage(currentval, maxval):
+        return 100 * currentval / float(maxval)

@@ -15,9 +15,9 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtCore import pyqtSignal
 from pathlib import Path
-from autosub import Autosub
 from pytranscriber.util.srtparser import SRTParser
 from pytranscriber.util.util import MyUtil
+from pytranscriber.control.ctr_autosub import Ctr_Autosub
 import os
 
 
@@ -59,10 +59,9 @@ class Thread_Exec_Autosub(QThread):
         outputFileTXT = outputFiles[1]
 
         #run autosub
-        fOutput = Autosub.generate_subtitles(source_path = sourceFile,
+        fOutput = Ctr_Autosub.generate_subtitles(source_path = sourceFile,
                                     output = outputFileSRT,
                                     src_language = langCode,
-                                    dst_language = langCode,
                                     listener_progress = self.listenerProgress)
         #if nothing was returned
         if not fOutput:
@@ -108,4 +107,4 @@ class Thread_Exec_Autosub(QThread):
         self.running = False
 
     def cancel(self):
-        Autosub.cancel_operation()
+       Ctr_Autosub.cancel_operation()
