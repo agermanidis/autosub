@@ -253,7 +253,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
     Given an input audio/video file, generate subtitles in the specified language and format.
     """
 
-    if "Darwin" in  os.uname():
+    if "Darwin" in os.uname():
         #the default unix fork method does not work on Mac OS
         #need to use forkserver
         multiprocessing.set_start_method('forkserver')
