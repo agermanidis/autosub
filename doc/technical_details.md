@@ -14,7 +14,7 @@ This app consists basically of a friendly pyQt5 graphical interface for a custom
 <li>pip3 install --user pyQt5
 <li>pip3 install --user autosub
 <li>pip3 install --user pyinstaller (only for generating bundled binary)
-<li>ffmpeg
+<li>Download the static ffmpeg binary and put on project root folder or install system wide
 </ol>
 
 # How to run?
