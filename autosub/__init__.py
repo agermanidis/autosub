@@ -8,7 +8,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import argparse
 import audioop
-import json
 import math
 import multiprocessing
 import os
@@ -16,8 +15,13 @@ import subprocess
 import sys
 import tempfile
 import wave
-
+import json
 import requests
+try:
+    from json.decoder import JSONDecodeError
+except ImportError:
+    JSONDecodeError = ValueError
+
 from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
@@ -101,6 +105,8 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         return line[:1].upper() + line[1:]
                     except IndexError:
                         # no result
+                        continue
+                    except JSONDecodeError:
                         continue
 
         except KeyboardInterrupt:
