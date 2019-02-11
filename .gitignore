@@ -5,6 +5,7 @@ bin/
 *.egg-info
 *html
 build/
+tests/
 dist/
 .DS_Store
 MANIFEST
