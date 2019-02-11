@@ -67,7 +67,10 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
             subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
-            return temp.read()
+            read_data = temp.read()
+            temp.close()
+            os.unlink(temp.name)
+            return read_data
 
         except KeyboardInterrupt:
             return None
@@ -251,6 +254,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
             extracted_regions = []
             for i, extracted_region in enumerate(pool.imap(converter, regions)):
                 extracted_regions.append(extracted_region)
+                print("file: " + extracted_region)
                 pbar.update(i)
             pbar.finish()
 
