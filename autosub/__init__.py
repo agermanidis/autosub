@@ -65,13 +65,16 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             start, end = region
             start = max(0, start - self.include_before)
             end += self.include_after
-            temp = tempfile.NamedTemporaryFile(suffix='.flac')
+            temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
             command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
                        "-y", "-i", self.source_path,
                        "-loglevel", "error", temp.name]
             use_shell = True if os.name == "nt" else False
             subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
-            return temp.read()
+            read_data = temp.read()
+            temp.close()
+            os.unlink(temp.name)
+            return read_data
 
         except KeyboardInterrupt:
             return None
