@@ -254,7 +254,6 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
             extracted_regions = []
             for i, extracted_region in enumerate(pool.imap(converter, regions)):
                 extracted_regions.append(extracted_region)
-                print("file: " + extracted_region)
                 pbar.update(i)
             pbar.finish()
 
