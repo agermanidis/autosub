@@ -158,17 +158,26 @@ def which(program):
         Checks whether a file is executable.
         """
         return os.path.isfile(file_path) and os.access(file_path, os.X_OK)
-
+    # necessary to run on Windows
+    if os.name == "nt":
+        program += ".exe"
     fpath, _ = os.path.split(program)
     if fpath:
         if is_exe(program):
             return program
     else:
-        for path in os.environ["PATH"].split(os.pathsep):
-            path = path.strip('"')
-            exe_file = os.path.join(path, program)
-            if is_exe(exe_file):
-                return exe_file
+        # looks for program file in the script execution folder
+        # before checking on system path
+        script_dir = os.getcwd()
+        local_program = os.path.join(script_dir, program)
+        if is_exe(local_program):
+            return local_program
+        else:
+            for path in os.environ["PATH"].split(os.pathsep):
+                path = path.strip('"')
+                exe_file = os.path.join(path, program)
+                if is_exe(exe_file):
+                    return exe_file
     return None
 
 
