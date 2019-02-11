@@ -32,6 +32,7 @@ class Ctr_Main():
         self.objGUI = Ui_window()
         self.objGUI.setupUi(window)
         self.__initGUI()
+        window.setFixedSize(window.size())
         window.show()
         sys.exit(app.exec_())
 
