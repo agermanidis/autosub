@@ -51,7 +51,7 @@ class Ctr_Autosub():
         ):
 
         # windows not support forkserver... only spawn
-        if "Darwin" in os.uname()
+        if "Darwin" in os.uname():
             # necessary for running on MacOS
             # method can be set only once, otherwise crash
             if 'forkserver' not in multiprocessing.get_start_method():
