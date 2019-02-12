@@ -26,7 +26,7 @@ setup(
     author='Anastasis Germanidis',
     author_email='agermanidis@gmail.com',
     url='https://github.com/agermanidis/autosub',
-    packages=['autosub'],
+    packages=[str('autosub')],
     entry_points={
         'console_scripts': [
             'autosub = autosub:main',

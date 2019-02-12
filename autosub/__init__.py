@@ -106,7 +106,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         line = json.loads(line)
                         line = line['result'][0]['alternative'][0]['transcript']
                         return line[:1].upper() + line[1:]
-                    except IndexError:
+                    except (ValueError, IndexError):
                         # no result
                         continue
                     except JSONDecodeError:
@@ -116,7 +116,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class Translator(object): # pylint: disable=too-few-public-methods
+class Translator(object):  # pylint: disable=too-few-public-methods
     """
     Class for translating a sentence from a one language to another.
     """
@@ -172,6 +172,17 @@ def which(program):
     return None
 
 
+def ffmpeg_check():
+    """
+    Return the ffmpeg executable name. "null" returned when no executable exists.
+    """
+    if which("ffmpeg"):
+        return "ffmpeg"
+    if which("ffmpeg.exe"):
+        return "ffmpeg.exe"
+    return None
+
+
 def extract_audio(filename, channels=1, rate=16000):
     """
     Extract audio from an input file to a temporary WAV file.
@@ -180,10 +191,10 @@ def extract_audio(filename, channels=1, rate=16000):
     if not os.path.isfile(filename):
         print("The given file does not exist: {}".format(filename))
         raise Exception("Invalid filepath: {}".format(filename))
-    if not which("ffmpeg"):
+    if not ffmpeg_check():
         print("ffmpeg: Executable not found on machine.")
         raise Exception("Dependency not found: ffmpeg")
-    command = ["ffmpeg", "-y", "-i", filename,
+    command = [ffmpeg_check(), "-y", "-i", filename,
                "-ac", str(channels), "-ar", str(rate),
                "-loglevel", "error", temp.name]
     use_shell = True if os.name == "nt" else False
