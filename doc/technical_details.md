@@ -26,7 +26,7 @@ Install Qt5 Designer and open the file pytranscriber/gui/gui.ui
 # How to convert the .ui file (qt5designer project file) to .py?
 $ pyuic5 gui.ui -o gui.py
 
-How to generate the python bundled binary package version?
+# How to generate the python bundled binary package version?
 $ pyinstaller --onefile main.py
 
 The output binary will be on subfolder dist/main and has all dependencies included. For more details check pyinstaller documentation
