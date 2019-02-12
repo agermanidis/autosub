@@ -237,7 +237,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         #the default unix fork method does not work on Mac OS
         #need to use forkserver
         try:
-            if 'forkserver' not in multiprocessing.get_start_method():
+            if 'forkserver' not in multiprocessing.get_start_method(allow_none=True):
                 multiprocessing.set_start_method('forkserver')
         except AttributeError:
             # for python 2 not have set_start_method... cannot be used on mac
