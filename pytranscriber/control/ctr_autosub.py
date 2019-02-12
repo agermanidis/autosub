@@ -15,7 +15,6 @@ from pytranscriber.util.util import MyUtil
 
 
 class Ctr_Autosub():
-    run_count = 0
 
     @staticmethod
     def output_progress(listener_progress, str_task, progress_percent):
@@ -52,11 +51,11 @@ class Ctr_Autosub():
         ):
 
         # windows not support forkserver... only spawn
-        if "Darwin" in os.uname() and Ctr_Autosub.run_count == 0:
+        if "Darwin" in os.uname()
             # necessary for running on MacOS
             # method can be set only once, otherwise crash
-            multiprocessing.set_start_method('forkserver')
-        Ctr_Autosub.run_count += 1
+            if 'forkserver' not in multiprocessing.get_start_method():
+                multiprocessing.set_start_method('forkserver')
         Ctr_Autosub.cancel = False
         Ctr_Autosub.step = 0
         """
