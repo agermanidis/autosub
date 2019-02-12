@@ -236,7 +236,11 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
     if "Darwin" in os.uname():
         #the default unix fork method does not work on Mac OS
         #need to use forkserver
-        multiprocessing.set_start_method('forkserver')
+        try:
+            multiprocessing.set_start_method('forkserver')
+        except AttributeError:
+            # for python 2 not have set_start_method... cannot be used on mac
+            print("Python 2 fork() does not work on MacOS. Please use Python 3 instead.")
 
     audio_filename, audio_rate = extract_audio(source_path)
 
