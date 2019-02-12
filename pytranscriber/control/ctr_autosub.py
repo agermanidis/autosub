@@ -54,7 +54,7 @@ class Ctr_Autosub():
         if "Darwin" in os.uname():
             # necessary for running on MacOS
             # method can be set only once, otherwise crash
-            if 'forkserver' not in multiprocessing.get_start_method():
+            if 'forkserver' != multiprocessing.get_start_method(allow_none=True):
                 multiprocessing.set_start_method('forkserver')
         Ctr_Autosub.cancel = False
         Ctr_Autosub.step = 0
