@@ -14,8 +14,7 @@ Autosub is a utility for automatic speech recognition and subtitle generation. I
 ```
 $ autosub -h
 usage: autosub [-h] [-C CONCURRENCY] [-o OUTPUT] [-F FORMAT] [-S SRC_LANGUAGE]
-               [-D DST_LANGUAGE] [-K API_KEY] [--list-formats]
-               [--list-languages]
+               [-D DST_LANGUAGE] [-K API_KEY] [-lf] [-lsc] [-ltc]
                [source_path]
 
 positional arguments:
@@ -36,10 +35,24 @@ optional arguments:
   -D DST_LANGUAGE, --dst-language DST_LANGUAGE
                         Desired language for the subtitles
   -K API_KEY, --api-key API_KEY
-                        The Google Translate API key to be used. (Required for
-                        subtitle translation)
-  --list-formats        List all available subtitle formats
-  --list-languages      List all available source/destination languages
+                        The Google Translation API key to be used. (Required
+                        for subtitle translation)
+  -lf, --list-formats   List all available subtitle formats
+  -lsc, --list-speech-to-text-codes
+                        List all available source language codes, which mean
+                        the speech-to-text available language codes.
+                        [WARNING]: Its name format is different from the
+                        destination language codes. And it's Google who make
+                        that difference not the developers of the autosub.
+                        Reference: https://cloud.google.com/speech-to-
+                        text/docs/languages
+  -ltc, --list-translation-codes
+                        List all available destination language codes, which
+                        mean the translation language codes. [WARNING]: Its
+                        name format is different from the source language
+                        codes. And it's Google who make that difference not
+                        the developers of the autosub. Reference:
+                        https://cloud.google.com/translate/docs/languages
 ```
 
 ### License
