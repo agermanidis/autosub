@@ -15,7 +15,7 @@ Autosub is a utility for automatic speech recognition and subtitle generation. I
 $ autosub -h
 usage: autosub [-h] [-C CONCURRENCY] [-o OUTPUT] [-F FORMAT] [-S SRC_LANGUAGE]
                [-D DST_LANGUAGE] [-K API_KEY] [--list-formats]
-               [--list-languages]
+               [--list-languages] [-htp]
                [source_path]
 
 positional arguments:
@@ -40,6 +40,8 @@ optional arguments:
                         subtitle translation)
   --list-formats        List all available subtitle formats
   --list-languages      List all available source/destination languages
+  -htp, --http-speech-to-text-api
+                        Change the speech-to-text api url into the http one
 ```
 
 ### License
