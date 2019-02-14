@@ -26,7 +26,7 @@ from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
 from autosub.constants import (
-    LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
+    SPEECH_TO_TEXT_LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
 
@@ -116,7 +116,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class Translator(object): # pylint: disable=too-few-public-methods
+class Translator(object):  # pylint: disable=too-few-public-methods
     """
     Class for translating a sentence from a one language to another.
     """
@@ -329,14 +329,14 @@ def validate(args):
         )
         return False
 
-    if args.src_language not in LANGUAGE_CODES.keys():
+    if args.src_language not in SPEECH_TO_TEXT_LANGUAGE_CODES.keys():
         print(
             "Source language not supported. "
             "Run with --list-languages to see all supported languages."
         )
         return False
 
-    if args.dst_language not in LANGUAGE_CODES.keys():
+    if args.dst_language not in SPEECH_TO_TEXT_LANGUAGE_CODES.keys():
         print(
             "Destination language not supported. "
             "Run with --list-languages to see all supported languages."
@@ -386,7 +386,7 @@ def main():
 
     if args.list_languages:
         print("List of all languages:")
-        for code, language in sorted(LANGUAGE_CODES.items()):
+        for code, language in sorted(SPEECH_TO_TEXT_LANGUAGE_CODES.items()):
             print("{code}\t{language}".format(code=code, language=language))
         return 0
 
