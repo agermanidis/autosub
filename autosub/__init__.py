@@ -26,7 +26,8 @@ from googleapiclient.discovery import build
 from progressbar import ProgressBar, Percentage, Bar, ETA
 
 from autosub.constants import (
-    SPEECH_TO_TEXT_LANGUAGE_CODES, TRANSLATION_LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
+    SPEECH_TO_TEXT_LANGUAGE_CODES, TRANSLATION_LANGUAGE_CODES,
+    GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
 
@@ -388,7 +389,8 @@ def main():
     parser.add_argument('-lf', '--list-formats', help="List all available subtitle formats",
                         action='store_true')
     parser.add_argument('-lsc', '--list-speech-to-text-codes',
-                        help="""List all available source language codes, which mean the speech-to-text
+                        help="""List all available source language codes,
+                              which mean the speech-to-text
                               available language codes.
                               [WARNING]: Its name format is different from 
                                          the destination language codes.
@@ -397,7 +399,8 @@ def main():
                               Reference: https://cloud.google.com/speech-to-text/docs/languages""",
                         action='store_true')
     parser.add_argument('-ltc', '--list-translation-codes',
-                        help="""List all available destination language codes, which mean the translation
+                        help="""List all available destination language codes,
+                             which mean the translation
                              language codes.
                              [WARNING]: Its name format is different from 
                                         the source language codes.
