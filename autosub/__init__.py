@@ -34,7 +34,7 @@ DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
-
+DEFAULT_API_URL_SCHEME = 'https://'
 
 def percentile(arr, percent):
     """
@@ -84,16 +84,19 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
     """
     Class for performing speech-to-text for an input FLAC file.
     """
-    def __init__(self, language="en", rate=44100, retries=3, api_key=GOOGLE_SPEECH_API_KEY):
+    def __init__(self, api_url, language="en",
+                 rate=44100, retries=3, api_key=GOOGLE_SPEECH_API_KEY):
+                 # pylint: disable=too-many-arguments
         self.language = language
         self.rate = rate
+        self.api_url = api_url
         self.api_key = api_key
         self.retries = retries
 
     def __call__(self, data):
         try:
             for _ in range(self.retries):
-                url = GOOGLE_SPEECH_API_URL.format(lang=self.language, key=self.api_key)
+                url = self.api_url.format(lang=self.language, key=self.api_key)
                 headers = {"Content-Type": "audio/x-flac; rate=%d" % self.rate}
 
                 try:
@@ -237,6 +240,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         src_language=DEFAULT_SRC_LANGUAGE,
         dst_language=DEFAULT_DST_LANGUAGE,
         subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
+        api_url_scheme=DEFAULT_API_URL_SCHEME,
         api_key=None,
     ):
     """
@@ -249,6 +253,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
     pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
     recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
+                                  api_url=api_url_scheme + GOOGLE_SPEECH_API_URL,
                                   api_key=GOOGLE_SPEECH_API_KEY)
 
     transcripts = []
@@ -375,6 +380,9 @@ def main():
                         action='store_true')
     parser.add_argument('--list-languages', help="List all available source/destination languages",
                         action='store_true')
+    parser.add_argument('-htp', '--http-speech-to-text-api',
+                        help="Change the speech-to-text api url into the http one",
+                        action='store_true')
 
     args = parser.parse_args()
 
@@ -394,16 +402,32 @@ def main():
         return 1
 
     try:
-        subtitle_file_path = generate_subtitles(
-            source_path=args.source_path,
-            concurrency=args.concurrency,
-            src_language=args.src_language,
-            dst_language=args.dst_language,
-            api_key=args.api_key,
-            subtitle_file_format=args.format,
-            output=args.output,
-        )
+        if args.http_speech_to_text_api:
+            print("Using http url instead of https one. ")
+            subtitle_file_path = generate_subtitles(
+                source_path=args.source_path,
+                concurrency=args.concurrency,
+                src_language=args.src_language,
+                dst_language=args.dst_language,
+                api_url_scheme="http://",
+                api_key=args.api_key,
+                subtitle_file_format=args.format,
+                output=args.output,
+            )
+
+        else:
+            subtitle_file_path = generate_subtitles(
+                source_path=args.source_path,
+                concurrency=args.concurrency,
+                src_language=args.src_language,
+                dst_language=args.dst_language,
+                api_key=args.api_key,
+                subtitle_file_format=args.format,
+                output=args.output,
+            )
+
         print("Subtitles file created at {}".format(subtitle_file_path))
+
     except KeyboardInterrupt:
         return 1
 
