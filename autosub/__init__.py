@@ -106,7 +106,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                         line = json.loads(line)
                         line = line['result'][0]['alternative'][0]['transcript']
                         return line[:1].upper() + line[1:]
-                    except IndexError:
+                    except (IndexError, ValueError):
                         # no result
                         continue
                     except JSONDecodeError:
