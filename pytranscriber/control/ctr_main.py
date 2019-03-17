@@ -131,8 +131,8 @@ class Ctr_Main():
         else:
             #extracts the two letter lang_code from the string on language selection
             selectedLanguage = self.objGUI.cbSelectLang.currentText()
-            indexDash = selectedLanguage.index("-")
-            langCode = selectedLanguage[:indexDash-1]
+            indexSpace = selectedLanguage.index(" ")
+            langCode = selectedLanguage[:indexSpace]
 
             listFiles = []
             for i in range(self.objGUI.qlwListFilesSelected.count()):
