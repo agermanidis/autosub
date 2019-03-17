@@ -21,7 +21,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>
 <br>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
-<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.1-stable"> pyTranscriber-v1.1-stable</a>
+<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.2-stable"> pyTranscriber-v1.2-stable</a>
 
 <h1>For Developers - Technical Details</h1>
 Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.md">technical_details.md<a>
