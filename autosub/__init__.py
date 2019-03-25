@@ -17,6 +17,8 @@ import tempfile
 import wave
 import json
 import requests
+from six.moves import range
+from six.moves import zip
 try:
     from json.decoder import JSONDecodeError
 except ImportError:
@@ -329,14 +331,14 @@ def validate(args):
         )
         return False
 
-    if args.src_language not in LANGUAGE_CODES.keys():
+    if args.src_language not in list(LANGUAGE_CODES.keys()):
         print(
             "Source language not supported. "
             "Run with --list-languages to see all supported languages."
         )
         return False
 
-    if args.dst_language not in LANGUAGE_CODES.keys():
+    if args.dst_language not in list(LANGUAGE_CODES.keys()):
         print(
             "Destination language not supported. "
             "Run with --list-languages to see all supported languages."
