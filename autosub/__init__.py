@@ -35,7 +35,6 @@ DEFAULT_CONCURRENCY = 10
 DEFAULT_SRC_LANGUAGE = 'en'
 DEFAULT_DST_LANGUAGE = 'en'
 
-
 def percentile(arr, percent):
     """
     Calculate the given percentile of arr.
@@ -237,16 +236,16 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         src_language=DEFAULT_SRC_LANGUAGE,
         dst_language=DEFAULT_DST_LANGUAGE,
         subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
-        api_key=None,
         min_region_size=0.5,
         max_region_size=6,
+        api_key=None,
     ):
     """
     Given an input audio/video file, generate subtitles in the specified language and format.
     """
     audio_filename, audio_rate = extract_audio(source_path)
 
-    regions = find_speech_regions(audio_filename)
+    regions = find_speech_regions(audio_filename, min_region_size=min_region_size, max_region_size=max_region_size)
 
     pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
@@ -356,6 +355,8 @@ def main():
     """
     Run autosub as a command-line program.
     """
+
+
     parser = argparse.ArgumentParser()
     parser.add_argument('source_path', help="Path to the video or audio file to subtitle",
                         nargs='?')
@@ -370,6 +371,10 @@ def main():
                         default=DEFAULT_SRC_LANGUAGE)
     parser.add_argument('-D', '--dst-language', help="Desired language for the subtitles",
                         default=DEFAULT_DST_LANGUAGE)
+    parser.add_argument('-m', '--min', help="Minimum region size",
+                        default=0.5)
+    parser.add_argument('-M', '--max', help="Maximum region size",
+                        default=6)
     parser.add_argument('-K', '--api-key',
                         help="The Google Translate API key to be used. \
                         (Required for subtitle translation)")
@@ -377,10 +382,6 @@ def main():
                         action='store_true')
     parser.add_argument('--list-languages', help="List all available source/destination languages",
                         action='store_true')
-    parser.add_argument('-m', '--min', help="Minimum region size",
-                        default=0.5)
-    parser.add_argument('-M', '--max', help="Maximum region size",
-                        default=6)
 
     args = parser.parse_args()
 
@@ -407,9 +408,9 @@ def main():
             dst_language=args.dst_language,
             api_key=args.api_key,
             subtitle_file_format=args.format,
-            output=args.output,
             min_region_size=int(args.min),
             max_region_size=int(args.max),
+            output=args.output,
         )
         print("Subtitles file created at {}".format(subtitle_file_path))
     except KeyboardInterrupt:
