@@ -238,6 +238,8 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         dst_language=DEFAULT_DST_LANGUAGE,
         subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
         api_key=None,
+        min_region_size=0.5,
+        max_region_size=6,
     ):
     """
     Given an input audio/video file, generate subtitles in the specified language and format.
@@ -375,6 +377,10 @@ def main():
                         action='store_true')
     parser.add_argument('--list-languages', help="List all available source/destination languages",
                         action='store_true')
+    parser.add_argument('-m', '--min', help="Minimum region size",
+                        default=0.5)
+    parser.add_argument('-M', '--max', help="Maximum region size",
+                        default=6)
 
     args = parser.parse_args()
 
@@ -402,6 +408,8 @@ def main():
             api_key=args.api_key,
             subtitle_file_format=args.format,
             output=args.output,
+            min_region_size=int(args.min),
+            max_region_size=int(args.max),
         )
         print("Subtitles file created at {}".format(subtitle_file_path))
     except KeyboardInterrupt:
