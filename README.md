@@ -1,8 +1,8 @@
 # Autosub <a href="https://pypi.python.org/pypi/autosub"><img src="https://img.shields.io/pypi/v/autosub.svg"></img></a>
 
-This is a modified verson of Autosub. I have added arguments for minimum and maximum region size (length of audio to be transcribed in each "subtitle").
+*This is a modified verson of Autosub. I have added arguments for minimum and maximum region size (length of audio to be transcribed in each "subtitle").*
 
-Personally I found this very convenient when using autosub to transcribe interviews (yes, autosub works great for that application), but it might be useful in other cases too.
+*Personally I found this very convenient when using autosub to transcribe interviews (yes, autosub works great for that application), but it might be useful in other cases too.*
 
 
 ### Auto-generated subtitles for any video
