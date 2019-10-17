@@ -16,6 +16,17 @@ from pytranscriber.util.util import MyUtil
 
 class Ctr_Autosub():
 
+    cancel = False
+
+    @staticmethod
+    def init():
+        Ctr_Autosub.cancel = False
+
+    @staticmethod
+    def is_operation_canceled():
+        return Ctr_Autosub.cancel
+
+
     @staticmethod
     def output_progress(listener_progress, str_task, progress_percent):
         # only update progress if not requested to cancel

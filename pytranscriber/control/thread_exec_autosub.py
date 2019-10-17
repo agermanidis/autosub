@@ -23,7 +23,8 @@ import os
 
 class Thread_Exec_Autosub(QThread):
     signalLockGUI = pyqtSignal()
-    signalResetGUI = pyqtSignal()
+    signalResetGUIAfterCancel = pyqtSignal()
+    signalResetGUIAfterSuccess = pyqtSignal()
     signalProgress = pyqtSignal(str, int)
     signalProgressFileYofN = pyqtSignal(str)
     signalErrorMsg = pyqtSignal(str)
@@ -98,12 +99,20 @@ class Thread_Exec_Autosub(QThread):
             #go ahead with autosub process
             nFiles = len(self.objParamAutosub.listFiles)
             for i in range(nFiles):
-                self.__updateProgressFileYofN(i, nFiles)
-                self.__runAutosubForMedia(i, langCode)
+                #does not continue the loop if user clicked cancel button
+                if not Ctr_Autosub.is_operation_canceled():
+                    self.__updateProgressFileYofN(i, nFiles)
+                    self.__runAutosubForMedia(i, langCode)
 
-            self.signalResetGUI.emit()
+            #if operation is canceled does not clear the file list
+            if Ctr_Autosub.is_operation_canceled():
+                self.signalResetGUIAfterCancel.emit()
+            else:
+                self.signalResetGUIAfterSuccess.emit()
+
 
     def run(self):
+        Ctr_Autosub.init()
         self.__loopSelectedFiles()
         self.running = False
 

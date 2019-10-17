@@ -67,13 +67,16 @@ class Ctr_Main():
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
         self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
 
-    def __resetGUI(self):
-
-        self.__resetProgressBar()
+    def __resetGUIAfterSuccess(self):
+        self.__resetGUIAfterCancel()
 
         self.objGUI.qlwListFilesSelected.clear()
         self.objGUI.bConvert.setEnabled(False)
         self.objGUI.bRemoveFile.setEnabled(False)
+
+    def __resetGUIAfterCancel(self):
+
+        self.__resetProgressBar()
 
         self.objGUI.bSelectMedia.setEnabled(True)
         self.objGUI.bSelectOutputFolder.setEnabled(True)
@@ -81,6 +84,8 @@ class Ctr_Main():
         self.objGUI.chbxOpenOutputFilesAuto.setEnabled(True)
 
         self.objGUI.bCancel.hide()
+        self.objGUI.bConvert.setEnabled(True)
+        self.objGUI.bRemoveFile.setEnabled(True)
 
     def __lockButtonsDuringOperation(self):
         self.objGUI.bConvert.setEnabled(False)
@@ -128,6 +133,7 @@ class Ctr_Main():
             self.objGUI.bConvert.setEnabled(True)
             self.objGUI.bRemoveFile.setEnabled(True)
 
+
     def __listenerBExec(self):
         if not MyUtil.is_internet_connected():
             self.__showErrorMessage("Error! You need to have internet connection to use pyTranscriber!")
@@ -156,11 +162,11 @@ class Ctr_Main():
 
             #connect signals from work thread to gui controls
             self.thread_exec.signalLockGUI.connect(self.__lockButtonsDuringOperation)
-            self.thread_exec.signalResetGUI.connect(self.__resetGUI)
+            self.thread_exec.signalResetGUIAfterSuccess.connect(self.__resetGUIAfterSuccess)
+            self.thread_exec.signalResetGUIAfterCancel.connect(self.__resetGUIAfterCancel)
             self.thread_exec.signalProgress.connect(self.__listenerProgress)
             self.thread_exec.signalProgressFileYofN.connect(self.__updateProgressFileYofN)
             self.thread_exec.signalErrorMsg.connect(self.__showErrorMessage)
-
             self.thread_exec.start()
 
             #Show the cancel button
@@ -179,7 +185,7 @@ class Ctr_Main():
             self.__updateProgressFileYofN("")
 
             #connect the terminate signal to resetGUI
-            self.thread_cancel.signalTerminated.connect(self.__resetGUI)
+            self.thread_cancel.signalTerminated.connect(self.__resetGUIAfterCancel)
             #run the cancel autosub operation in new thread
             #to avoid progressbar freezing
             self.thread_cancel.start()
