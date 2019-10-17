@@ -75,9 +75,10 @@ class Thread_Exec_Autosub(QThread):
             #parses the .srt subtitle file and export text to .txt file
             SRTParser.extractTextFromSRT(str(outputFileSRT))
 
-            #open both SRT and TXT output files
-            MyUtil.open_file(outputFileTXT)
-            MyUtil.open_file(outputFileSRT)
+            if self.objParamAutosub.boolOpenOutputFilesAuto:
+                #open both SRT and TXT output files
+                MyUtil.open_file(outputFileTXT)
+                MyUtil.open_file(outputFileSRT)
 
     def __loopSelectedFiles(self):
         self.signalLockGUI.emit()

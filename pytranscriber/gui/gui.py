@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'gui.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.dev1812231618
+# Created by: PyQt5 UI code generator 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_window(object):
     def setupUi(self, window):
@@ -18,15 +20,15 @@ class Ui_window(object):
         self.bSelectMedia.setGeometry(QtCore.QRect(10, 10, 141, 34))
         self.bSelectMedia.setObjectName("bSelectMedia")
         self.cbSelectLang = QtWidgets.QComboBox(self.centralwidget)
-        self.cbSelectLang.setGeometry(QtCore.QRect(550, 230, 97, 34))
+        self.cbSelectLang.setGeometry(QtCore.QRect(200, 230, 92, 32))
         self.cbSelectLang.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
         self.cbSelectLang.setObjectName("cbSelectLang")
         self.labelSelectLang = QtWidgets.QLabel(self.centralwidget)
-        self.labelSelectLang.setGeometry(QtCore.QRect(400, 230, 141, 31))
+        self.labelSelectLang.setGeometry(QtCore.QRect(20, 230, 141, 31))
         self.labelSelectLang.setObjectName("labelSelectLang")
         self.bConvert = QtWidgets.QPushButton(self.centralwidget)
         self.bConvert.setEnabled(False)
-        self.bConvert.setGeometry(QtCore.QRect(250, 270, 301, 34))
+        self.bConvert.setGeometry(QtCore.QRect(200, 270, 341, 34))
         self.bConvert.setObjectName("bConvert")
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setGeometry(QtCore.QRect(20, 320, 1021, 23))
@@ -37,7 +39,7 @@ class Ui_window(object):
         self.labelCurrentOperation.setText("")
         self.labelCurrentOperation.setObjectName("labelCurrentOperation")
         self.bOpenOutputFolder = QtWidgets.QPushButton(self.centralwidget)
-        self.bOpenOutputFolder.setGeometry(QtCore.QRect(560, 270, 191, 34))
+        self.bOpenOutputFolder.setGeometry(QtCore.QRect(560, 270, 241, 34))
         self.bOpenOutputFolder.setObjectName("bOpenOutputFolder")
         self.bSelectOutputFolder = QtWidgets.QPushButton(self.centralwidget)
         self.bSelectOutputFolder.setGeometry(QtCore.QRect(10, 180, 141, 34))
@@ -66,9 +68,13 @@ class Ui_window(object):
         self.bCancel = QtWidgets.QPushButton(self.centralwidget)
         self.bCancel.setGeometry(QtCore.QRect(470, 370, 108, 36))
         self.bCancel.setObjectName("bCancel")
+        self.chbxOpenOutputFilesAuto = QtWidgets.QCheckBox(self.centralwidget)
+        self.chbxOpenOutputFilesAuto.setGeometry(QtCore.QRect(560, 230, 351, 32))
+        self.chbxOpenOutputFilesAuto.setChecked(True)
+        self.chbxOpenOutputFilesAuto.setObjectName("chbxOpenOutputFilesAuto")
         window.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1045, 32))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1045, 34))
         self.menubar.setObjectName("menubar")
         self.menuAbout = QtWidgets.QMenu(self.menubar)
         self.menuAbout.setObjectName("menuAbout")
@@ -89,15 +95,16 @@ class Ui_window(object):
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
-        window.setWindowTitle(_translate("window", "pyTranscriber - v1.2 - 17/03/2019"))
+        window.setWindowTitle(_translate("window", "pyTranscriber - v1.3 - 18/04/2019"))
         self.bSelectMedia.setText(_translate("window", "Select file(s)"))
         self.labelSelectLang.setText(_translate("window", "Audio Language"))
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
         self.bOpenOutputFolder.setText(_translate("window", "Open Output Folder"))
         self.bSelectOutputFolder.setText(_translate("window", "Output Location"))
-        self.groupBox.setTitle(_translate("window", "&List of files to transcribe audio / generate subtitles"))
+        self.groupBox.setTitle(_translate("window", "&List of files to generate transcribe audio / generate subtitles"))
         self.bRemoveFile.setText(_translate("window", "Remove file(s)"))
         self.bCancel.setText(_translate("window", "Cancel"))
+        self.chbxOpenOutputFilesAuto.setText(_translate("window", "Open output transcription files automatically"))
         self.menuAbout.setTitle(_translate("window", "Abo&ut"))
         self.actionLicense.setText(_translate("window", "&License"))
         self.actionAbout_pyTranscriber.setText(_translate("window", "&About pyTranscriber"))

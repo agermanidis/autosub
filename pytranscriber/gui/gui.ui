@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>pyTranscriber - v1.2 - 17/03/2019</string>
+   <string>pyTranscriber - v1.3 - 18/04/2019</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="bSelectMedia">
@@ -30,10 +30,10 @@
    <widget class="QComboBox" name="cbSelectLang">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>200</x>
       <y>230</y>
-      <width>97</width>
-      <height>34</height>
+      <width>92</width>
+      <height>32</height>
      </rect>
     </property>
     <property name="sizeAdjustPolicy">
@@ -43,7 +43,7 @@
    <widget class="QLabel" name="labelSelectLang">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>20</x>
       <y>230</y>
       <width>141</width>
       <height>31</height>
@@ -59,9 +59,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>200</x>
       <y>270</y>
-      <width>301</width>
+      <width>341</width>
       <height>34</height>
      </rect>
     </property>
@@ -100,7 +100,7 @@
      <rect>
       <x>560</x>
       <y>270</y>
-      <width>191</width>
+      <width>241</width>
       <height>34</height>
      </rect>
     </property>
@@ -208,6 +208,22 @@
      <string>Cancel</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="chbxOpenOutputFilesAuto">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>230</y>
+      <width>351</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open output transcription files automatically</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -215,7 +231,7 @@
      <x>0</x>
      <y>0</y>
      <width>1045</width>
-     <height>32</height>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout">

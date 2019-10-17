@@ -14,6 +14,7 @@
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtCore import Qt
 from pathlib import Path
 from pytranscriber.model.param_autosub import Param_Autosub
 from pytranscriber.util.util import MyUtil
@@ -77,6 +78,7 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.setEnabled(True)
         self.objGUI.bSelectOutputFolder.setEnabled(True)
         self.objGUI.cbSelectLang.setEnabled(True)
+        self.objGUI.chbxOpenOutputFilesAuto.setEnabled(True)
 
         self.objGUI.bCancel.hide()
 
@@ -86,6 +88,7 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.setEnabled(False)
         self.objGUI.bSelectOutputFolder.setEnabled(False)
         self.objGUI.cbSelectLang.setEnabled(False)
+        self.objGUI.chbxOpenOutputFilesAuto.setEnabled(False)
         QtCore.QCoreApplication.processEvents()
 
     def __listenerProgress(self, str, percent):
@@ -139,7 +142,14 @@ class Ctr_Main():
                 listFiles.append(str(self.objGUI.qlwListFilesSelected.item(i).text()))
 
             outputFolder = self.objGUI.qleOutputFolder.text()
-            objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode)
+
+            if self.objGUI.chbxOpenOutputFilesAuto.checkState() == Qt.Checked:
+                boolOpenOutputFilesAuto = True
+            else:
+                boolOpenOutputFilesAuto = False
+
+            objParamAutosub = Param_Autosub(listFiles, outputFolder, langCode,
+                                            boolOpenOutputFilesAuto)
 
             #execute the main process in separate thread to avoid gui lock
             self.thread_exec = Thread_Exec_Autosub(objParamAutosub)
