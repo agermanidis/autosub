@@ -24,6 +24,7 @@ $ pyuic5 gui.ui -o gui.py
 $ pyinstaller --onefile main.py
 
 Note: At least in my Manjaro system running latest python I need to add some extra parameters like as follows to be able to run the generated binary:
+<br>
 $ pyinstaller --onefile main.py --hidden-import='packaging.version' --hidden-import='packaging.specifiers' --hidden-import='packaging.requirements'
 
 
