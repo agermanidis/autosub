@@ -21,9 +21,9 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>
 <br>
 <h1>Release Notes:</h1>
-18/10/2019 - v1.3:
-<br>Added option for not opening output transcription files automatically after finish
-<br>Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected
+<b>18/10/2019 - v1.3:</b>
+<br>* Added option for not opening output transcription files automatically after finish
+<br>* Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected).
 <br><br>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
 <a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.3-stable"> pyTranscriber-v1.3-stable</a>
