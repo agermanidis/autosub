@@ -23,9 +23,9 @@ $ pyuic5 gui.ui -o gui.py
 # How to generate the python bundled binary package version?
 $ pyinstaller --onefile main.py
 
-Note: At least in my Manjaro system running latest python I need to add some extra parameters like as follows to be able to run the generated binary:
-<br>
-$ pyinstaller --onefile main.py --hidden-import='packaging.version' --hidden-import='packaging.specifiers' --hidden-import='packaging.requirements'
-
-
 The output binary will be on subfolder dist/main and has all dependencies included. For more details check pyinstaller documentation
+
+
+Note: At least in my Manjaro system running latest python I need to add some extra parameters like as follows to be able to run the generated binary:
+<br><br>
+$ pyinstaller --onefile main.py --hidden-import='packaging.version' --hidden-import='packaging.specifiers' --hidden-import='packaging.requirements'
