@@ -33,17 +33,20 @@ $ pyinstaller --onefile main.py --hidden-import='packaging.version' --hidden-imp
 # On Linux how to generate a statically linked binary so it can run even on systems with older glibc installed?
 
 As explained in <a href=https://github.com/pyinstaller/pyinstaller/wiki/FAQ>pyInstaller FAQ</a>:
-"The executable that PyInstaller builds is not fully static, in that it still depends on the system libc. Under Linux, the ABI of GLIBC is backward compatible, but not forward compatible. So if you link against a newer GLIBC, you can't run the resulting executable on an older system.
+> The executable that PyInstaller builds is not fully static, in that it still depends on the system libc. Under Linux, the ABI of GLIBC is backward compatible, but not forward compatible. So if you link against a newer GLIBC, you can't run the resulting executable on an older system.
 
-<b>Solution 1)</b> To compile the Python interpreter with its modules (and also probably bootloader) on the oldest system you have around, so that it gets linked with the oldest version of GLIBC.
+> <b>Solution 1)</b>To compile the Python interpreter with its modules (and also probably bootloader) on the oldest system you have around, so that it gets linked with the oldest version of GLIBC.
 
-<b>Solution 2)</b> to use a tool like StaticX to create a fully-static bundled version of your PyInstaller application. StaticX bundles all dependencies, including libc and ld.so. (Python code :arrow_right: PyInstaller :arrow_right: StaticX :arrow_right: Fully-static application)"
+> <b>Solution 2)</b> to use a tool like StaticX to create a fully-static bundled version of your PyInstaller application. StaticX bundles all dependencies, including libc and ld.so. (Python code :arrow_right: PyInstaller :arrow_right: StaticX :arrow_right: Fully-static application)"
 
 1) Install staticx and patchelf (dependency)
+
 $ pip3 install --user patchelf-wrapper
+
 $ pip3 install --user staticx
 
 2) After generating the binary with pyinstaller, open the dist folder and run:
+
 $ staticx main main-static
 
 The newly created main-static contains all library dependencies, including glibc, so it should be able to run even on very old systems.
