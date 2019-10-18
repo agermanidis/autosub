@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1045</width>
-    <height>463</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,32 +27,6 @@
      <string>Select file(s)</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="cbSelectLang">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>230</y>
-      <width>92</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QComboBox::AdjustToContents</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSelectLang">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>230</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Audio Language</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="bConvert">
     <property name="enabled">
      <bool>false</bool>
@@ -60,7 +34,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>270</y>
+      <y>290</y>
       <width>341</width>
       <height>34</height>
      </rect>
@@ -73,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>320</y>
+      <y>340</y>
       <width>1021</width>
       <height>23</height>
      </rect>
@@ -86,7 +60,7 @@
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>330</y>
+      <y>350</y>
       <width>871</width>
       <height>41</height>
      </rect>
@@ -98,8 +72,8 @@
    <widget class="QPushButton" name="bOpenOutputFolder">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>270</y>
+      <x>550</x>
+      <y>290</y>
       <width>241</width>
       <height>34</height>
      </rect>
@@ -186,7 +160,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>330</y>
+      <y>350</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -199,7 +173,7 @@
     <property name="geometry">
      <rect>
       <x>470</x>
-      <y>370</y>
+      <y>390</y>
       <width>108</width>
       <height>36</height>
      </rect>
@@ -211,18 +185,44 @@
    <widget class="QCheckBox" name="chbxOpenOutputFilesAuto">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>230</y>
-      <width>351</width>
+      <x>10</x>
+      <y>220</y>
+      <width>291</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
-     <string>Open output transcription files automatically</string>
+     <string>Open output files automatically</string>
     </property>
     <property name="checked">
      <bool>true</bool>
     </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>250</y>
+      <width>591</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="labelSelectLang">
+       <property name="text">
+        <string>Audio Language:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbSelectLang">
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
