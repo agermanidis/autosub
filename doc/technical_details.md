@@ -39,13 +39,13 @@ As explained in <a href=https://github.com/pyinstaller/pyinstaller/wiki/FAQ>pyIn
 
 > <b>Solution 2)</b> to use a tool like StaticX to create a fully-static bundled version of your PyInstaller application. StaticX bundles all dependencies, including libc and ld.so. (Python code :arrow_right: PyInstaller :arrow_right: StaticX :arrow_right: Fully-static application)"
 
-1) Install staticx and patchelf (dependency)
+<b>Install staticx and patchelf (dependency)</b>
 
 $ pip3 install --user patchelf-wrapper
 
 $ pip3 install --user staticx
 
-2) After generating the binary with pyinstaller, open the dist folder and run:
+<b>After generating the binary with pyinstaller, open the dist folder and run: </b>
 
 $ staticx main main-static
 
