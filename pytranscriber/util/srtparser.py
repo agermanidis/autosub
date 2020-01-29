@@ -27,7 +27,7 @@ class SRTParser(object):
             new_file_name = file_name[:-4] + '.txt'
 
         #write parsed txt file
-        with open(new_file_name, 'w') as f:
+        with open(new_file_name, 'w', encoding=file_encoding) as f:
             for line in new_lines:
                 f.write(line)
 
