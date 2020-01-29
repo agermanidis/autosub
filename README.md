@@ -21,6 +21,9 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>
 <br>
 <h1>Release Notes:</h1>
+<b>29/01/2020 - v1.4:</b>
+<br>* Fixed crash when exporting txt file for languages with special characters, specially chinese, on Windows system. Thanks for KY Poon for reporting!
+<br><br>
 <b>18/10/2019 - v1.3:</b>
 <br>* Added option for not opening output transcription files automatically after finish
 <br>* Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected).
