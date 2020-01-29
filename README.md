@@ -29,7 +29,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>* Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected).
 <br><br>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
-<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.3-stable"> pyTranscriber-v1.3-stable</a>
+<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.4-stable"> pyTranscriber-v1.4-stable</a>
 
 <h1>For Developers - Technical Details</h1>
 Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.md">technical_details.md<a>
