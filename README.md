@@ -36,7 +36,7 @@ Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/
 
 ### Supporting the development
 
-If you feel this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can donate via Paypal to raryel.costa@gmail.com or bitcoin address 16rg9vG5aNpjgo7xXoVjRLJcjNYqxwtfEt
+If you feel this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can donate via Paypal to <b>raryel.costa@gmail.com</b> or bitcoin address <b>16rg9vG5aNpjgo7xXoVjRLJcjNYqxwtfEt</b>
 
 ### License
 
