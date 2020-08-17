@@ -36,8 +36,8 @@ Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/
 
 <h1> Donations to support the development </h1>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
-If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can donate via Paypal to <b>raryel.costa@gmail.com</b> or bitcoin address <b>16rg9vG5aNpjgo7xXoVjRLJcjNYqxwtfEt</b>
-Thanks in advance!
+<br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can donate via Paypal to <b>raryel.costa@gmail.com</b> or bitcoin address <b>16rg9vG5aNpjgo7xXoVjRLJcjNYqxwtfEt</b>
+<br>Thanks in advance!
 
 ### License
 
