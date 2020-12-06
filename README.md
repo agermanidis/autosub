@@ -21,6 +21,9 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>
 <br>
 <h1>Release Notes:</h1>
+<b>06/12/2020 - v1.4.1:</b>
+<br>* Added support for MacOS Catalina!
+<br><br>
 <b>29/01/2020 - v1.4:</b>
 <br>* Fixed crash when exporting txt file for languages with special characters, specially chinese, on Windows system. Thanks for KY Poon for reporting!
 <br><br>
@@ -29,7 +32,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>* Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected).
 <br><br>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
-<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.4-stable"> pyTranscriber-v1.4-stable</a>
+<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.4.1-stable"> pyTranscriber-v1.4-stable</a>
 
 <h1>For Developers - Technical Details</h1>
 Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.md">technical_details.md<a>
