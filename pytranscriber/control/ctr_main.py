@@ -65,6 +65,7 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.clicked.connect(self.__listenerBSelectMedia)
 
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
+        self.objGUI.actionDonation.triggered.connect(self.__listenerBDonation)
         self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
 
     def __resetGUIAfterSuccess(self):
@@ -226,6 +227,13 @@ class Ctr_Main():
                 + "You should have received a copy of the GNU General Public License<br>"
                 + "along with this program.  If not, see <a href=\"https://www.gnu.org/licenses\">www.gnu.org/licenses</a>."
                 + "</body></html>", "License")
+
+    def __listenerBDonation(self):
+        self.__showInfoMessage("<html><body>"
+                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
+                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a> or <a href=\"https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development\"> DONATE US$5 VIA BITCOIN</a>."
+                + "<br><br>Thanks in advance!"
+                + "</body></html>", "DONATIONS")
 
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
