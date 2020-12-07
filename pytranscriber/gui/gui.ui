@@ -239,6 +239,7 @@
      <string>Abo&amp;ut</string>
     </property>
     <addaction name="actionLicense"/>
+    <addaction name="actionDonate"/>
     <addaction name="actionAbout_pyTranscriber"/>
    </widget>
    <addaction name="menuAbout"/>
@@ -247,6 +248,11 @@
   <action name="actionLicense">
    <property name="text">
     <string>&amp;License</string>
+   </property>
+  </action>
+  <action name="actionDonate">
+   <property name="text">
+    <string>&amp;DONATIONS</string>
    </property>
   </action>
   <action name="actionAbout_pyTranscriber">
