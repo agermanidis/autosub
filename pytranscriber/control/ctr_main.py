@@ -136,7 +136,7 @@ class Ctr_Main():
 
     def __listenerBExec(self):
         if not MyUtil.is_internet_connected():
-            self.__showErrorMessage("Error! You need to have internet connection to use pyTranscriber!")
+            self.__showErrorMessage("Error! Cannot reach Google Speech Servers. \n\n1) Please make sure you are connected to the internet. \n2) If you are in China or other place that blocks access to Google servers: please install and enable a desktop-wide VPN app like Windscribe before trying to use pyTranscriber!")
         else:
             #extracts the two letter lang_code from the string on language selection
             selectedLanguage = self.objGUI.cbSelectLang.currentText()
