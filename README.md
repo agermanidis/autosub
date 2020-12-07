@@ -34,14 +34,15 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
 <a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.4.1-stable"> pyTranscriber-v1.4-stable</a>
 
-<h1>For Developers - Technical Details</h1>
-Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.md">technical_details.md<a>
-
 <h1> Donations to support the development </h1>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
 <br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL">DONATE VIA PAYPAL</a></b> or <b><a href="https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development"> DONATE US$5 VIA BITCOIN</a></b>
 
 <br>Thanks in advance!
+
+<h1>For Developers - Technical Details</h1>
+Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/doc/technical_details.md">technical_details.md<a>
+
 
 ### License
 
