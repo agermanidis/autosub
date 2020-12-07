@@ -90,9 +90,12 @@ class Ui_window(object):
         window.setStatusBar(self.statusbar)
         self.actionLicense = QtWidgets.QAction(window)
         self.actionLicense.setObjectName("actionLicense")
+        self.actionDonation = QtWidgets.QAction(window)
+        self.actionDonation.setObjectName("actionDonation")
         self.actionAbout_pyTranscriber = QtWidgets.QAction(window)
         self.actionAbout_pyTranscriber.setObjectName("actionAbout_pyTranscriber")
         self.menuAbout.addAction(self.actionLicense)
+        self.menuAbout.addAction(self.actionDonation)
         self.menuAbout.addAction(self.actionAbout_pyTranscriber)
         self.menubar.addAction(self.menuAbout.menuAction())
 
@@ -101,7 +104,7 @@ class Ui_window(object):
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
-        window.setWindowTitle(_translate("window", "pyTranscriber - v1.4 - 29/01/2020"))
+        window.setWindowTitle(_translate("window", "pyTranscriber - v1.5 - 07/12/2020"))
         self.bSelectMedia.setText(_translate("window", "Select file(s)"))
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
         self.bOpenOutputFolder.setText(_translate("window", "Open Output Folder"))
@@ -113,4 +116,5 @@ class Ui_window(object):
         self.labelSelectLang.setText(_translate("window", "Audio Language:"))
         self.menuAbout.setTitle(_translate("window", "Abo&ut"))
         self.actionLicense.setText(_translate("window", "&License"))
+        self.actionDonation.setText(_translate("window", "&DONATIONS"))
         self.actionAbout_pyTranscriber.setText(_translate("window", "&About pyTranscriber"))

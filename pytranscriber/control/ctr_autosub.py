@@ -65,8 +65,9 @@ class Ctr_Autosub():
         if os.name != "nt" and "Darwin" in os.uname():
             # necessary for running on MacOS
             # method can be set only once, otherwise crash
-            if 'forkserver' != multiprocessing.get_start_method(allow_none=True):
-                multiprocessing.set_start_method('forkserver')
+            #from python 3.8 above the default for macos is spawn and not fork
+            if 'spawn' != multiprocessing.get_start_method(allow_none=True):
+                multiprocessing.set_start_method('spawn')
         Ctr_Autosub.cancel = False
         Ctr_Autosub.step = 0
         """

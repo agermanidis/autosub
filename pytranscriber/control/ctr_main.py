@@ -65,6 +65,7 @@ class Ctr_Main():
         self.objGUI.bSelectMedia.clicked.connect(self.__listenerBSelectMedia)
 
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
+        self.objGUI.actionDonation.triggered.connect(self.__listenerBDonation)
         self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
 
     def __resetGUIAfterSuccess(self):
@@ -136,7 +137,7 @@ class Ctr_Main():
 
     def __listenerBExec(self):
         if not MyUtil.is_internet_connected():
-            self.__showErrorMessage("Error! You need to have internet connection to use pyTranscriber!")
+            self.__showErrorMessage("Error! Cannot reach Google Speech Servers. \n\n1) Please make sure you are connected to the internet. \n2) If you are in China or other place that blocks access to Google servers: please install and enable a desktop-wide VPN app like Windscribe before trying to use pyTranscriber!")
         else:
             #extracts the two letter lang_code from the string on language selection
             selectedLanguage = self.objGUI.cbSelectLang.currentText()
@@ -227,14 +228,24 @@ class Ctr_Main():
                 + "along with this program.  If not, see <a href=\"https://www.gnu.org/licenses\">www.gnu.org/licenses</a>."
                 + "</body></html>", "License")
 
+    def __listenerBDonation(self):
+        self.__showInfoMessage("<html><body>"
+                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
+                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a> or <a href=\"https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development\"> DONATE US$5 VIA BITCOIN</a>."
+                + "<br><br>Thanks in advance!"
+                + "</body></html>", "DONATIONS")
+
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
                 + "<a href=\"https://github.com/raryelcostasouza/pyTranscriber\">pyTranscriber</a> is an application that can be used "
                 + "to generate <b>automatic transcription / automatic subtitles </b>"
                 + "for audio/video files through a friendly graphical user interface. "
-                +"<br><br>"
+                + "<br><br>"
                 + "The hard work of speech recognition is made by the <a href=\"https://cloud.google.com/speech/\">Google Speech Recognition API</a> "
                 + "using <a href=\"https://github.com/agermanidis/autosub\">Autosub</a>"
+                + "<br><br>pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
+                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a> or <a href=\"https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development\"> DONATE US$5 VIA BITCOIN</a>."
+                + "<br><br>Thanks in advance!"
                 + "</body></html>", "About pyTranscriber")
 
 
