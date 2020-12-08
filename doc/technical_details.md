@@ -21,7 +21,7 @@ Install Qt5 Designer and open the file pytranscriber/gui/gui.ui
 $ pyuic5 gui.ui -o gui.py
 
 # How to generate the python bundled binary package version?
-$ pyinstaller --onefile main.py
+$ pyinstaller --add-data "lib/google_api_python_client-1.12.8.dist-info/*;google_api_python_client-1.12.8.dist-info" --clean main.py
 
 The output binary will be on subfolder dist/main and has all dependencies included. For more details check pyinstaller documentation
 
@@ -42,7 +42,7 @@ As explained in <a href=https://github.com/pyinstaller/pyinstaller/wiki/FAQ>pyIn
 <b>Install staticx and patchelf (dependency)</b>
 
 $ pip3 install --user patchelf-wrapper
-
+ 
 $ pip3 install --user staticx
 
 <b>After generating the binary with pyinstaller, open the dist folder and run: </b>
