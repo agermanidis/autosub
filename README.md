@@ -21,6 +21,11 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>
 <br>
 <h1>Release Notes:</h1>
+<b>07/12/2020 - v1.5 </b>
+<br>* Since v1.4.1 COMPATIBLE WITH MACOS CATALINA.
+<br>* Upgraded to latest Python and libraries
+<br>* Minor GUI tweaks and fixes.
+<br><br>
 <b>06/12/2020 - v1.4.1:</b>
 <br>* Added support for MacOS Catalina!
 <br><br>
@@ -32,7 +37,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <br>* Fixed bug with canceling during batch processing (only the current job was being stopped... not all of them as expected).
 <br><br>
 <h1>For Users - Download the Windows/Linux/MacOS portable app</h1>
-<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.4.1-stable"> pyTranscriber-v1.4-stable</a>
+<a href="https://github.com/raryelcostasouza/pyTranscriber/releases/tag/v1.5-stable"> pyTranscriber-v1.5-stable</a>
 
 <h1> Donations to support the development </h1>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
