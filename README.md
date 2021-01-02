@@ -5,7 +5,7 @@ pyTranscriber is an application that can be used to generate <b>automatic transc
 <br>
 ![pyTranscriber1](doc/screenshot3.png?raw=true "pyTranscriber")
 <br>
-[![Watch the video](https://img.youtube.com/vi/DJFpklDnyA4/maxresdefault.jpg)](https://youtu.be/DJFpklDnyA4)
+[![Watch the video](doc/pyTranscriber.png](https://youtu.be/DJFpklDnyA4)
 <br>
 <br>
 pyTranscriber is a improved version of my previous project <a href="https://github.com/raryelcostasouza/JAutosub">JAutosub (Java)</a>, created because of the limitations, issues, and overhead of mixing this 2 different languages on a single project.
