@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from __future__ import unicode_literals
+
 
 try:
     from setuptools import setup
@@ -20,7 +20,8 @@ long_description = (
 
 setup(
     name='autosub',
-    version='0.4.0',
+    version='0.5.0',
+    python_requires='>=3',
     description='Auto-generates subtitles for any video or audio file',
     long_description=long_description,
     author='Anastasis Germanidis',
