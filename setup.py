@@ -21,6 +21,7 @@ long_description = (
 setup(
     name='autosub',
     version='0.5.0',
+    python_requires='>=3',
     description='Auto-generates subtitles for any video or audio file',
     long_description=long_description,
     author='Anastasis Germanidis',
