@@ -51,7 +51,7 @@ def percentile(arr, percent):
     return low_value + high_value
 
 
-class FLACConverter(object): # pylint: disable=too-few-public-methods
+class FLACConverter: # pylint: disable=too-few-public-methods
     """
     Class for converting a region of an input audio or video file into a FLAC audio file
     """
@@ -65,14 +65,14 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             start, end = region
             start = max(0, start - self.include_before)
             end += self.include_after
-            temp = tempfile.NamedTemporaryFile(suffix='.flac', delete=False)
-            command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
-                       "-y", "-i", self.source_path,
-                       "-loglevel", "error", temp.name]
-            use_shell = True if os.name == "nt" else False
-            subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
-            read_data = temp.read()
-            temp.close()
+            with tempfile.NamedTemporaryFile(suffix='.flac', delete=False) as temp:
+                command = ["ffmpeg", "-ss", str(start), "-t", str(end - start),
+                           "-y", "-i", self.source_path,
+                           "-loglevel", "error", temp.name]
+                use_shell = os.name == "nt"
+                subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
+                read_data = temp.read()
+                temp.close()
             os.unlink(temp.name)
             return read_data
 
@@ -80,7 +80,7 @@ class FLACConverter(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
+class SpeechRecognizer: # pylint: disable=too-few-public-methods
     """
     Class for performing speech-to-text for an input FLAC file.
     """
@@ -90,7 +90,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
         self.api_key = api_key
         self.retries = retries
 
-    def __call__(self, data):
+    def __call__(self, data): # pylint: disable=inconsistent-return-statements
         try:
             for _ in range(self.retries):
                 url = GOOGLE_SPEECH_API_URL.format(lang=self.language, key=self.api_key)
@@ -116,7 +116,7 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
             return None
 
 
-class Translator(object): # pylint: disable=too-few-public-methods
+class Translator: # pylint: disable=too-few-public-methods
     """
     Class for translating a sentence from a one language to another.
     """
@@ -176,19 +176,19 @@ def extract_audio(filename, channels=1, rate=16000):
     """
     Extract audio from an input file to a temporary WAV file.
     """
-    temp = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
-    if not os.path.isfile(filename):
-        print("The given file does not exist: {}".format(filename))
-        raise Exception("Invalid filepath: {}".format(filename))
-    if not which("ffmpeg"):
-        print("ffmpeg: Executable not found on machine.")
-        raise Exception("Dependency not found: ffmpeg")
-    command = ["ffmpeg", "-y", "-i", filename,
-               "-ac", str(channels), "-ar", str(rate),
-               "-loglevel", "error", temp.name]
-    use_shell = True if os.name == "nt" else False
-    subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
-    return temp.name, rate
+    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp:
+        if not os.path.isfile(filename):
+            print("The given file does not exist: {}".format(filename))
+            raise Exception("Invalid filepath: {}".format(filename))
+        if not which("ffmpeg"):
+            print("ffmpeg: Executable not found on machine.")
+            raise Exception("Dependency not found: ffmpeg")
+        command = ["ffmpeg", "-y", "-i", filename,
+                   "-ac", str(channels), "-ar", str(rate),
+                   "-loglevel", "error", temp.name]
+        use_shell = os.name == "nt"
+        subprocess.check_output(command, stdin=open(os.devnull), shell=use_shell)
+        return temp.name, rate
 
 
 def find_speech_regions(filename, frame_width=4096, min_region_size=0.5, max_region_size=6): # pylint: disable=too-many-locals
@@ -246,7 +246,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
 
     regions = find_speech_regions(audio_filename)
 
-    pool = multiprocessing.Pool(concurrency)
+    pool = multiprocessing.Pool(concurrency) # pylint: disable=consider-using-with
     converter = FLACConverter(source_path=audio_filename)
     recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
                                   api_key=GOOGLE_SPEECH_API_KEY)
