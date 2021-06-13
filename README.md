@@ -43,7 +43,11 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 
 <h1> Donations to support the development </h1>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
-<br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL">DONATE VIA PAYPAL</a></b> or <b><a href="https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development"> DONATE US$5 VIA BITCOIN</a></b>
+<br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can use any of the following donation means:
+<br><b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL">DONATE VIA PAYPAL</a></b>
+<br><b>DONATE VIA BITCOIN (bc1qun8q6xsp0pwzyf39qmxt3lpqk6ql458gzlm9u5)</b> or
+<br><b>DONATE VIA ETHEREUM (0x0db3341579caf72ce972fbbfcdec5cea761538fd)</b>
+<br><b>DONATE VIA DOGECOIN (DLZ5BMVfhdVxqZKEhcPKX4QuJLrLL42vJC)</b>
 
 <br>Thanks in advance!
 
