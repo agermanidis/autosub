@@ -15,7 +15,8 @@
 import platform
 import os
 import subprocess
-import socket
+import requests
+
 
 class MyUtil(object):
     @staticmethod
@@ -28,13 +29,15 @@ class MyUtil(object):
             subprocess.Popen(["xdg-open", path])
 
     @staticmethod
-    def is_internet_connected():
+    def is_internet_connected(proxies=None):
         try:
             # connect to the host -- tells us if the host is actually
             # reachable
-            s = socket.create_connection(("www.google.com", 80), 2)
-            s.close()
-            return True
+            res = requests.get('https://www.google.com', timeout=2,proxies=proxies)
+            if res.status_code != 200:
+                return False
+            else:
+                return True
         except OSError:
             pass
         return False
