@@ -1,3 +1,10 @@
+# UPDATE
+1. add proxy setting
+2. change the function 'pytranscriber.util.MyUtil.is_internet_connected'
+3. add requirements.txt
+
+![image](https://user-images.githubusercontent.com/23170065/143678535-750ac415-2be7-41ce-b5c2-f1d319d3e204.png)
+
 # pyTranscriber
 
 pyTranscriber is an application that can be used to generate <b>automatic transcription / automatic subtitles </b> for audio/video files through a friendly graphical user interface. The hard work of speech recognition is made by the <a href="https://cloud.google.com/speech/">Google Speech Recognition API</a> using <a href="https://github.com/agermanidis/autosub">Autosub</a>.
