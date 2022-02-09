@@ -45,9 +45,15 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
 <br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can use any of the following donation means:
 <br><b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL">DONATE VIA PAYPAL</a></b>
-<br><b>BITCOIN (bc1qun8q6xsp0pwzyf39qmxt3lpqk6ql458gzlm9u5)</b> or
-<br><b>ETHEREUM (0x0db3341579caf72ce972fbbfcdec5cea761538fd)</b>
-<br><b>DOGECOIN (DLZ5BMVfhdVxqZKEhcPKX4QuJLrLL42vJC)</b>
+<br><b>BITCOIN (16Bk1X9w7ZMjLRSDJU4qgp5bkehUuT3T7x)</b> or
+<br><b>ETHEREUM (0x8481d35ed088c9be153545aa156b3ac5a70d1406)</b>
+<br><b>LITECOIN (LcmkQVVcAyAKbAuN3A1ovyGHBWbYnfsXeH)</b>
+<br><b>DOGECOIN (DGk31oWs2V6XA8Wmartm2VkkwFpd4p2PcB)</b>
+<br><b>FANTOM (FTM) (0x8481d35ed088c9be153545aa156b3ac5a70d1406)</b>
+<br><b>Polygon (MATIC) (0x8481d35ed088c9be153545aa156b3ac5a70d1406)</b>
+<br><b>BITCOIN CASH (BCH) (16Bk1X9w7ZMjLRSDJU4qgp5bkehUuT3T7x)</b>
+
+
 
 <br>Thanks in advance!
 
