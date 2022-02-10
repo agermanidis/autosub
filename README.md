@@ -64,16 +64,3 @@ Check at <a href="https://github.com/raryelcostasouza/pyTranscriber/blob/master/
 ### License
 
 GPL v3
-	
-```html
-<script type="text/javascript">
-	atOptions = {
-		'key' : 'f3dfdf999fbf93eb5c8378a2b547d481',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
-	document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.effectivedisplaycontent.com/f3dfdf999fbf93eb5c8378a2b547d481/invoke.js"></scr' + 'ipt>');
-</script>
-```
