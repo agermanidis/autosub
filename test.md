@@ -1,6 +1,7 @@
 ---
 layout: home
 title: pyTranscriber
+permalink: /test/
 ---
 ```html
 
