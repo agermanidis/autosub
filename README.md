@@ -5,7 +5,7 @@
 [![Tip Me via Ethereum](https://img.shields.io/badge/Ethereum-tip%20me-1462ab.svg?logo=ethereum)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/eth.png)
 [![Tip Me via Litecoin](https://img.shields.io/badge/Litecoin-tip%20me-f7931a.svg?logo=litecoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/ltc.png)
 [![Tip Me via BNB](https://img.shields.io/badge/BNB-tip%20me-1462ab.svg?logo=binance)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/bnb.png)
-[![Tip Me via Dogecoin](https://img.shields.io/badge/Dogecoin-tip%20me-f7931a.svg?logo=doge)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/doge.png)
+[![Tip Me via Dogecoin](https://img.shields.io/badge/Dogecoin-tip%20me-f7931a.svg?logo=dogecoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/doge.png)
 
 pyTranscriber is an application that can be used to generate <b>automatic transcription / automatic subtitles </b> for audio/video files through a friendly graphical user interface. The hard work of speech recognition is made by the <a href="https://cloud.google.com/speech/">Google Speech Recognition API</a> using <a href="https://github.com/agermanidis/autosub">Autosub</a>.
 <br>
