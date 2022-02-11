@@ -2,6 +2,10 @@
 
 [![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-1462ab.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL)
 [![Tip Me via Bitcoin](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/btc.png)
+[![Tip Me via Ethereum](https://img.shields.io/badge/Ethereum-tip%20me-1462ab.svg?logo=ethereum)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/eth.png)
+[![Tip Me via Litecoin](https://img.shields.io/badge/Ethereum-tip%20me-f7931a.svg?logo=litecoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/ltc.png)
+[![Tip Me via BNB](https://img.shields.io/badge/Ethereum-tip%20me-1462ab.svg?logo=binance)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/bnb.png)
+[![Tip Me via Dogecoin](https://img.shields.io/badge/Ethereum-tip%20me-f7931a.svg?logo=doge)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/doge.png)
 
 pyTranscriber is an application that can be used to generate <b>automatic transcription / automatic subtitles </b> for audio/video files through a friendly graphical user interface. The hard work of speech recognition is made by the <a href="https://cloud.google.com/speech/">Google Speech Recognition API</a> using <a href="https://github.com/agermanidis/autosub">Autosub</a>.
 <br>
