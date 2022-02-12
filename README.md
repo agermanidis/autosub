@@ -1,6 +1,6 @@
 # pyTranscriber
 
-[![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-1462ab.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=USD)
+[![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-1462ab.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL)
 [![Tip Me via Bitcoin](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/btc.png)
 [![Tip Me via Ethereum](https://img.shields.io/badge/Ethereum-tip%20me-1462ab.svg?logo=ethereum)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/eth.png)
 [![Tip Me via Litecoin](https://img.shields.io/badge/Litecoin-tip%20me-f7931a.svg?logo=litecoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/ltc.png)
@@ -51,7 +51,7 @@ IMPORTANT: As speech recognition technology is still not fully accurate, the <b>
 <h1> Donations to support the development </h1>
 pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements.
 <br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can use any of the following donation means:
-<br><b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=USD">DONATE VIA PAYPAL</a></b>
+<br><b><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL">DONATE VIA PAYPAL</a></b>
 <br><b>BITCOIN (16Bk1X9w7ZMjLRSDJU4qgp5bkehUuT3T7x)</b> or
 <br><b>ETHEREUM (0x8481d35ed088c9be153545aa156b3ac5a70d1406)</b>
 <br><b>LITECOIN (LcmkQVVcAyAKbAuN3A1ovyGHBWbYnfsXeH)</b>
