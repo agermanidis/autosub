@@ -15,8 +15,9 @@
 class Param_Autosub():
 
     def __init__(self, listFiles, outputFolder, langCode,
-                boolOpenOutputFilesAuto):
+                boolOpenOutputFilesAuto, proxies=None):
         self.listFiles = listFiles
         self.outputFolder = outputFolder
         self.langCode = langCode
         self.boolOpenOutputFilesAuto = boolOpenOutputFilesAuto
+        self.proxies = proxies

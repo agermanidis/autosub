@@ -58,7 +58,8 @@ class Ctr_Autosub():
             listener_progress,
             output=None,
             concurrency=DEFAULT_CONCURRENCY,
-            subtitle_file_format=DEFAULT_SUBTITLE_FORMAT
+            subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
+            proxies=None
         ):
 
         # windows not support forkserver... only spawn
@@ -79,7 +80,7 @@ class Ctr_Autosub():
 
         converter = FLACConverter(source_path=audio_filename)
         recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
-                                      api_key=GOOGLE_SPEECH_API_KEY)
+                                      api_key=GOOGLE_SPEECH_API_KEY, proxies=proxies)
         transcripts = []
         if regions:
             try:

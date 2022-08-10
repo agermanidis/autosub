@@ -88,11 +88,12 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
     """
     Class for performing speech-to-text for an input FLAC file.
     """
-    def __init__(self, language="en", rate=44100, retries=3, api_key=GOOGLE_SPEECH_API_KEY):
+    def __init__(self, language="en", rate=44100, retries=3, api_key=GOOGLE_SPEECH_API_KEY, proxies=None):
         self.language = language
         self.rate = rate
         self.api_key = api_key
         self.retries = retries
+        self.proxies = proxies
 
     def __call__(self, data):
         try:
@@ -101,7 +102,10 @@ class SpeechRecognizer(object): # pylint: disable=too-few-public-methods
                 headers = {"Content-Type": "audio/x-flac; rate=%d" % self.rate}
 
                 try:
-                    resp = requests.post(url, data=data, headers=headers)
+                    if self.proxies:
+                        resp = requests.post(url, data=data, headers=headers, proxies=self.proxies)
+                    else:
+                        resp = requests.post(url, data=data, headers=headers)
                 except requests.exceptions.ConnectionError:
                     continue
 
@@ -251,6 +255,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
         dst_language=DEFAULT_DST_LANGUAGE,
         subtitle_file_format=DEFAULT_SUBTITLE_FORMAT,
         api_key=None,
+        proxies=None
     ):
     """
     Given an input audio/video file, generate subtitles in the specified language and format.
@@ -269,7 +274,7 @@ def generate_subtitles( # pylint: disable=too-many-locals,too-many-arguments
     pool = multiprocessing.Pool(concurrency)
     converter = FLACConverter(source_path=audio_filename)
     recognizer = SpeechRecognizer(language=src_language, rate=audio_rate,
-                                  api_key=GOOGLE_SPEECH_API_KEY)
+                                  api_key=GOOGLE_SPEECH_API_KEY, proxies=proxies)
 
     transcripts = []
     if regions:
