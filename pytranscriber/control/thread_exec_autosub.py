@@ -63,7 +63,7 @@ class Thread_Exec_Autosub(QThread):
         fOutput = Ctr_Autosub.generate_subtitles(source_path = sourceFile,
                                     output = outputFileSRT,
                                     src_language = langCode,
-                                    listener_progress = self.listenerProgress)
+                                    listener_progress = self.listenerProgress, proxies=self.objParamAutosub.proxies)
         #if nothing was returned
         if not fOutput:
             self.signalErrorMsg.emit("Error! Unable to generate subtitles for file " + sourceFile + ".")
