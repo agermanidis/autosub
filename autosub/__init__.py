@@ -171,7 +171,7 @@ def which(program):
             return program
     else:
         #looks for file in the script execution folder before checking on system path
-        current_dir = os.getcwd()
+        current_dir = sys._MEIPASS #tmp dir where the bundled binary is extracted
         local_program = os.path.join(current_dir, program)
         if is_exe(local_program):
             return local_program
