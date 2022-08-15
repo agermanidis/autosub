@@ -27,10 +27,10 @@ $ pyuic5 gui.ui -o gui.py
 $ pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --onefile --clean
 
 # Windows:
-$ pyinstaller main.py --path=$pwd --add-binary="ffmpeg;." --onefile --clean
+$ pyinstaller main.py --path=$pwd --add-binary="ffmpeg.exe;." --onefile --clean
 
 # Mac:
-$ pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --onefile --clean --windowed
+$ pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --clean --windowed
 
 
 The output binary will be on subfolder dist/main and has all dependencies included. For more details check pyinstaller documentation
