@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>pyTranscriber - v1.5 - 07/12/2020</string>
+   <string>pyTranscriber - v1.7 - 08/08/2022</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="bSelectMedia">
@@ -230,8 +230,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1045</width>
-     <height>34</height>
+     <width>1042</width>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout">
@@ -239,9 +239,16 @@
      <string>Abo&amp;ut</string>
     </property>
     <addaction name="actionLicense"/>
-    <addaction name="actionDonate"/>
+    <addaction name="actionDonation"/>
     <addaction name="actionAbout_pyTranscriber"/>
    </widget>
+   <widget class="QMenu" name="menuProxy">
+    <property name="title">
+     <string>Setting</string>
+    </property>
+    <addaction name="actionProxy"/>
+   </widget>
+   <addaction name="menuProxy"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -250,7 +257,7 @@
     <string>&amp;License</string>
    </property>
   </action>
-  <action name="actionDonate">
+  <action name="actionDonation">
    <property name="text">
     <string>&amp;DONATIONS</string>
    </property>
@@ -258,6 +265,14 @@
   <action name="actionAbout_pyTranscriber">
    <property name="text">
     <string>&amp;About pyTranscriber</string>
+   </property>
+  </action>
+  <action name="actionProxy">
+   <property name="text">
+    <string>Proxy</string>
+   </property>
+   <property name="toolTip">
+    <string>Proxy setting</string>
    </property>
   </action>
  </widget>

@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+autosub = "*"
+pyqt5 = "*"
+pyinstaller = "*"
+macholib = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
