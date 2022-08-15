@@ -2,13 +2,12 @@
 
 This app consists basically of a friendly pyQt5 graphical interface for a customized version of <a href="https://github.com/agermanidis/autosub">Autosub 0.4.0</a> that can run on Linux, Windows and MacOS. All the hard work of processing the audio and generating the subtitles is done by Autosub.
 
-<h2>Dependencies</h2>
+<h2>Dependencies to build</h2>
 
 <ol>
 <li>pip3 install pipenv
 <li>pipenv install (install all dependencies from Pipfile)
-<li>Download the static ffmpeg binary and put on project root folder or install system wide
-</ol>
+<li>Download the <a href="https://johnvansickle.com/ffmpeg/">static ffmpeg binary </a> and move it to project root folder
 
 # How to run?
 $ pipenv shell
