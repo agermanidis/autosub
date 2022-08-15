@@ -1,0 +1,20 @@
+Way to embed ffmpeg directly with pyinstaller
+
+Embed ffmpeg linux
+pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --onefile --clean
+
+Embed ffmpeg windows
+pyinstaller main.py --path=$pwd --add-binary="ffmpeg;." --onefile --clean
+
+
+Release notes
+- Rebuilt using pyInstaller 5.3 - should improve stability on Windows related to multithreading crashes
+- Added support for using a proxy.
+
+Generate binary ubuntu
+generate binary windows
+generate binary mac
+
+upload binaries
+
+fix links pytranscriber website

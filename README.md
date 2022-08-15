@@ -1,7 +1,9 @@
-# UPDATE
+# UPDATE - v1.7 - 08/08/2022
 1. add proxy setting
 2. change the function 'pytranscriber.util.MyUtil.is_internet_connected'
 3. add requirements.txt
+4. rebuilt using pyInstaller 5.3 - more stability to prevent multithreading crashes on Windows
+5. Added pipfile
 
 ![image](https://user-images.githubusercontent.com/23170065/143678535-750ac415-2be7-41ce-b5c2-f1d319d3e204.png)
 
