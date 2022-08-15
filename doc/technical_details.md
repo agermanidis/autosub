@@ -29,6 +29,10 @@ $ pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --onefile --clean
 # Windows:
 $ pyinstaller main.py --path=$pwd --add-binary="ffmpeg;." --onefile --clean
 
+# Mac:
+$ pyinstaller main.py --path="$(pwd)" --add-binary="ffmpeg:." --onefile --clean --windowed
+
+
 The output binary will be on subfolder dist/main and has all dependencies included. For more details check pyinstaller documentation
 
 # On Linux how to generate a statically linked binary so it can run even on systems with older glibc installed?
