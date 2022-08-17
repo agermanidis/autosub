@@ -22,6 +22,7 @@ from pytranscriber.control.thread_exec_autosub import Thread_Exec_Autosub
 from pytranscriber.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pytranscriber.gui.gui import Ui_window
 import os
+import sys
 
 
 class Ctr_Main():
@@ -246,7 +247,15 @@ class Ctr_Main():
         #if it was a valid event
         if currentLang:
             #loads the languageFile
-            self.objGUI.trans.load('pytranscriber/gui/'+currentLang)
+            if hasattr(sys, 'frozen'):
+                #if frozen gets temp folder
+                currentDir = sys._MEIPASS
+            else:
+                #app folder
+                currentDir =  ""
+            pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang )
+            self.objGUI.trans.load(pathLangFile)
+            
             QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
         else:
             QtWidgets.QApplication.instance().removeTranslator(self.trans)
