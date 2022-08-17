@@ -1,3 +1,8 @@
+# UPDATE - v1.8 - 17/08/2022
+1. Fixed bug: language codes for Chinese Languages updated accordingly to Speech API. Changed to "cmn-Hans-CN" and "cmn-Hant-TW" instead of "zh / zh-TW").. The output was always mistakenly coming in Cantonese (yue-Hant-HK). Now they come properly in Traditional Chinese and Simplified Chinese. Thanks to "Specter Hi" for reporting!
+2. Added GUI language switch feature
+3. Updated link to funding campaign at GitHub Sponsors
+
 # UPDATE - v1.7 - 08/08/2022
 1. add proxy setting
 2. change the function 'pytranscriber.util.MyUtil.is_internet_connected'

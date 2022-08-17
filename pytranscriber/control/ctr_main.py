@@ -13,7 +13,7 @@
 '''
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox, QDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QDialog, QActionGroup
 from PyQt5.QtCore import Qt
 from pathlib import Path
 from pytranscriber.model.param_autosub import Param_Autosub
@@ -36,16 +36,19 @@ class Ctr_Main():
         window = QtWidgets.QMainWindow()
         self.objGUI = Ui_window()
         self.objGUI.setupUi(window)
-        self.__initGUI()
+        self.__initGUI(window)
         window.setFixedSize(window.size())
         window.show()
         sys.exit(app.exec_())
 
-    def __initGUI(self):
+    def __initGUI(self, window):
 
         # language selection list
         list_languages = ["en-US - English (United States)",
-                          "en-AU - English (Australia)",
+                          "cmn-Hans-CN - Chinese (Simplified, China)",                          
+                          "cmn-Hant-TW - Chinese (Traditional, Taiwan)",
+                          "yue-Hant-HK - Cantonese (Traditional, HK)",
+                          "en-AU - English (Australia)",                          
                           "en-CA - English (Canada)",
                           "en-GB - English (United Kingdom)",
                           "en-HK - English (Hong Kong)",
@@ -187,10 +190,6 @@ class Ctr_Main():
                           "vi - Vietnamese",
                           "yi - Yiddish",
                           "yo - Yoruba",
-                          "yue-Hant-HK - Cantonese (Traditional, HK)",
-                          "zh - Chinese (Simplified, China)",
-                          "zh-HK - Chinese (Simplified, Hong Kong)",
-                          "zh-TW - Chinese (Traditional, Taiwan)",
                           "zu - Zulu"]
 
         self.objGUI.cbSelectLang.addItems(list_languages)
@@ -218,6 +217,42 @@ class Ctr_Main():
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
         self.objGUI.actionDonation.triggered.connect(self.__listenerBDonation)
         self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
+        
+        self.__initLanguageMenu(window)
+        self.objGUI.action_group.triggered.connect(self.__listenerChangeLanguage)
+        
+    def __initLanguageMenu(self, window):
+        self.objGUI.actionEnglish.setCheckable(True)
+        self.objGUI.actionEnglish.setChecked(True)
+        self.objGUI.actionChineseTraditional.setCheckable(True)
+        self.objGUI.actionChineseSimplified.setCheckable(True)
+        self.objGUI.actionPortuguese.setCheckable(True)
+        
+        #set up of the actiongroup
+        self.objGUI.action_group = QActionGroup(window)
+        self.objGUI.action_group.addAction(self.objGUI.actionEnglish)
+        self.objGUI.action_group.addAction(self.objGUI.actionChineseTraditional)
+        self.objGUI.action_group.addAction(self.objGUI.actionChineseSimplified)
+        self.objGUI.action_group.addAction(self.objGUI.actionPortuguese)
+
+        self.objGUI.trans = QtCore.QTranslator(window)
+        self.objGUI.mainWindow = window        
+    
+    #listener change language selected
+    def __listenerChangeLanguage(self, event):
+        #get the label of the selected language
+        currentLang = event.text()
+        
+        #if it was a valid event
+        if currentLang:
+            #loads the languageFile
+            self.objGUI.trans.load('pytranscriber/gui/'+currentLang)
+            QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
+        else:
+            QtWidgets.QApplication.instance().removeTranslator(self.trans)
+        
+        #refresh UI with translation
+        self.objGUI.retranslateUi(self.objGUI.mainWindow)
 
     def __resetGUIAfterSuccess(self):
         self.__resetGUIAfterCancel()
@@ -399,10 +434,10 @@ class Ctr_Main():
 
     def __listenerBDonation(self):
         self.__showInfoMessage("<html><body>"
-                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
-                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a>"
+                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed."
+                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improving and have more and bugfixes and features like support to other Speech Recognition Engines (like Vosk and Mozilla Deep Speech) you can either join our <a href=\"https://github.com/sponsors/raryelcostasouza\">funding campaign at Github Sponsors</a> or make a <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">Paypal donation</a>."
                 + "<br><br>Thanks in advance!"
-                + "</body></html>", "DONATIONS")
+                + "</body></html>", "Funding")
 
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
@@ -412,8 +447,8 @@ class Ctr_Main():
                                + "<br><br>"
                                + "The hard work of speech recognition is made by the <a href=\"https://cloud.google.com/speech/\">Google Speech Recognition API</a> "
                                + "using <a href=\"https://github.com/agermanidis/autosub\">Autosub</a>"
-                               + "<br><br>pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
-                               + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a> or <a href=\"https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development\"> DONATE US$5 VIA BITCOIN</a>."
+                               + "<br><br>pyTranscriber is developed as a hobby, so donations of any value are welcomed."
+                               + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improving and have more and bugfixes and features like support to other Speech Recognition Engines (like Vosk and Mozilla Deep Speech) you can either join our <a href=\"https://github.com/sponsors/raryelcostasouza\">funding campaign at Github Sponsors</a> or make a <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">Paypal donation</a>."
                                + "<br><br>Thanks in advance!"
                                + "</body></html>", "About pyTranscriber")
 

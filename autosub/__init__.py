@@ -175,7 +175,12 @@ def which(program):
             return program
     else:
         #looks for file in the script execution folder before checking on system path
-        current_dir = sys._MEIPASS #tmp dir where the bundled binary is extracted
+        #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
+        if hasattr(sys, 'frozen'):
+            current_dir = sys._MEIPASS #tmp dir where the bundled binary is extracted
+        else:
+            #checks the current directory for ffmpeg binary when running locally directly from interpreter
+            current_dir = os.getcwd()
         local_program = os.path.join(current_dir, program)
         if is_exe(local_program):
             return local_program

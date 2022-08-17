@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>pyTranscriber - v1.7 - 08/08/2022</string>
+   <string>pyTranscriber - v1.8 - 17/08/2022</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="bSelectMedia">
@@ -121,7 +121,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>&amp;List of files to generate transcribe audio / generate subtitles</string>
+     <string>List of files to generate transcribe audio / generate subtitles</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -204,7 +204,7 @@
       <x>200</x>
       <y>250</y>
       <width>591</width>
-      <height>34</height>
+      <height>38</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -230,8 +230,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1042</width>
-     <height>18</height>
+     <width>1045</width>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout">
@@ -244,11 +244,21 @@
    </widget>
    <widget class="QMenu" name="menuProxy">
     <property name="title">
-     <string>Setting</string>
+     <string>&amp;Settings</string>
     </property>
     <addaction name="actionProxy"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>&amp;Language</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionChineseTraditional"/>
+    <addaction name="actionChineseSimplified"/>
+    <addaction name="actionPortuguese"/>
+   </widget>
    <addaction name="menuProxy"/>
+   <addaction name="menuLanguage"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -259,7 +269,7 @@
   </action>
   <action name="actionDonation">
    <property name="text">
-    <string>&amp;DONATIONS</string>
+    <string>&amp;Funding at Github Sponsors</string>
    </property>
   </action>
   <action name="actionAbout_pyTranscriber">
@@ -269,10 +279,30 @@
   </action>
   <action name="actionProxy">
    <property name="text">
-    <string>Proxy</string>
+    <string>&amp;Proxy</string>
    </property>
    <property name="toolTip">
     <string>Proxy setting</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionChineseTraditional">
+   <property name="text">
+    <string>繁體中文 - Chinese Traditional</string>
+   </property>
+  </action>
+  <action name="actionChineseSimplified">
+   <property name="text">
+    <string>简体中文 - Chinese Simplified</string>
+   </property>
+  </action>
+  <action name="actionPortuguese">
+   <property name="text">
+    <string>Português</string>
    </property>
   </action>
  </widget>
