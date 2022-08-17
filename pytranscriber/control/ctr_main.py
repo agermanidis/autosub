@@ -434,10 +434,10 @@ class Ctr_Main():
 
     def __listenerBDonation(self):
         self.__showInfoMessage("<html><body>"
-                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
-                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a>"
+                + "pyTranscriber is developed as a hobby, so donations of any value are welcomed."
+                + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improving and have more and bugfixes and features like support to other Speech Recognition Engines (like Vosk and Mozilla Deep Speech) you can either join our <a href=\"https://github.com/sponsors/raryelcostasouza\">funding campaign at Github Sponsors</a> or make a <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">Paypal donation</a>."
                 + "<br><br>Thanks in advance!"
-                + "</body></html>", "DONATIONS")
+                + "</body></html>", "Funding")
 
     def __listenerBAboutpyTranscriber(self):
         self.__showInfoMessage("<html><body>"
@@ -447,8 +447,8 @@ class Ctr_Main():
                                + "<br><br>"
                                + "The hard work of speech recognition is made by the <a href=\"https://cloud.google.com/speech/\">Google Speech Recognition API</a> "
                                + "using <a href=\"https://github.com/agermanidis/autosub\">Autosub</a>"
-                               + "<br><br>pyTranscriber is developed as a hobby, so donations of any value are welcomed and essential for further improvements and fixes."
-                               + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improve and have more features and fixes you can <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">DONATE VIA PAYPAL</a> or <a href=\"https://blockchain.com/btc/payment_request?address=153LcqV59paxEEJX7riLrEHQbE54vhcko9&amount=0.00026351&message=Donation to support pyTranscriber development\"> DONATE US$5 VIA BITCOIN</a>."
+                               + "<br><br>pyTranscriber is developed as a hobby, so donations of any value are welcomed."
+                               + "<br><br>If you feel that this software has been useful and would like to contribute for it to continue improving and have more and bugfixes and features like support to other Speech Recognition Engines (like Vosk and Mozilla Deep Speech) you can either join our <a href=\"https://github.com/sponsors/raryelcostasouza\">funding campaign at Github Sponsors</a> or make a <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL\">Paypal donation</a>."
                                + "<br><br>Thanks in advance!"
                                + "</body></html>", "About pyTranscriber")
 
