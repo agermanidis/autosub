@@ -36,16 +36,19 @@ class Ctr_Main():
         window = QtWidgets.QMainWindow()
         self.objGUI = Ui_window()
         self.objGUI.setupUi(window)
-        self.__initGUI()
+        self.__initGUI(window)
         window.setFixedSize(window.size())
         window.show()
         sys.exit(app.exec_())
 
-    def __initGUI(self):
+    def __initGUI(self, window):
 
         # language selection list
         list_languages = ["en-US - English (United States)",
-                          "en-AU - English (Australia)",
+                          "cmn-Hans-CN - Chinese (Simplified, China)",                          
+                          "cmn-Hant-TW - Chinese (Traditional, Taiwan)",
+                          "yue-Hant-HK - Cantonese (Traditional, HK)",
+                          "en-AU - English (Australia)",                          
                           "en-CA - English (Canada)",
                           "en-GB - English (United Kingdom)",
                           "en-HK - English (Hong Kong)",
@@ -187,10 +190,6 @@ class Ctr_Main():
                           "vi - Vietnamese",
                           "yi - Yiddish",
                           "yo - Yoruba",
-                          "yue-Hant-HK - Cantonese (Traditional, HK)",
-                          "zh - Chinese (Simplified, China)",
-                          "zh-HK - Chinese (Simplified, Hong Kong)",
-                          "zh-TW - Chinese (Traditional, Taiwan)",
                           "zu - Zulu"]
 
         self.objGUI.cbSelectLang.addItems(list_languages)
