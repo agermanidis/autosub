@@ -13,7 +13,7 @@
 '''
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox, QDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QDialog, QActionGroup
 from PyQt5.QtCore import Qt
 from pathlib import Path
 from pytranscriber.model.param_autosub import Param_Autosub
@@ -217,6 +217,42 @@ class Ctr_Main():
         self.objGUI.actionLicense.triggered.connect(self.__listenerBLicense)
         self.objGUI.actionDonation.triggered.connect(self.__listenerBDonation)
         self.objGUI.actionAbout_pyTranscriber.triggered.connect(self.__listenerBAboutpyTranscriber)
+        
+        self.__initLanguageMenu(window)
+        self.objGUI.action_group.triggered.connect(self.__listenerChangeLanguage)
+        
+    def __initLanguageMenu(self, window):
+        self.objGUI.actionEnglish.setCheckable(True)
+        self.objGUI.actionEnglish.setChecked(True)
+        self.objGUI.actionChineseTraditional.setCheckable(True)
+        self.objGUI.actionChineseSimplified.setCheckable(True)
+        self.objGUI.actionPortuguese.setCheckable(True)
+        
+        #set up of the actiongroup
+        self.objGUI.action_group = QActionGroup(window)
+        self.objGUI.action_group.addAction(self.objGUI.actionEnglish)
+        self.objGUI.action_group.addAction(self.objGUI.actionChineseTraditional)
+        self.objGUI.action_group.addAction(self.objGUI.actionChineseSimplified)
+        self.objGUI.action_group.addAction(self.objGUI.actionPortuguese)
+
+        self.objGUI.trans = QtCore.QTranslator(window)
+        self.objGUI.mainWindow = window        
+    
+    #listener change language selected
+    def __listenerChangeLanguage(self, event):
+        #get the label of the selected language
+        currentLang = event.text()
+        
+        #if it was a valid event
+        if currentLang:
+            #loads the languageFile
+            self.objGUI.trans.load('pytranscriber/gui/'+currentLang)
+            QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
+        else:
+            QtWidgets.QApplication.instance().removeTranslator(self.trans)
+        
+        #refresh UI with translation
+        self.objGUI.retranslateUi(self.objGUI.mainWindow)
 
     def __resetGUIAfterSuccess(self):
         self.__resetGUIAfterCancel()
