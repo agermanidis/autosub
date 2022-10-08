@@ -321,7 +321,7 @@ class Ctr_Main():
         # options = QFileDialog.Options()
         options = QFileDialog.DontUseNativeDialog
         files, _ = QFileDialog.getOpenFileNames(self.objGUI.centralwidget, "Select media", "",
-                                                "All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma)")
+                                                "All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma *.ogg *.mkv *.webm)")
 
         if files:
             self.objGUI.qlwListFilesSelected.addItems(files)
