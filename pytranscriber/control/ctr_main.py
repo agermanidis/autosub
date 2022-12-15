@@ -23,6 +23,7 @@ from pytranscriber.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pytranscriber.gui.gui import Ui_window
 import os
 import sys
+import re
 
 
 class Ctr_Main():
@@ -247,13 +248,15 @@ class Ctr_Main():
         #if it was a valid event
         if currentLang:
             #loads the languageFile
-            if hasattr(sys, 'frozen'):
-                #if frozen gets temp folder
-                currentDir = sys._MEIPASS
-            else:
+            try:
+                if __compiled__:
+                    #if frozen gets temp folder
+                    currentDir = util.extract_tmp_root(os.path.dirname(__file__))
+            except:
                 #app folder
                 currentDir =  ""
-            pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang )
+            pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang)
+            print("PATHLANGFILE:", pathLangFile)
             self.objGUI.trans.load(pathLangFile)
             
             QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
@@ -321,7 +324,7 @@ class Ctr_Main():
         # options = QFileDialog.Options()
         options = QFileDialog.DontUseNativeDialog
         files, _ = QFileDialog.getOpenFileNames(self.objGUI.centralwidget, "Select media", "",
-                                                "All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma *.ogg *.mkv *.webm)")
+                                                "All Media Files (*.mp3 *.mp4 *.wav *.m4a *.wma *.ogg *.ogv *.mkv *.webm *.ts)")
 
         if files:
             self.objGUI.qlwListFilesSelected.addItems(files)

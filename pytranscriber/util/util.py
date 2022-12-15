@@ -45,3 +45,9 @@ class MyUtil(object):
     @staticmethod
     def percentage(currentval, maxval):
         return 100 * currentval / float(maxval)
+
+    @staticmethod
+    def extract_tmp_root(path_code_file):
+        #extract root tmp dir from code path
+        root_tmp_extracted = re.findall('/\S+/onefile_[0-9_]*/', path_code_file)
+        return root_tmp_extracted[0]

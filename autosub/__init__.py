@@ -16,6 +16,7 @@ import subprocess
 import sys
 import tempfile
 import wave
+import re
 
 import json
 import requests
@@ -156,6 +157,10 @@ class Translator(object): # pylint: disable=too-few-public-methods
         except KeyboardInterrupt:
             return None
 
+def extract_tmp_root(path_code_file):
+    #extract root tmp dir from code path
+    root_tmp_extracted = re.findall('/\S+/onefile_[0-9_]*/', path_code_file)
+    return root_tmp_extracted[0]
 
 def which(program):
     """
@@ -176,11 +181,17 @@ def which(program):
     else:
         #looks for file in the script execution folder before checking on system path
         #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
-        if hasattr(sys, 'frozen'):
-            current_dir = sys._MEIPASS #tmp dir where the bundled binary is extracted
-        else:
+        
+        
+        try:
+            #for nuitka compiled code
+            if __compiled__:
+                #tmp dir where the bundled binary is extracted
+                current_dir = extract_tmp_root(os.path.dirname(__file__)) 
+        except:
             #checks the current directory for ffmpeg binary when running locally directly from interpreter
             current_dir = os.getcwd()
+        print("DIR AUTOSUB BIN:", current_dir)
         local_program = os.path.join(current_dir, program)
         if is_exe(local_program):
             return local_program
