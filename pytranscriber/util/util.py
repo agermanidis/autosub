@@ -16,6 +16,10 @@ import platform
 import os
 import subprocess
 import requests
+import re
+from pathlib import PureWindowsPath
+from urllib.parse import urlparse
+
 
 
 class MyUtil(object):
@@ -48,6 +52,21 @@ class MyUtil(object):
 
     @staticmethod
     def extract_tmp_root(path_code_file):
-        #extract root tmp dir from code path
-        root_tmp_extracted = re.findall('/\S+/onefile_[0-9_]*/', path_code_file)
-        return root_tmp_extracted[0]
+        
+        regex = "\S+/onefile_[0-9_]*/"
+        # for Unixes
+        if os.name != "nt":
+            tmp_root_found = re.findall(regex, path_code_file)  
+            #extract root tmp dir from code path  
+            return tmp_root_found[0]
+        # for Windows
+        else:
+            # converts the Windows Path to uri to use the same regular expression as in Unixes
+            win_path = PureWindowsPath(path_code_file)
+            uri_path = win_path.as_uri()
+            
+            tmp_root_found = re.findall(regex, uri_path)
+            # after finding the regular expression on the uri converts back to python path
+            py_path = urlparse(tmp_root_found[0])
+            
+            return py_path
