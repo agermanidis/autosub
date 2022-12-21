@@ -31,6 +31,9 @@ from autosub.constants import (
 )
 from autosub.formatters import FORMATTERS
 
+sys.path.append("../../")
+from pytranscriber.util.util import MyUtil
+
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
 DEFAULT_SRC_LANGUAGE = 'en'
@@ -174,14 +177,15 @@ def which(program):
     else:
         #looks for file in the script execution folder before checking on system path
         #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
-        
-        
         try:
+            print("StartTry:", os.path.dirname(__file__))
             #for nuitka compiled code
             if __compiled__:
+                
                 #tmp dir where the bundled binary is extracted
-                current_dir = extract_tmp_root(os.path.dirname(__file__)) 
-        except:
+                current_dir = MyUtil.extract_tmp_root(os.path.dirname(__file__)) 
+        except Exception as ex:
+            print("Exception", type(ex),ex)
             #checks the current directory for ffmpeg binary when running locally directly from interpreter
             current_dir = os.getcwd()
         print("DIR AUTOSUB BIN:", current_dir)
