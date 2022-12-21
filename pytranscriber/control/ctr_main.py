@@ -23,7 +23,6 @@ from pytranscriber.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pytranscriber.gui.gui import Ui_window
 import os
 import sys
-import re
 
 
 class Ctr_Main():
@@ -249,11 +248,13 @@ class Ctr_Main():
         if currentLang:
             #loads the languageFile
             try:
+                print("StartTry:", os.path.dirname(__file__))
                 if __compiled__:
                     #if frozen gets temp folder
-                    currentDir = util.extract_tmp_root(os.path.dirname(__file__))
-            except:
+                    currentDir = MyUtil.extract_tmp_root(os.path.dirname(__file__))
+            except Exception as ex:
                 #app folder
+                print("Exception", type(ex),ex)
                 currentDir =  ""
             pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang)
             print("PATHLANGFILE:", pathLangFile)
