@@ -16,8 +16,6 @@ import subprocess
 import sys
 import tempfile
 import wave
-import re
-
 import json
 import requests
 try:
@@ -156,11 +154,6 @@ class Translator(object): # pylint: disable=too-few-public-methods
 
         except KeyboardInterrupt:
             return None
-
-def extract_tmp_root(path_code_file):
-    #extract root tmp dir from code path
-    root_tmp_extracted = re.findall('/\S+/onefile_[0-9_]*/', path_code_file)
-    return root_tmp_extracted[0]
 
 def which(program):
     """
