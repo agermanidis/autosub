@@ -178,14 +178,17 @@ def which(program):
         #looks for file in the script execution folder before checking on system path
         #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
         try:
+            print("StartTry:", os.path.dirname(__file__))
             #for nuitka compiled code
             if __compiled__:
+                
                 #tmp dir where the bundled binary is extracted
                 current_dir = MyUtil.extract_tmp_root(os.path.dirname(__file__)) 
         except Exception as ex:
             print("Exception", type(ex),ex)
             #checks the current directory for ffmpeg binary when running locally directly from interpreter
             current_dir = os.getcwd()
+        print("DIR AUTOSUB BIN:", current_dir)
         local_program = os.path.join(current_dir, program)
         if is_exe(local_program):
             return local_program

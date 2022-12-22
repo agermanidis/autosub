@@ -248,6 +248,7 @@ class Ctr_Main():
         if currentLang:
             #loads the languageFile
             try:
+                print("StartTry:", os.path.dirname(__file__))
                 if __compiled__:
                     #if frozen gets temp folder
                     currentDir = MyUtil.extract_tmp_root(os.path.dirname(__file__))
@@ -256,6 +257,7 @@ class Ctr_Main():
                 print("Exception", type(ex),ex)
                 currentDir =  ""
             pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang)
+            print("PATHLANGFILE:", pathLangFile)
             self.objGUI.trans.load(pathLangFile)
             
             QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
