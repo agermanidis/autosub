@@ -1,0 +1,1 @@
+nuitka --enable-plugin=pyqt5 --include-data-files="ffmpeg.exe"="./" --include-data-files="pytranscriber/gui/*.qm"="pytranscriber/gui/"  main.py --onefile --disable-console
