@@ -49,25 +49,3 @@ class MyUtil(object):
     @staticmethod
     def percentage(currentval, maxval):
         return 100 * currentval / float(maxval)
-
-    @staticmethod
-    def extract_tmp_root(path_code_file):
-        
-        # for Unixes
-        if os.name != 'nt':
-            regex = "\S+/onefile_[0-9_]*/"
-            tmp_root_found = re.findall(regex, path_code_file)  
-            #extract root tmp dir from code path  
-            return tmp_root_found[0]
-        # for Windows
-        else:
-            regex = "\S+/ONEFIL[~0-9_]*/"
-            # converts the Windows Path to uri to use the same regular expression as in Unixes
-            win_path = PureWindowsPath(path_code_file)
-            uri_path = win_path.as_uri()
-            
-            tmp_root_found = re.findall(regex, uri_path)
-            # after finding the regular expression on the uri converts back to python path
-            py_path = urlparse(tmp_root_found[0]).path
-            
-            return os.path.normpath(py_path)
