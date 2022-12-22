@@ -126,7 +126,7 @@ class Ui_window(object):
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
-        window.setWindowTitle(_translate("window", "pyTranscriber - v1.8 - 17/08/2022"))
+        window.setWindowTitle(_translate("window", "pyTranscriber - v1.9 - 21/12/2022"))
         self.bSelectMedia.setText(_translate("window", "Select file(s)"))
         self.bConvert.setText(_translate("window", "Transcribe Audio / Generate Subtitles"))
         self.bOpenOutputFolder.setText(_translate("window", "Open Output Folder"))

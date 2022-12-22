@@ -16,6 +16,10 @@ import platform
 import os
 import subprocess
 import requests
+import re
+from pathlib import PureWindowsPath
+from urllib.parse import urlparse
+
 
 
 class MyUtil(object):

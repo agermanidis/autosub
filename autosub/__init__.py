@@ -16,7 +16,6 @@ import subprocess
 import sys
 import tempfile
 import wave
-
 import json
 import requests
 try:
@@ -31,6 +30,7 @@ from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
+from pathlib import PurePath
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
@@ -156,7 +156,6 @@ class Translator(object): # pylint: disable=too-few-public-methods
         except KeyboardInterrupt:
             return None
 
-
 def which(program):
     """
     Return the path for a given executable.
@@ -174,16 +173,11 @@ def which(program):
         if is_exe(program):
             return program
     else:
-        #looks for file in the script execution folder before checking on system path
-        #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
-        if hasattr(sys, 'frozen'):
-            current_dir = sys._MEIPASS #tmp dir where the bundled binary is extracted
-        else:
-            #checks the current directory for ffmpeg binary when running locally directly from interpreter
-            current_dir = os.getcwd()
-        local_program = os.path.join(current_dir, program)
-        if is_exe(local_program):
-            return local_program
+        local_program_path = PurePath(__file__).parent.parent.joinpath(program)
+        str_local_program_path = str(local_program_path)
+        print("path_ffmpeg",str_local_program_path)
+        if is_exe(str_local_program_path):
+            return str_local_program_path
         else:
             for path in os.environ["PATH"].split(os.pathsep):
                 path = path.strip('"')
