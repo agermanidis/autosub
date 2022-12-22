@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{5240AB76-FC62-4BFA-A1EF-FA49AF701F80}
 AppName=pyTranscriber
-AppVersion=1.7
-;AppVerName=pyTranscriber 1.7
+AppVersion=1.9
+AppVerName=pyTranscriber 1.9
 AppPublisher=Raryel C. Souza
 AppPublisherURL=https://github.com/raryelcostasouza/pyTranscriber
 AppSupportURL=https://github.com/raryelcostasouza/pyTranscriber
