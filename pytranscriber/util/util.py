@@ -70,4 +70,4 @@ class MyUtil(object):
             # after finding the regular expression on the uri converts back to python path
             py_path = urlparse(tmp_root_found[0]).path
             
-            return py_path
+            return os.path.normpath(py_path)
