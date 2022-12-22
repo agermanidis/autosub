@@ -23,6 +23,7 @@ from pytranscriber.control.thread_cancel_autosub import Thread_Cancel_Autosub
 from pytranscriber.gui.gui import Ui_window
 import os
 import sys
+from pathlib import PurePath
 
 
 class Ctr_Main():
@@ -246,19 +247,10 @@ class Ctr_Main():
         
         #if it was a valid event
         if currentLang:
-            #loads the languageFile
-            try:
-                print("StartTry:", os.path.dirname(__file__))
-                if __compiled__:
-                    #if frozen gets temp folder
-                    currentDir = MyUtil.extract_tmp_root(os.path.dirname(__file__))
-            except Exception as ex:
-                #app folder
-                print("Exception", type(ex),ex)
-                currentDir =  ""
-            pathLangFile = os.path.join(currentDir,'pytranscriber/gui/'+currentLang)
-            print("PATHLANGFILE:", pathLangFile)
-            self.objGUI.trans.load(pathLangFile)
+            currentDir = PurePath(__file__).parent.parent.parent    
+            pathLangFile = currentDir.joinpath('pytranscriber').joinpath('gui').joinpath(currentLang)
+            print("pathlangfile", pathLangFile)
+            self.objGUI.trans.load(str(pathLangFile))
             
             QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)
         else:

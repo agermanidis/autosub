@@ -30,9 +30,7 @@ from autosub.constants import (
     LANGUAGE_CODES, GOOGLE_SPEECH_API_KEY, GOOGLE_SPEECH_API_URL,
 )
 from autosub.formatters import FORMATTERS
-
-sys.path.append("../../")
-from pytranscriber.util.util import MyUtil
+from pathlib import PurePath
 
 DEFAULT_SUBTITLE_FORMAT = 'srt'
 DEFAULT_CONCURRENCY = 10
@@ -175,23 +173,11 @@ def which(program):
         if is_exe(program):
             return program
     else:
-        #looks for file in the script execution folder before checking on system path
-        #if its running frozen code from pyInstaller the path depends on pyInstaller tmp folder
-        try:
-            print("StartTry:", os.path.dirname(__file__))
-            #for nuitka compiled code
-            if __compiled__:
-                
-                #tmp dir where the bundled binary is extracted
-                current_dir = MyUtil.extract_tmp_root(os.path.dirname(__file__)) 
-        except Exception as ex:
-            print("Exception", type(ex),ex)
-            #checks the current directory for ffmpeg binary when running locally directly from interpreter
-            current_dir = os.getcwd()
-        print("DIR AUTOSUB BIN:", current_dir)
-        local_program = os.path.join(current_dir, program)
-        if is_exe(local_program):
-            return local_program
+        local_program_path = PurePath(__file__).parent.parent.joinpath(program)
+        str_local_program_path = str(local_program_path)
+        print("path_ffmpeg",str_local_program_path)
+        if is_exe(str_local_program_path):
+            return str_local_program_path
         else:
             for path in os.environ["PATH"].split(os.pathsep):
                 path = path.strip('"')
