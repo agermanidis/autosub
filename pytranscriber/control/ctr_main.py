@@ -249,7 +249,6 @@ class Ctr_Main():
         if currentLang:
             currentDir = PurePath(__file__).parent.parent.parent    
             pathLangFile = currentDir.joinpath('pytranscriber').joinpath('gui').joinpath(currentLang)
-            print("pathlangfile", pathLangFile)
             self.objGUI.trans.load(str(pathLangFile))
             
             QtWidgets.QApplication.instance().installTranslator(self.objGUI.trans)

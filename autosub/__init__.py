@@ -175,7 +175,7 @@ def which(program):
     else:
         local_program_path = PurePath(__file__).parent.parent.joinpath(program)
         str_local_program_path = str(local_program_path)
-        print("path_ffmpeg",str_local_program_path)
+        
         if is_exe(str_local_program_path):
             return str_local_program_path
         else:
