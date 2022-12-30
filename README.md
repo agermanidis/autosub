@@ -1,3 +1,7 @@
+# UPDATE - v1.9 - 22/12/2022
+1. Windows/Linux version compiled with Nuitka (https://github.com/Nuitka/Nuitka) instead of pyInstaller to improve stability and fix random crashes while transcribing audio. If you still experience issues please report at Issues section.
+2. Support for Ogg/ogv/mkv/webm media files on file selector
+
 # UPDATE - v1.8 - 17/08/2022
 1. Fixed bug: language codes for Chinese Languages updated accordingly to Speech API. Changed to "cmn-Hans-CN" and "cmn-Hant-TW" instead of "zh / zh-TW").. The output was always mistakenly coming in Cantonese (yue-Hant-HK). Now they come properly in Traditional Chinese and Simplified Chinese. Thanks to "Specter Hi" for reporting!
 2. Added GUI language switch feature
