@@ -9,6 +9,8 @@
 
 MOVED TO NEW WEBSITE - <a href="https://pytranscriber.github.io">https://pytranscriber.github.io</a>
 
+More than 500.000 downloads since first version. Thanks!
+Check live statistics at <a href="https://somsubhra.github.io/github-release-stats/?username=raryelcostasouza&repository=pyTranscriber&page=1&per_page=30">GitHub Release Stats</a>
 
 # UPDATE - v1.9 - 22/12/2022
 1. Windows/Linux version compiled with Nuitka (https://github.com/Nuitka/Nuitka) instead of pyInstaller to improve stability and fix random crashes while transcribing audio. If you still experience issues please report at Issues section.
