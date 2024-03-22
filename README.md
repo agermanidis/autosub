@@ -7,7 +7,7 @@
 
 MOVED TO NEW WEBSITE - <a href="https://pytranscriber.github.io">https://pytranscriber.github.io</a>
 
-More than 500.000 downloads since first version. Thanks!
+More than 640k downloads since first version. Thanks!
 Check live statistics at <a href="https://somsubhra.github.io/github-release-stats/?username=raryelcostasouza&repository=pyTranscriber&page=1&per_page=30">GitHub Release Stats</a>
 
 # Thanks to the people helping funding
