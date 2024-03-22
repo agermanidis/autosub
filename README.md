@@ -1,7 +1,7 @@
 # pyTranscriber
 
 [![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-1462ab.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=YHB854YHPJCU8&item_name=Donation+pyTranscriber&currency_code=BRL)
-[![Tip Me via Bitcoin Lightning](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/lightning.png)
+[![Tip Me via Bitcoin Lightning](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://github.com/raryelcostasouza/pyTranscriber/raw/master/doc/lightning.jpeg)
 
 MOVED TO NEW WEBSITE - <a href="https://pytranscriber.github.io">https://pytranscriber.github.io</a>
 
